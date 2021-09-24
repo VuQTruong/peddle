@@ -1,6 +1,3 @@
-# Peddle
-
-## API
 | | | |
 |---|---|---|
 | **Auth Service** |
