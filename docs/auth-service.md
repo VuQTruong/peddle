@@ -30,7 +30,7 @@ Failure Response:
 ```
 ## Examples ##
 
-POST /api/auth/signin
+**POST /api/auth/signin**
 ```
 request
 {
@@ -51,7 +51,7 @@ response Error:
 }
 ```
 
-POST /api/auth/signout
+**POST /api/auth/signout**
 ```
 request:
 {}
@@ -68,7 +68,7 @@ response Error:
     message: "bad request"
 }
 ```
-POST | /api/auth/signup
+**POST /api/auth/signup**
 ```
 request
 {
@@ -90,7 +90,7 @@ response Error:
     message: "bad request"
 }
 ```
-GET /api/auth/currentuser 
+**GET /api/auth/currentuser**
 ```
 {
     status:200,

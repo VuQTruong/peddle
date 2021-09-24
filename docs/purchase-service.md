@@ -14,7 +14,7 @@ ErrorStatus:
 ```
 
 ## Examples 
-### POST /api/purchase/{itemId}/buyer/{userId} - purchase an item
+**POST /api/purchase/{itemId}/buyer/{userId} - purchase an item**
 ```
 request
 {

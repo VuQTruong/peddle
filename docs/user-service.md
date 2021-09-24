@@ -19,7 +19,7 @@ User:
 ```
 
 # Examples ##
-### POST /api/users - add a new user 
+**POST /api/users - add a new user**
 ```
 request
 {
@@ -42,7 +42,7 @@ response Error
 }
 ```
 
-### GET  /api/users/{userId} - get a user profile
+**GET /api/users/{userId} - get a user profile**
 ```
 response OK
 {
@@ -59,7 +59,7 @@ resopnse Error
 }
 ```
 
-### GET  /api/users/{userId}/posts - get posted items for a user 
+**GET  /api/users/{userId}/posts - get posted items for a user**
 ```
 response OK
 {
@@ -78,7 +78,7 @@ response Error
     message: "account is suspended"
 }
 ```
-### GET /api/users/{userId}/purchasedItem - get purchased history for a user
+**GET /api/users/{userId}/purchasedItem - get purchased history for a user**
 ```
 response OK
 {
@@ -97,7 +97,7 @@ response Error
 }
 ```
 
-### PUT  /api/users/{userId} - update user info  
+**PUT  /api/users/{userId} - update user info**
 ```
 request 
 {

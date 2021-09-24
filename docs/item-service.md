@@ -37,7 +37,7 @@ Item:
 
 ## Examples ##
 
-GET /api/items - get all items on the market
+**GET /api/items - get all items on the market**
 ```
 response OK: 
 {
@@ -57,7 +57,7 @@ response Error:
 }
 ```
 
-POST /api/items - post an item on the market for a user
+**POST /api/items - post an item on the market for a user**
 ```
 request:
 {
@@ -77,7 +77,7 @@ response Error:
 }
 ```
 
-PUT /api/items/{itemId} - update an item on the market
+**PUT /api/items/{itemId} - update an item on the market**
 ```
 request
 {
@@ -97,7 +97,7 @@ response Error:
 }
 ```
 
-DELETE /api/items/{itemId} - delete an item on the market
+**DELETE /api/items/{itemId} - delete an item on the market**
 ```
 request:
 {
