@@ -5,7 +5,6 @@ export class NotFoundError extends AppError {
   constructor() {
     super("Route not found");
 
-    Object.setPrototypeOf(this, NotFoundError.prototype);
   }
 
   serializeErrors() {

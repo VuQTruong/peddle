@@ -7,9 +7,6 @@ const port = (process.env.PORT || 5000) as number;
 app.listen(port, host, () => {
   // Connect to database
   //   connectToDB();
-  // in case database error
-  // throw new DatabaseConnectionError();
   console.log(`Serve at http://${host}:${port}`);
-
 
 });

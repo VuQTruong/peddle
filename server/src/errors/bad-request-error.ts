@@ -5,8 +5,6 @@ export class BadRequestError extends AppError {
 
   constructor(public message: string) {
     super(message);
-
-    Object.setPrototypeOf(this, BadRequestError.prototype);
   }
 
   serializeErrors() {

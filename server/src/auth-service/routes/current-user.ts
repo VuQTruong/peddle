@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/api/auth/currentuser', requireAuth, (req, res) =>{
     currentUser(req, res);
-});
+}); 
 
 export { router as currentUserRouter };
 
