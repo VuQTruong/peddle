@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
+import { DatabaseConnectionError } from '../errors/database-connection-error';
 
 const connectToDB = () => {
-  // TODO: Create new database on MongoDB Atlas and Update database URL
   const databaseURI = process.env.MONGODB_URL as string;
   const options: object = {
     useNewUrlParser: true,
@@ -14,8 +14,7 @@ const connectToDB = () => {
       console.log('Database Connected!');
     })
     .catch((err) => {
-      console.log('DB Connection Error', err);
-      process.exit(1);
+      throw new DatabaseConnectionError();
     });
 };
 
