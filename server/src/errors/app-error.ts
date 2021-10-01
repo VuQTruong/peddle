@@ -3,8 +3,8 @@ export abstract class AppError extends Error {
 
   constructor(message: string) {
     super(message);
-    Object.setPrototypeOf(this, AppError.prototype);
+    Object.setPrototypeOf(this, AppError.prototype)
   }
 
-  abstract serializeErrors(): { message: string; field?: string };
+  abstract getErrorMessage(): string;
 }

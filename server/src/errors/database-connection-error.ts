@@ -1,15 +1,15 @@
 import { AppError } from "./app-error";
 
 export class DatabaseConnectionError extends AppError {
-  reason = "Error connecting to database";
+  reason = "Database connection error";
   statusCode = 500;
 
   constructor() {
-    super("Error connecting to database");
-
+    super("Database connection error");
+    Object.setPrototypeOf(this, DatabaseConnectionError.prototype);
   }
 
-  serializeErrors() {
-    return { message: this.reason };
+  getErrorMessage() {
+    return this.reason;
   }
 }

@@ -8,11 +8,17 @@ export const errorHandler = (
   next: NextFunction
 ) => {
 
+    console.log(err);
+
     if(err instanceof AppError ){
-        return res.status(err.statusCode).send({ errors: err.serializeErrors() });
+         return res.status(err.statusCode).send({
+            status:err.statusCode, 
+            message: err.getErrorMessage() 
+        });
     }
 
     res.status(400).send({
-        error: {message: 'Unexpected Error'}
+        status: "400",
+        message: `Unexpected Error - ${err.message}`
     });
 }

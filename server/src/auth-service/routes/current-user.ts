@@ -1,12 +1,9 @@
-import express from 'express';
-import { requireAuth } from '../../middlewares/require-auth';
-import { currentUser  } from '../services/current-user-service';
+import express from "express";
+import { currentUser } from "../../middlewares/current-user";
 const router = express.Router();
 
-router.get('/api/auth/currentuser', requireAuth, (req, res) =>{
-    currentUser(req, res);
-}); 
+router.get("/api/auth/currentuser", currentUser, (req, res) => {
+  res.send({ currentUser: req.currentUser || null });
+});
 
 export { router as currentUserRouter };
-
-
