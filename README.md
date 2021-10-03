@@ -1,3 +1,5 @@
+[![Server Continuous integration](https://github.com/SionYoung/peddle/actions/workflows/integrate.yml/badge.svg)](https://github.com/SionYoung/peddle/actions/workflows/integrate.yml)
+
 # Peddle
 
 ## API
