@@ -45,7 +45,6 @@ router.post("/api/auth/signup", validations, validateRequest, async (req: Reques
     const user = User.build(newUser);
     await user.save();
 
-    // genrate json webtoken
     const userJwt = jwt.sign(
       {
         id: user.id,
