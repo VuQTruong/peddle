@@ -1,4 +1,4 @@
-[![Server Continuous integration](https://github.com/SionYoung/peddle/actions/workflows/integrate.yml/badge.svg?branch=master&event=pull_request)](https://github.com/SionYoung/peddle/actions/workflows/integrate.yml)
+[![test](https://github.com/SionYoung/peddle/actions/workflows/integrate.yml/badge.svg?event=pull_request)](https://github.com/SionYoung/peddle/actions/workflows/integrate.yml)
 
 # Peddle
 
