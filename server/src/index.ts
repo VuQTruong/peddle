@@ -8,4 +8,5 @@ app.listen(port, host, () => {
   console.log(`Serve at http://${host}:${port}`); 
   
   connectToDB();
+  
 });
