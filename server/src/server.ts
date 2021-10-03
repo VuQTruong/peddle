@@ -21,7 +21,7 @@ app.use(
   })
 );
 
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 /* Home Route */
 app.get('/health', (req, res) => {
