@@ -1,4 +1,4 @@
-name: Project Continuous integration
+name: Server Continuous integration
 
 on:
   pull_request:
@@ -6,12 +6,16 @@ on:
 jobs:
   test_pull_request:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./server
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: cd server
       - run: npm ci
       - run: npm test
       - run: npm run build
+        env: 
+          CI: true

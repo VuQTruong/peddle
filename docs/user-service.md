@@ -9,12 +9,20 @@ ErrorStatus:
 401 Unauthorized
 403 Forbidden
 404 Not Found
-422 Unprocessable Entity
 ```
 User:
 ```
 {
-    ... to be determined
+  firstName: string;
+  lastName: string;
+  photo: string;
+  email: string;
+  password: string;
+  lat: number;
+  lng: number;
+  postalCode: string;
+  isPremiumMember: boolean;
+  dislikedItemIds: string[];
 }
 ```
 
