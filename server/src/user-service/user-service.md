@@ -284,7 +284,7 @@ response Error:
 }
 ```
 
-**`PATCH` /api/users/{userId}/favourite/add - add an item to favourite list**
+**`PATCH` /api/users/{userId}/favourite - add an item to favourite list**
 
 ```
 request

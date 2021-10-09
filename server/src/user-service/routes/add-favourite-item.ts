@@ -12,7 +12,7 @@ const router = express.Router();
 const validations = [body('itemId').isString()];
 
 router.patch(
-  '/api/users/:userId/favourite/add',
+  '/api/users/:userId/favourite',
   currentUser,
   requireAuth,
   validations,
