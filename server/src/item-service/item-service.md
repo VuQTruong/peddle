@@ -39,8 +39,7 @@ request
     "category": "Electronic",
     "images": ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
     "price": 13.99,
-    "description": "Item Description",
-    "postedBy": "UserId"
+    "description": "Item Description"
 }
 
 response OK:

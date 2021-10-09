@@ -29,7 +29,7 @@ router.patch(
       const itemId = req.params.itemId;
       const item = await Item.findById(itemId);
 
-      if (item?.postedBy === req.currentUser?.id) {
+      if (item?.postedBy.toString() === req.currentUser?.id) {
         const updatedItem = await Item.findByIdAndUpdate(itemId, req.body, {
           new: true,
           runValidators: true,
@@ -43,7 +43,7 @@ router.patch(
           },
         });
       } else {
-        return res.send(403).send({
+        return res.status(403).send({
           status: '403',
           message: 'You are not allowed to update this item',
         });

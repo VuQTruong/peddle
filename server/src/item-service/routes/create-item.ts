@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import Item from '../../models/item';
 import { User } from '../../models/user';
 import { body } from 'express-validator';
@@ -15,7 +16,6 @@ const validations = [
   body('images').isArray(),
   body('price').isNumeric(),
   body('description').isString(),
-  body('postedBy').isString(),
 ];
 
 router.post(
@@ -26,10 +26,14 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     try {
-      const newItem = await Item.create(req.body);
-
-      // Update postedItems
       const userId = req.currentUser?.id;
+      const itemInfo = {
+        ...req.body,
+        postedBy: userId,
+      };
+      const newItem = await Item.create(itemInfo);
+
+      // Update user's postedItems
       const user = await User.findById(userId);
       if (user) {
         user.postedItems.push(newItem._id);

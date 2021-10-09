@@ -17,7 +17,7 @@ router.delete(
       const item = await Item.findById(itemId);
 
       // Checking if the user requesting delete is the one that own the item
-      if (item?.postedBy === req.currentUser?.id) {
+      if (item?.postedBy.toString() === req.currentUser?.id) {
         await Item.findByIdAndDelete(itemId);
 
         // Update postedItems
@@ -32,7 +32,7 @@ router.delete(
 
         return res.sendStatus(204);
       } else {
-        return res.send(403).send({
+        return res.status(403).send({
           status: '403',
           message: 'You are not allowed to delete this item',
         });
