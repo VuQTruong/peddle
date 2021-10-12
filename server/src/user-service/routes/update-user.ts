@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { ServerError } from '../../errors/server-error';
+import { BadRequestError } from '../../errors/bad-request-error';
 import { currentUser } from '../../middlewares/current-user';
 import { requireAuth } from '../../middlewares/require-auth';
 import { validateRequest } from '../../middlewares/validate-request';
@@ -23,23 +23,24 @@ router.patch(
   validations,
   validateRequest,
   async (req: Request, res: Response) => {
-    try {
-      const userId = req.params.userId;
-      const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
-        new: true,
-        runValidators: true,
-      });
+    const userId = req.params.userId;
 
-      return res.status(200).send({
-        status: '200',
-        message: 'User updated successfully',
-        data: {
-          user: updatedUser,
-        },
-      });
-    } catch (err) {
-      throw new ServerError('Something went wrong');
+    if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequestError('Item id is not valid');
     }
+
+    const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    return res.status(200).send({
+      status: '200',
+      message: 'User updated successfully',
+      data: {
+        user: updatedUser,
+      },
+    });
   }
 );
 

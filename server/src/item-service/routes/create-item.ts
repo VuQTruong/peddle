@@ -25,31 +25,27 @@ router.post(
   validations,
   validateRequest,
   async (req: Request, res: Response) => {
-    try {
-      const userId = req.currentUser?.id;
-      const itemInfo = {
-        ...req.body,
-        postedBy: userId,
-      };
-      const newItem = await Item.create(itemInfo);
+    const userId = req.currentUser?.id;
+    const itemInfo = {
+      ...req.body,
+      postedBy: userId,
+    };
+    const newItem = await Item.create(itemInfo);
 
-      // Update user's postedItems
-      const user = await User.findById(userId);
-      if (user) {
-        user.postedItems.push(newItem._id);
-        await user.save();
-      }
-
-      return res.status(201).send({
-        status: '201',
-        message: 'Item created successfully',
-        data: {
-          item: newItem,
-        },
-      });
-    } catch (err) {
-      throw new ServerError('Something went wrong');
+    // Update user's postedItems
+    const user = await User.findById(userId);
+    if (user) {
+      user.postedItems.push(newItem._id);
+      await user.save();
     }
+
+    return res.status(201).send({
+      status: '201',
+      message: 'Item created successfully',
+      data: {
+        item: newItem,
+      },
+    });
   }
 );
 

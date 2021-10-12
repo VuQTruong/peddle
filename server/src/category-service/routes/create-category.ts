@@ -17,19 +17,15 @@ router.post(
   validations,
   validateRequest,
   async (req: Request, res: Response) => {
-    try {
-      const category = await Category.create(req.body);
+    const category = await Category.create(req.body);
 
-      return res.status(201).send({
-        status: '201',
-        message: 'Category created successfully',
-        data: {
-          category,
-        },
-      });
-    } catch (err) {
-      throw new ServerError('Something went wrong');
-    }
+    return res.status(201).send({
+      status: '201',
+      message: 'Category created successfully',
+      data: {
+        category,
+      },
+    });
   }
 );
 

@@ -1,6 +1,6 @@
 import express from 'express';
 import Category from '../../models/category';
-import { ServerError } from '../../errors/server-error';
+import { BadRequestError } from '../../errors/bad-request-error';
 import { currentUser } from '../../middlewares/current-user';
 import { requireAuth } from '../../middlewares/require-auth';
 
@@ -11,17 +11,18 @@ router.delete(
   currentUser,
   requireAuth,
   async (req, res) => {
-    try {
-      const categoryId = req.params.categoryId;
-      await Category.findByIdAndDelete(categoryId);
+    const categoryId = req.params.categoryId;
 
-      return res.status(204).send({
-        status: '204',
-        message: 'Category deleted successfully',
-      });
-    } catch (err) {
-      throw new ServerError('Something went wrong');
+    if (!categoryId.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequestError('Item id is not valid');
     }
+
+    await Category.findByIdAndDelete(categoryId);
+
+    return res.status(204).send({
+      status: '204',
+      message: 'Category deleted successfully',
+    });
   }
 );
 

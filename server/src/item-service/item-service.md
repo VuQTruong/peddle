@@ -71,7 +71,7 @@ response OK:
 response Error:
 {
     status: 500,
-    message: "Something went wrong"
+    message: "Unexpected Error - ${err.message}"
 }
 ```
 
@@ -123,7 +123,7 @@ response Error:
 response Error:
 {
     status: 500,
-    message: "Something went wrong"
+    message: "Unexpected Error - ${err.message}"
 }
 ```
 
@@ -155,7 +155,7 @@ response Ok:
 response Error:
 {
     status: 500,
-    message: "Something went wrong"
+    message: "Unexpected Error - ${err.message}"
 }
 ```
 
@@ -164,7 +164,11 @@ response Error:
 ```
 request {}
 
-response Ok (204 - No Content): {}
+response Ok:
+{
+    status: '200',
+    message: 'Success',
+}
 
 response Error:
 {
@@ -175,7 +179,7 @@ response Error:
 response Error:
 {
     status: 500,
-    message: "Something went wrong"
+    message: "Unexpected Error - ${err.message}"
 }
 ```
 
@@ -228,6 +232,6 @@ response Error:
 response Error:
 {
     status: 500,
-    message: "Something went wrong"
+    message: "Unexpected Error - ${err.message}"
 }
 ```

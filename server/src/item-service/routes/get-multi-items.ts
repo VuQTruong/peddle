@@ -8,29 +8,25 @@ import { requireAuth } from '../../middlewares/require-auth';
 const router = express.Router();
 
 router.get('/api/items', currentUser, requireAuth, async (req, res) => {
-  try {
-    // Get user seen items
-    const userId = req.currentUser?.id;
-    const userInfo = await User.findById(userId);
-    const seenItems = userInfo?.seenItems;
+  // Get user seen items
+  const userId = req.currentUser?.id;
+  const userInfo = await User.findById(userId);
+  const seenItems = userInfo?.seenItems;
 
-    // Get items
-    const items = await Item.find({
-      _id: {
-        $nin: seenItems,
-      },
-    }).limit(10);
+  // Get items
+  const items = await Item.find({
+    _id: {
+      $nin: seenItems,
+    },
+  }).limit(10);
 
-    return res.status(200).send({
-      status: '200',
-      message: 'Success',
-      data: {
-        items,
-      },
-    });
-  } catch (err) {
-    throw new ServerError('Something went wrong');
-  }
+  return res.status(200).send({
+    status: '200',
+    message: 'Success',
+    data: {
+      items,
+    },
+  });
 });
 
 export { router as getMultiItemsRouter };

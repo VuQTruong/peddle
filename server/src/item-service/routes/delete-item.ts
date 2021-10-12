@@ -1,6 +1,6 @@
 import express from 'express';
 import Item from '../../models/item';
-import { ServerError } from '../../errors/server-error';
+import { BadRequestError } from '../../errors/bad-request-error';
 import { currentUser } from '../../middlewares/current-user';
 import { requireAuth } from '../../middlewares/require-auth';
 import { User } from '../../models/user';
@@ -12,33 +12,36 @@ router.delete(
   currentUser,
   requireAuth,
   async (req, res) => {
-    try {
-      const itemId = req.params.itemId;
-      const item = await Item.findById(itemId);
+    const itemId = req.params.itemId;
 
-      // Checking if the user requesting delete is the one that own the item
-      if (item?.postedBy.toString() === req.currentUser?.id) {
-        await Item.findByIdAndDelete(itemId);
+    if (!itemId.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequestError('Item id is not valid');
+    }
 
-        // Update postedItems
-        const userId = req.currentUser?.id;
-        const user = await User.findById(userId);
-        if (user) {
-          user.postedItems = user.postedItems.filter(
-            (id) => id.toString() !== itemId
-          );
-          await user.save();
-        }
+    const item = await Item.findById(itemId);
+    // Checking if the user requesting delete is the one that own the item
+    if (item?.postedBy.toString() === req.currentUser?.id) {
+      await Item.findByIdAndDelete(itemId);
 
-        return res.sendStatus(204);
-      } else {
-        return res.status(403).send({
-          status: '403',
-          message: 'You are not allowed to delete this item',
-        });
+      // Update postedItems
+      const userId = req.currentUser?.id;
+      const user = await User.findById(userId);
+      if (user) {
+        user.postedItems = user.postedItems.filter(
+          (id) => id.toString() !== itemId
+        );
+        await user.save();
       }
-    } catch (err) {
-      throw new ServerError('Something went wrong');
+
+      return res.status(200).send({
+        status: '200',
+        message: 'Success',
+      });
+    } else {
+      return res.status(403).send({
+        status: '403',
+        message: 'You are not allowed to delete this item',
+      });
     }
   }
 );

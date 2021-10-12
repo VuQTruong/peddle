@@ -1,6 +1,6 @@
 import express from 'express';
 import { User } from '../../models/user';
-import { ServerError } from '../../errors/server-error';
+import { BadRequestError } from '../../errors/bad-request-error';
 import { currentUser } from '../../middlewares/current-user';
 import { requireAuth } from '../../middlewares/require-auth';
 
@@ -11,22 +11,23 @@ router.get(
   currentUser,
   requireAuth,
   async (req, res) => {
-    try {
-      const userId = req.params.userId;
-      const postItems = await User.findById(userId)
-        .select('postedItems')
-        .populate('postedItems');
+    const userId = req.params.userId;
 
-      return res.status(200).send({
-        status: '200',
-        message: 'Success',
-        data: {
-          items: postItems?.postedItems,
-        },
-      });
-    } catch (err) {
-      throw new ServerError('Something went wrong');
+    if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequestError('Item id is not valid');
     }
+
+    const postItems = await User.findById(userId)
+      .select('postedItems')
+      .populate('postedItems');
+
+    return res.status(200).send({
+      status: '200',
+      message: 'Success',
+      data: {
+        items: postItems?.postedItems,
+      },
+    });
   }
 );
 

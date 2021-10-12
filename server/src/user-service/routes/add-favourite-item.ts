@@ -18,24 +18,29 @@ router.patch(
   validations,
   validateRequest,
   async (req: Request, res: Response) => {
-    try {
-      const itemId = req.body.itemId;
-      const userId = req.params.userId;
-      const updatedUser = await User.findById(userId);
+    const itemId = req.body.itemId;
+    const userId = req.params.userId;
 
-      if (updatedUser) {
-        updatedUser.favouriteItems.push(itemId);
-        await updatedUser.save();
+    if (!itemId.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequestError('Item id is not valid');
+    }
 
-        return res.status(200).send({
-          status: '200',
-          message: 'Favourite Item added successfully',
-        });
-      } else {
-        throw new BadRequestError('User not found');
-      }
-    } catch (err) {
-      throw new ServerError('Something went wrong');
+    if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequestError('Item id is not valid');
+    }
+
+    const updatedUser = await User.findById(userId);
+
+    if (updatedUser) {
+      updatedUser.favouriteItems.push(itemId);
+      await updatedUser.save();
+
+      return res.status(200).send({
+        status: '200',
+        message: 'Favourite Item added successfully',
+      });
+    } else {
+      throw new BadRequestError('User not found');
     }
   }
 );
