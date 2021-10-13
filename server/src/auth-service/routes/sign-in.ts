@@ -52,7 +52,7 @@ router.post(
 
     res
       .status(200)
-      .send({ status: '200', message: 'user signed in', data: existingUser });
+      .send({ status: 200, message: 'user signed in', data: existingUser });
   }
 );
 

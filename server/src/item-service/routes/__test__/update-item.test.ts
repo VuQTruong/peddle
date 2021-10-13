@@ -9,7 +9,7 @@ const item = {
   description: "Item Description",
 };
 
-it("updates an item with invalid session", async () => {
+it("updates an item with valid session", async () => {
   const cookie = await global.signin();
 
   const itemRes = await request(app)
@@ -17,6 +17,7 @@ it("updates an item with invalid session", async () => {
     .set("Cookie", cookie)
     .send(item)
     .expect(201);
+
   const itemId = itemRes.body.data.item.id;
   expect(itemRes.body.data.item.isSold).toBe(false);
 

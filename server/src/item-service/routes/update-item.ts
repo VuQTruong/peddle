@@ -46,6 +46,10 @@ router.patch(
       runValidators: true,
     });
 
+    if(!updatedItem){
+      return next(new BadRequestError('Item not found'))
+    }
+
     return res.status(200).send({
       status: "200",
       message: "Item updated successfully",

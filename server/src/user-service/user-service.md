@@ -217,7 +217,7 @@ request
     "photo": "value",    // Optional
     "lat": value,    // Optional
     "lng": value,    // Optional
-    "postalCode": "value"    // Optional
+    "postalCode": "valid Canadian postal code"    // Optional
 }
 
 response Ok:

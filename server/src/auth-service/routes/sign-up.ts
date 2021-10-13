@@ -22,11 +22,13 @@ interface User {
 
 const validations = [
   body("email").isEmail().withMessage("Email must be valid"),
+  body("firstName").isString().trim().not().isEmpty(),
+  body("lastName").isString().trim().not().isEmpty(),
   body("password")
     .trim()
     .isLength({ min: 4, max: 20 })
     .withMessage("Password must be between 4 and 20 characters"),
-  body("postalCode").trim().isLength({ min: 7, max: 7 }).isPostalCode("CA"),
+  body("postalCode").isString().trim().isLength({ min: 7, max: 7 }).isPostalCode('CA'),
   body("lat").isNumeric(),
   body("lng").isNumeric(),
   body("dislikedItemIds").isArray(),
@@ -59,7 +61,7 @@ router.post("/api/auth/signup", validations, validateRequest, async (req: Reques
     };
 
     res.status(201).send({
-      status: "201",
+      status: 201,
       message:"success",
       data: user,
     });

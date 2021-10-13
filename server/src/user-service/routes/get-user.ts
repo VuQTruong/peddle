@@ -6,14 +6,17 @@ import { requireAuth } from '../../middlewares/require-auth';
 
 const router = express.Router();
 
-router.get('/api/users/:userId', currentUser, requireAuth, async (req, res) => {
+router.get('/api/users/:userId', currentUser, requireAuth, async (req, res, next) => {
   const userId = req.params.userId;
 
   if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
-    throw new BadRequestError('Item id is not valid');
+    throw new BadRequestError('User id is not valid');
   }
 
   const user = await User.findById(userId);
+  if(!user){
+    return next(new BadRequestError('User not found'));
+  }
 
   return res.status(200).send({
     status: '200',

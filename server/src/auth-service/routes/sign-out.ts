@@ -6,6 +6,6 @@ const router = express.Router();
 router.post('/api/auth/signout',currentUser, (req, res) =>{
   req.session = null;
   
-  res.send({"status": "200", "message": "user signed out"});
+  res.send({"status": 200, "message": "user signed out"});
 })
 export { router as signoutRouter };
