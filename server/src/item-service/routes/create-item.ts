@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import Item from '../../models/item';
 import { User } from '../../models/user';
 import { body } from 'express-validator';
@@ -23,7 +23,7 @@ router.post(
   requireAuth,
   validations,
   validateRequest,
-  async (req: Request, res: Response) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.currentUser?.id;
     const itemInfo = {
       ...req.body,
@@ -34,11 +34,11 @@ router.post(
     // Update user's postedItems
     const user = await User.findById(userId);
     if(!user){
-      throw new ServerError('Database out of sync')
+      return next(new ServerError('Database out of sync'));
     }
 
-    user.postedItems.push(newItem._id);
-    await user.save();
+    user!.postedItems.push(newItem._id);
+    await user!.save();
 
     return res.status(201).send({
       status: '201',
