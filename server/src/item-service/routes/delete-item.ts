@@ -1,6 +1,6 @@
 import express from 'express';
 import Item from '../../models/item';
-import { BadRequestError } from '../../errors/bad-request-error';
+import { BadRequestError} from '../../errors';
 import { currentUser } from '../../middlewares/current-user';
 import { requireAuth } from '../../middlewares/require-auth';
 import { User } from '../../models/user';
@@ -19,7 +19,11 @@ router.delete(
     }
 
     const item = await Item.findById(itemId);
+    if (!item){
+      throw new BadRequestError("Item not found");
+    }
     // Checking if the user requesting delete is the one that own the item
+
     if (item?.postedBy.toString() === req.currentUser?.id) {
       await Item.findByIdAndDelete(itemId);
 
