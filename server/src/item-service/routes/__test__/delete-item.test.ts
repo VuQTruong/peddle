@@ -70,8 +70,8 @@ it("fails to delete an item because the item user tries to delete doesn't belong
   .set('Cookie', user1Cookie)
   .send(item)
   .expect(201);
+  const itemPosted  = itemRes.body.data.item;
 
-  const itemPosted = itemRes.body.data.item;
 
   // user 2 delete the item user1 just posted
   const response = await request(app)
