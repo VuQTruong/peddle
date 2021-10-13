@@ -1,6 +1,6 @@
 import express from 'express';
 import Item from '../../models/item';
-import { BadRequestError} from '../../errors';
+import { BadRequestError} from '../../errors/index';
 import { currentUser } from '../../middlewares/current-user';
 import { requireAuth } from '../../middlewares/require-auth';
 import { User } from '../../models/user';
