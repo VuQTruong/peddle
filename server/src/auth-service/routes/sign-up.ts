@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-interface User {
+interface SignupData {
   firstName: string;
   lastName: string;
   photo: string;
@@ -18,6 +18,10 @@ interface User {
   postalCode: string;
   isPremiumMember: boolean;
   dislikedItemIds: string[];
+  postedItems: string[];
+  purchasedItems : string[];
+  favouriteItems : string[];
+  seenItems: string[];
 }
 
 const validations = [
@@ -31,18 +35,23 @@ const validations = [
   body("postalCode").isString().trim().isLength({ min: 7, max: 7 }).isPostalCode('CA'),
   body("lat").isNumeric(),
   body("lng").isNumeric(),
-  body("dislikedItemIds").isArray(),
   // body("photo").trim().isBase64()
 ];
 
 router.post("/api/auth/signup", validations, validateRequest, async (req: Request, res: Response) => {
-    const newUser: User = req.body;
+    const newUser: SignupData = req.body;
 
     const existingUser = await User.findOne({ email: newUser.email });
 
     if (existingUser) {
       throw new BadRequestError("Email in use");
     }
+    newUser.isPremiumMember = false;
+    newUser.seenItems = [];
+    newUser.postedItems = [];
+    newUser.dislikedItemIds = [];
+    newUser.purchasedItems  = [];
+    newUser.favouriteItems  = [];
 
     const user = User.build(newUser);
     await user.save();

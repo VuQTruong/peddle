@@ -14,7 +14,7 @@ router.get(
     const userId = req.params.userId;
 
     if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
-      throw new BadRequestError('Item id is not valid');
+      throw new BadRequestError('User id is not valid');
     }
 
     const favouriteItems = await User.findById(userId)

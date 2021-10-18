@@ -1,15 +1,16 @@
 import express, { Request, Response } from 'express';
 import { User } from '../../models/user';
 import { body } from 'express-validator';
-import { ServerError } from '../../errors/server-error';
 import { currentUser } from '../../middlewares/current-user';
 import { requireAuth } from '../../middlewares/require-auth';
-import { validateRequest } from '../../middlewares/validate-request';
 import { BadRequestError } from '../../errors/bad-request-error';
+import { validateRequest } from '../../middlewares/validate-request';
 
 const router = express.Router();
 
-const validations = [body('itemId').isString()];
+const validations = [
+  body('itemId').isString().not().isEmpty()
+];
 
 router.patch(
   '/api/users/:userId/favourite',
@@ -26,21 +27,28 @@ router.patch(
     }
 
     if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
-      throw new BadRequestError('Item id is not valid');
+      throw new BadRequestError('User id is not valid');
     }
 
-    const updatedUser = await User.findById(userId);
+    const user = await User.findById(userId);
 
-    if (updatedUser) {
-      updatedUser.favouriteItems.push(itemId);
-      await updatedUser.save();
+    if(user?.favouriteItems?.includes(itemId)){
+      return res.status(200).send({
+        status: '200',
+        message: 'Item already exists',
+      });
+    }
+
+    if (user) {
+      user.favouriteItems.push(itemId);
+      await user.save();
 
       return res.status(200).send({
         status: '200',
         message: 'Favourite Item added successfully',
       });
     } else {
-      throw new BadRequestError('User not found');
+      throw new BadRequestError('User id is not valid');
     }
   }
 );

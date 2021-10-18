@@ -14,12 +14,15 @@ router.get(
     const userId = req.params.userId;
 
     if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
-      throw new BadRequestError('Item id is not valid');
+      throw new BadRequestError('User id is not valid');
     }
 
     const postItems = await User.findById(userId)
       .select('postedItems')
       .populate('postedItems');
+    if(!postItems){
+      throw new BadRequestError('User not found')
+    }
 
     return res.status(200).send({
       status: '200',
