@@ -10,11 +10,12 @@ import { validateRequest } from '../../middlewares/validate-request';
 const router = express.Router();
 
 const validations = [
-  body('name').isString(),
-  body('category').isString(),
-  body('images').isArray(),
-  body('price').isNumeric(),
-  body('description').isString(),
+  body('name').isString().not().isEmpty().withMessage('Item name not valid'),
+  body('category').isString().not().isEmpty().withMessage('Category not valid'),
+  body('images').isArray().withMessage('Invalid images'),
+  body('price').isNumeric().withMessage('Price not valid'),
+  body('description').isString().not().isEmpty().withMessage('Description not valid'),
+  body('postedBy').isMongoId().withMessage('Item owner id not in valid MongoId form'),
 ];
 
 router.post(

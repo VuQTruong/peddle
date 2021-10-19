@@ -9,7 +9,7 @@ export class BadRequestError extends AppError{
         Object.setPrototypeOf(this, BadRequestError.prototype);
     }
 
-    getErrorMessage() {
-      return this.message;
+    getErrors() {
+      return [{ message: this.message }];
     }
 }

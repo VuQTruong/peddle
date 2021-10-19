@@ -37,7 +37,7 @@ it("returns a bad request error when the user id does not exist", async () => {
     .send()
     .expect(401);
 
-  expect(res.body.message).toBe("Not authorized");
+  expect(res.body.errors[0].message).toBe("Not authorized");
 });
 
 it("returns bad request error when the user is not found", async () => {
@@ -49,5 +49,5 @@ it("returns bad request error when the user is not found", async () => {
     .send()
     .expect(400);
 
-  expect(res.body.message).toBe("User not found");
+  expect(res.body.errors[0].message).toBe("User not found");
 });

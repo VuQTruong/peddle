@@ -6,6 +6,7 @@
 SuccessStatus:
 200 OK
 201 Created
+
 ErrorStatus:
 400 Bad Request
 401 Unauthorized
@@ -20,6 +21,12 @@ Failure Response:
 {
     status: ErrorStatusCode
     message: string
+    errors: [
+        {
+            message: string,
+            field?: string
+        }
+    ]
 }
 ```
 
@@ -62,7 +69,12 @@ response OK:
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}",
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -91,7 +103,12 @@ response OK:
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}",
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -120,7 +137,12 @@ response OK:
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}",
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -134,6 +156,11 @@ response OK - 204 - No Content: {}
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}",
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```

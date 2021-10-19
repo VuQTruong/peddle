@@ -42,6 +42,7 @@ it("gets favourite item array for a user", async () => {
       images: ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
       price: "13.99",
       description: "Item Description",
+      postedBy: userRes.body.data.currentUser.id
     })
     .expect(201);
 
@@ -70,7 +71,7 @@ it("fails to get user fav items due to invalid session", async () => {
     .send()
     .expect(401);
 
-  expect(res.body.message).toBe("Not authorized");
+  expect(res.body.errors[0].message).toBe("Not authorized");
 });
 
 it("fails to get user fav items due to bad user id", async () => {
@@ -83,5 +84,5 @@ it("fails to get user fav items due to bad user id", async () => {
     .send()
     .expect(400);
 
-  expect(res.body.message).toBe("User id is not valid");
+  expect(res.body.errors[0].message).toBe("User id is not valid");
 });

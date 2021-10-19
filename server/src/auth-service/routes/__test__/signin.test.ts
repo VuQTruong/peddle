@@ -9,20 +9,20 @@ it('fails when a email that does not exist is supplied', async () => {
       password: 'password',
     })
     .expect(400);
-  expect(response.body.message).toBe('Invalid credentials');
+  expect(response.body.errors[0].message).toBe('Invalid credentials');
 });
 
 it('fails when an incorrect password is supplied', async () => {
   const cookie = await global.signin();
 
-  const response = await request(app)
+  const res= await request(app)
     .post('/api/auth/signin')
     .send({
       email: 'test@test.com',
       password: 'password baaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad',
     })
     .expect(400);
-  expect(response.body.message).toBe('Invalid credentials');
+  expect(res.body.errors[0].message).toBe('Invalid credentials');
 });
 
 it('fails when either email or password is not supplied', async () => {
@@ -34,8 +34,8 @@ it('fails when either email or password is not supplied', async () => {
       email: 'test@test.com',
     })
     .expect(400);
-  expect(res.body.message).toBe(
-    'Invalid request - One or more field is invalid.'
+  expect(res.body.errors[0].message).toBe(
+    'Password not supplied'
   );
 
   res = await request(app)
@@ -44,14 +44,14 @@ it('fails when either email or password is not supplied', async () => {
       password: 'password',
     })
     .expect(400);
-  expect(res.body.message).toBe(
-    'Invalid request - One or more field is invalid.'
+  expect(res.body.errors[0].message).toBe(
+    'Email must be valid'
   );
 
   res = await request(app).post('/api/auth/signin').send({}).expect(400);
 
-  expect(res.body.message).toBe(
-    'Invalid request - One or more field is invalid.'
+  expect(res.body.errors[0].message).toBe(
+    'Email must be valid'
   );
 });
 

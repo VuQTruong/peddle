@@ -8,7 +8,7 @@ export class NotFoundError extends AppError {
     Object.setPrototypeOf(this, NotFoundError.prototype);
   }
 
-  getErrorMessage() {
-    return this.reason;
+  getErrors() {
+    return [{ message: this.reason }];
   }
 }

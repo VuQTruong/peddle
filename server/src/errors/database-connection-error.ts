@@ -9,7 +9,7 @@ export class DatabaseConnectionError extends AppError {
     Object.setPrototypeOf(this, DatabaseConnectionError.prototype);
   }
 
-  getErrorMessage() {
-    return this.reason;
+  getErrors() {
+    return [{message:  this.reason}];
   }
 }

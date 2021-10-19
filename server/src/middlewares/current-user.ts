@@ -1,10 +1,20 @@
 import { Request, Response, NextFunction } from "express";
-import jwt, { TokenExpiredError } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { NotAuthorizedError } from "../errors/not-authorized-error";
 
 interface UserPayload {
   id: string;
   email: string;
+  firstName: string;
+  lastName: string;
+  lat: number;
+  lng: number;
+  postalCode: string;
+  isPremiumMember: boolean;
+  dislikedItemIds: [];
+  postedItems: string[];
+  purchasedItems: string[];
+  favouriteItems: string[];
 }
 
 declare global {

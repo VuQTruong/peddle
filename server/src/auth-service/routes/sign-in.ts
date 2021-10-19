@@ -1,20 +1,20 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { body } from 'express-validator';
-import jwt from 'jsonwebtoken';
+import express, { Request, Response, NextFunction } from "express";
+import { body } from "express-validator";
+import jwt from "jsonwebtoken";
 
-import { BadRequestError } from '../../errors/bad-request-error';
-import { validateRequest } from '../../middlewares/validate-request';
-import { User } from '../../models/user';
-import { comparePassword } from '../../utilities/password-util';
+import { BadRequestError } from "../../errors/bad-request-error";
+import { validateRequest } from "../../middlewares/validate-request";
+import { User } from "../../models/user";
+import { comparePassword } from "../../utilities/password-util";
 
 const router = express.Router();
 const validations = [
-  body('email').isEmail(),
-  body('password').trim().notEmpty(),
+  body("email").isEmail().withMessage("Email must be valid"),
+  body("password").trim().notEmpty().withMessage("Password not supplied"),
 ];
 
 router.post(
-  '/api/auth/signin',
+  "/api/auth/signin",
   validations,
   validateRequest,
   async (req: Request, res: Response) => {
@@ -22,7 +22,7 @@ router.post(
     const existingUser = await User.findOne({ email });
 
     if (!existingUser) {
-      throw new BadRequestError('Invalid credentials');
+      throw new BadRequestError("Invalid credentials");
     }
 
     const passwordMatch = await comparePassword(
@@ -31,17 +31,26 @@ router.post(
     );
 
     if (!passwordMatch) {
-      throw new BadRequestError('Invalid credentials');
+      throw new BadRequestError("Invalid credentials");
     }
 
     const userJwt = jwt.sign(
       {
-        id: existingUser.id,
         email: existingUser.email,
+        firstName: existingUser.firstName,
+        lastName: existingUser.lastName,
+        lat: existingUser.lat,
+        lng: existingUser.lng,
+        postalCode: existingUser.postalCode,
+        isPremiumMember: existingUser.isPremiumMember,
+        dislikedItemIds: existingUser.dislikedItemIds,
+        postedItems: existingUser.postedItems,
+        purchasedItems: existingUser.purchasedItems,
+        favouriteItems: existingUser.favouriteItems,
       },
       process.env.ACCESS_TOKEN_SECRET!,
       {
-        expiresIn: 600, // 10 minutes
+        expiresIn: 1800, // 30 minutes
       }
     );
 
@@ -52,7 +61,7 @@ router.post(
 
     res
       .status(200)
-      .send({ status: 200, message: 'user signed in', data: existingUser });
+      .send({ status: 200, message: "user signed in", data: existingUser });
   }
 );
 
