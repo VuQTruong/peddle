@@ -284,7 +284,7 @@ response Error:
 }
 ```
 
-**`PATCH` /api/users/{userId}/favourite - add an item to favourite list**
+**`POST` /api/users/{userId}/favourite - add an item to favourite list**
 
 ```
 request
@@ -311,7 +311,7 @@ response Error:
 }
 ```
 
-**`PATCH` /api/users/{userId}/favourite/remove - add an item to favourite list**
+**`DELETE` /api/users/{userId}/favourite - delete an item to favourite list**
 
 ```
 request

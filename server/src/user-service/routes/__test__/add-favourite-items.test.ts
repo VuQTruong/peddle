@@ -23,7 +23,7 @@ it("gets fav item  arr for a user", async () => {
     .expect(201);
 
   await request(app)
-    .patch(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
     .set("Cookie", cookie)
     .send({ itemId: itemRes.body.data.item.id })
     .expect(200);
@@ -62,13 +62,13 @@ it("does not add duplicate items", async () => {
     .expect(201);
 
   await request(app)
-    .patch(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
     .set("Cookie", cookie)
     .send({ itemId: itemRes.body.data.item.id })
     .expect(200);
 
   await request(app)
-    .patch(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
     .set("Cookie", cookie)
     .send({ itemId: itemRes.body.data.item.id })
     .expect(200);
@@ -107,7 +107,7 @@ it("does not add favourite items with invalid session", async () => {
     .expect(201);
 
   const res = await request(app)
-    .patch(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
     .send({ itemId: itemRes.body.data.item.id })
     .expect(401);
   expect(res.body.message).toBe("Not authorized");
@@ -135,7 +135,7 @@ it("does not add favourite items with invalid request body", async () => {
       .expect(201);
   
     const res = await request(app)
-      .patch(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+      .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
       .send({ item: itemRes.body.data.item.id })
       .set("Cookie", cookie)
       .expect(400);

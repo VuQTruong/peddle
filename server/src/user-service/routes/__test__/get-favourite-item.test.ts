@@ -46,7 +46,7 @@ it("gets favourite item array for a user", async () => {
     .expect(201);
 
   await request(app)
-    .patch(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
     .set("Cookie", cookie)
     .send({ itemId: itemRes.body.data.item.id })
     .expect(200);

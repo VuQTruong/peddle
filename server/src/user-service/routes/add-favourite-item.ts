@@ -12,7 +12,7 @@ const validations = [
   body('itemId').isString().not().isEmpty()
 ];
 
-router.patch(
+router.post(
   '/api/users/:userId/favourite',
   currentUser,
   requireAuth,
