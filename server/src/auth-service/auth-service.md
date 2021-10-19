@@ -29,8 +29,8 @@ Failure Response:
     message: string, // general error message
     errors: [
         {
-            "message": "Password must be between 4 and 20 characters", // detail error message
-            "field": "password""
+            message: string // detail message
+            field?: string 
         }
     ]
 }

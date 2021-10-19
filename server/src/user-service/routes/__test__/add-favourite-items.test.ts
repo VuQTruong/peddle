@@ -19,6 +19,7 @@ it("gets fav item  arr for a user", async () => {
       images: ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
       price: "13.99",
       description: "Item Description",
+      postedBy: userRes.body.data.currentUser.id
     })
     .expect(201);
 
@@ -58,6 +59,7 @@ it("does not add duplicate items", async () => {
       images: ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
       price: "13.99",
       description: "Item Description",
+      postedBy: userRes.body.data.currentUser.id
     })
     .expect(201);
 
@@ -103,6 +105,7 @@ it("does not add favourite items with invalid session", async () => {
       images: ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
       price: "13.99",
       description: "Item Description",
+      postedBy: userRes.body.data.currentUser.id
     })
     .expect(201);
 
@@ -131,6 +134,7 @@ it("does not add favourite items with invalid request body", async () => {
         images: ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
         price: "13.99",
         description: "Item Description",
+        postedBy: userRes.body.data.currentUser.id
       })
       .expect(201);
   

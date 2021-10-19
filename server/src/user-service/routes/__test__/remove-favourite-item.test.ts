@@ -1,13 +1,6 @@
 import request from "supertest";
 import { app } from "../../../server";
 
-const item = {
-  name: "Test Item",
-  category: "Electronic",
-  images: ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
-  price: "13.99",
-  description: "Item Description",
-};
 const validMongoseId = "507f1f77bcf86cd799439011";
 
 it("removes a favourite item from favourite item array", async () => {
@@ -18,7 +11,14 @@ it("removes a favourite item from favourite item array", async () => {
     .set("Cookie", cookie)
     .send()
     .expect(200);
-
+  const item = {
+    name: "Test Item",
+    category: "Electronic",
+    images: ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
+    price: "13.99",
+    description: "Item Description",
+    postedBy: userRes.body.data.currentUser.id,
+  };
   const itemRes = await request(app)
     .post("/api/items")
     .set("Cookie", cookie)
@@ -34,13 +34,13 @@ it("removes a favourite item from favourite item array", async () => {
   const addFavRes = await request(app)
     .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
     .set("Cookie", cookie)
-    .send({itemId: itemRes.body.data.item.id})
+    .send({ itemId: itemRes.body.data.item.id })
     .expect(200);
-  
-    const addFavRes2 = await request(app)
+
+  const addFavRes2 = await request(app)
     .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
     .set("Cookie", cookie)
-    .send({itemId: itemRes2.body.data.item.id})
+    .send({ itemId: itemRes2.body.data.item.id })
     .expect(200);
 
   const res = await request(app)
@@ -87,13 +87,14 @@ it("fails to remove an item because the item does not exist", async () => {
       images: ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
       price: "13.99",
       description: "Item Description",
+      postedBy: userRes.body.data.currentUser.id
     })
     .expect(201);
 
-    const addFavRes = await request(app)
+  const addFavRes = await request(app)
     .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
     .set("Cookie", cookie)
-    .send({itemId: itemRes.body.data.item.id})
+    .send({ itemId: itemRes.body.data.item.id })
     .expect(200);
 
   await request(app)
@@ -108,7 +109,9 @@ it("fails to remove an item because the item does not exist", async () => {
     .send({ itemId: itemRes.body.data.item.id })
     .expect(400);
 
-  expect(res.body.errors[0].message).toContain("Item does not exist in favourite items");
+  expect(res.body.errors[0].message).toContain(
+    "Item does not exist in favourite items"
+  );
 });
 
 it("fails to delete favourite items with invalid session", async () => {
@@ -131,11 +134,11 @@ it("does not remove favourite items because item id is in invalid format", async
   const addFavRes = await request(app)
     .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
     .set("Cookie", cookie)
-    .send({itemId: 'abc'})
+    .send({ itemId: "abc" })
     .expect(400);
 
-  expect(addFavRes.body.errors[0].message).toBe('Item id is not valid');
-})
+  expect(addFavRes.body.errors[0].message).toBe("Item id is not valid");
+});
 
 it("does not remove favourite items because user id is in invalid format", async () => {
   const cookie = await global.signin();
@@ -146,7 +149,16 @@ it("does not remove favourite items because user id is in invalid format", async
     .send()
     .expect(200);
 
-    const itemRes = await request(app)
+  const item = {
+    name: "Test Item",
+    category: "Electronic",
+    images: ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
+    price: "13.99",
+    description: "Item Description",
+    postedBy: userRes.body.data.currentUser.id,
+  };
+
+  const itemRes = await request(app)
     .post("/api/items")
     .set("Cookie", cookie)
     .send(item)
@@ -155,8 +167,8 @@ it("does not remove favourite items because user id is in invalid format", async
   const addFavRes = await request(app)
     .post(`/api/users/invaliduserid/favourite`)
     .set("Cookie", cookie)
-    .send({itemId: itemRes.body.data.item.id})
+    .send({ itemId: itemRes.body.data.item.id })
     .expect(400);
 
-  expect(addFavRes.body.errors[0].message).toBe('User id is not valid');
-})
+  expect(addFavRes.body.errors[0].message).toBe("User id is not valid");
+});

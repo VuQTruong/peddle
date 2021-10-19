@@ -42,6 +42,7 @@ it("gets favourite item array for a user", async () => {
       images: ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
       price: "13.99",
       description: "Item Description",
+      postedBy: userRes.body.data.currentUser.id
     })
     .expect(201);
 

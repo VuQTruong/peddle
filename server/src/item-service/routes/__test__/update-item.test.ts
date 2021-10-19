@@ -1,16 +1,22 @@
 import request from "supertest";
 import { app } from "../../../server";
 
-const item = {
-  name: "Test Item",
-  category: "Electronic",
-  images: ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
-  price: 13.99,
-  description: "Item Description",
-};
-
 it("updates an item with valid session", async () => {
   const cookie = await global.signin();
+  const userRes = await request(app)
+  .get(`/api/auth/currentuser`)
+  .set("Cookie", cookie)
+  .send()
+  .expect(200);
+
+  const item = {
+    name: "Test Item",
+    category: "Electronic",
+    images: ["imageUrl_0", "imageUrl_2", "imageUrl_3"],
+    price: 12.99,
+    description: "Item Description",
+    postedBy: userRes.body.data.currentUser.id
+  };
 
   const itemRes = await request(app)
     .post("/api/items")
@@ -41,7 +47,20 @@ it("updates an item with valid session", async () => {
 
 it("does not update an item with valid session", async () => {
   const cookie = await global.signin();
+  const userRes = await request(app)
+  .get(`/api/auth/currentuser`)
+  .set("Cookie", cookie)
+  .send()
+  .expect(200);
 
+  const item = {
+    name: "Test Item",
+    category: "Electronic",
+    images: ["imageUrl_0", "imageUrl_2", "imageUrl_3"],
+    price: 12.99,
+    description: "Item Description",
+    postedBy: userRes.body.data.currentUser.id
+  };
   const itemRes = await request(app)
     .post("/api/items")
     .set("Cookie", cookie)
@@ -60,7 +79,20 @@ it("does not update an item with valid session", async () => {
 
 it("does not update an item with invalid attributes", async () => {
   const cookie = await global.signin();
+  const userRes = await request(app)
+  .get(`/api/auth/currentuser`)
+  .set("Cookie", cookie)
+  .send()
+  .expect(200);
 
+  const item = {
+    name: "Test Item",
+    category: "Electronic",
+    images: ["imageUrl_0", "imageUrl_2", "imageUrl_3"],
+    price: 12.99,
+    description: "Item Description",
+    postedBy: userRes.body.data.currentUser.id
+  };
   const itemRes = await request(app)
     .post("/api/items")
     .set("Cookie", cookie)
@@ -84,7 +116,20 @@ it("does not update an item with invalid attributes", async () => {
 it("does not update an item with when item doesn't belong a user", async () => {
   const cookie = await global.signin();
   const cookie2 = await global.signin2();
+  const userRes = await request(app)
+  .get(`/api/auth/currentuser`)
+  .set("Cookie", cookie)
+  .send()
+  .expect(200);
 
+  const item = {
+    name: "Test Item",
+    category: "Electronic",
+    images: ["imageUrl_0", "imageUrl_2", "imageUrl_3"],
+    price: 12.99,
+    description: "Item Description",
+    postedBy: userRes.body.data.currentUser.id
+  };
   const itemRes = await request(app)
     .post("/api/items")
     .set("Cookie", cookie)
@@ -104,7 +149,20 @@ it("does not update an item with when item doesn't belong a user", async () => {
 
 it("fails when item doesn't exist", async () => {
   const cookie = await global.signin();
+  const userRes = await request(app)
+  .get(`/api/auth/currentuser`)
+  .set("Cookie", cookie)
+  .send()
+  .expect(200);
 
+  const item = {
+    name: "Test Item",
+    category: "Electronic",
+    images: ["imageUrl_0", "imageUrl_2", "imageUrl_3"],
+    price: 12.99,
+    description: "Item Description",
+    postedBy: userRes.body.data.currentUser.id
+  };
   const itemRes = await request(app)
     .post("/api/items")
     .set("Cookie", cookie)

@@ -17,13 +17,22 @@ ErrorStatus:
 Success Response:
 {
     status: SuccessStatusCode,
-    message: string
+    message: string,
+    data:{
+        
+    }
 }
 
 Failure Response:
 {
     status: ErrorStatusCode
-    message: string
+    message: string,
+    errors: [
+        {
+            message: string
+            field?: string
+        }
+    ]
 }
 
 ```
@@ -40,6 +49,7 @@ request
     "images": ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
     "price": 13.99,
     "description": "Item Description"
+    "postedBy": "a valid Mongo Id"
 }
 
 response OK:
@@ -71,7 +81,12 @@ response OK:
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}",
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -118,12 +133,20 @@ response Error:
 {
     status: 404,
     message: "Item not found"
+    errors: {
+        message: "Item not found"
+    }
 }
 
 response Error:
 {
     status: 500,
     message: "Unexpected Error - ${err.message}"
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -156,6 +179,11 @@ response Error:
 {
     status: 500,
     message: "Unexpected Error - ${err.message}"
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -173,13 +201,23 @@ response Ok:
 response Error:
 {
     status: 403,
-    message: "You are not allowed to delete this item"
+    message: "You are not allowed to delete this item",
+    errors:[
+        {
+            message: "You are not allowed to delete this item",
+        }
+    ]
 }
 
 response Error:
 {
     status: 500,
     message: "Unexpected Error - ${err.message}"
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -226,12 +264,20 @@ response Ok:
 response Error:
 {
     status: 403,
-    message: "You are not allowed to update this item"
+    message: "You are not allowed to update this item",
+    errors: {
+        message: "You are not allowed to update this item",
+    }
 }
 
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}", 
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```

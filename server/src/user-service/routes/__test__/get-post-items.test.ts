@@ -1,7 +1,6 @@
 import request from "supertest";
 import { app } from "../../../server";
 
-const validMongoseId = "507f1f77bcf86cd799439011";
 
 it("gets an empty post item array", async () => {
   const cookie = await global.signin();
@@ -40,6 +39,7 @@ it("gets post item array", async () => {
       images: ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
       price: "13.99",
       description: "Item Description",
+      postedBy: userRes.body.data.currentUser.id
     })
     .expect(201);
   await request(app)
@@ -51,6 +51,7 @@ it("gets post item array", async () => {
       images: ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
       price: "13.99",
       description: "Item Description",
+      postedBy: userRes.body.data.currentUser.id
     })
     .expect(201);
 
@@ -83,8 +84,11 @@ it("fails due to invalid user id", async () => {
 
 it("fails due to user not found", async () => {
   const cookie = await global.signin();
+
+  const fakeUserId = "507f1f77bcf86cd799439011";
+
   const itemRes = await request(app)
-    .get(`/api/users/${validMongoseId}/posts`)
+    .get(`/api/users/${fakeUserId}/posts`)
     .set("Cookie", cookie)
     .send()
     .expect(400);

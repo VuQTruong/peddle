@@ -33,8 +33,29 @@ User:
   purchasedItems: string[];
   favouriteItems: string[];
 }
-```
 
+Success Response:
+{
+    status: SuccessStatusCode,
+    message: string,
+    data:{
+        
+    }
+}
+
+Failure Response:
+{
+    status: ErrorStatusCode
+    message: string,
+    errors: [
+      {
+        message: string,
+        field?: string
+      }  
+    ]
+}
+
+```
 # Examples
 
 **`GET` /api/users/{userId} - get a user by id**
@@ -73,7 +94,12 @@ response Ok:
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}",
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -113,10 +139,14 @@ response Ok:
     }
 }
 
-response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}",
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -159,7 +189,12 @@ response Ok:
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}",
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -203,7 +238,12 @@ response Ok:
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}",
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -251,7 +291,12 @@ response Ok:
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}",
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -274,13 +319,23 @@ response Ok:
 response Error:
 {
     status: 400,
-    message: "User not found"
+    message: "User not found",
+    errors: [
+        {
+            message: "User not found",
+        }
+    ]
 }
 
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}",
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -301,13 +356,21 @@ response Ok:
 response Error:
 {
     status: 400,
-    message: "User not found"
+    message: "User not found",
+    errors:[
+        message: "User not found",
+    ]
 }
 
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}",
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
 
@@ -329,11 +392,21 @@ response Error:
 {
     status: 400,
     message: "User not found"
+    errors:[
+        {
+            message: "User not found"
+        }
+    ]
 }
 
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}"
+    message: "Unexpected Error - ${err.message}",
+    errors:[
+        {
+            message: "Unexpected Error - ${err.message}",
+        }
+    ]
 }
 ```
