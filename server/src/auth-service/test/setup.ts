@@ -5,6 +5,7 @@ import request from "supertest";
 
 declare global {
   var signin: () => Promise<string[]>;
+  var signin2: () => Promise<string[]>;
 }
 
 let mongo: any;
@@ -33,13 +34,34 @@ global.signin = async () => {
   const response = await request(app)
     .post("/api/auth/signup")
     .send({
-      firstName: "Tae Kwon",
+      firstName: "John",
       lastName: "Doe",
       photo: "base64 or other format",
       email: "test@test.com",
       password: "password",
-      lat: 123,
-      lng: 456,
+      lat: 42.97835888354304,
+      lng: -81.26441944180407,
+      postalCode: "N6H 1A2",
+      isPremiumMember: false,
+      dislikedItemIds: [],
+    })
+    .expect(201);
+
+  const cookie = response.get("Set-Cookie");
+  return cookie;
+};
+
+global.signin2 = async () => {
+  const response = await request(app)
+    .post("/api/auth/signup")
+    .send({
+      firstName: "Tae Kwon",
+      lastName: "Doe",
+      photo: "base64 or other format",
+      email: "test2@test.com",
+      password: "password",
+      lat: 42.97835888354304,
+      lng: -81.26441944180407,
       postalCode: "N6H 1A2",
       isPremiumMember: false,
       dislikedItemIds: [],

@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { hashPassword } from "../utilities/password-util";
+import mongoose from 'mongoose';
+import { hashPassword } from '../utilities/password-util';
 
 // an interface that describe the properties
 // that are required to create a new user
@@ -35,6 +35,10 @@ interface UserDoc extends mongoose.Document {
   postalCode: string;
   isPremiumMember: boolean;
   dislikedItemIds: string[];
+  seenItems: string[];
+  postedItems: string[];
+  purchasedItems: string[];
+  favouriteItems: string[];
 }
 
 const userSchema = new mongoose.Schema(
@@ -78,6 +82,25 @@ const userSchema = new mongoose.Schema(
       type: [String],
       required: true,
     },
+    seenItems: [String],
+    postedItems: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
+      },
+    ],
+    purchasedItems: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
+      },
+    ],
+    favouriteItems: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
+      },
+    ],
   },
   {
     toJSON: {
@@ -86,14 +109,15 @@ const userSchema = new mongoose.Schema(
         delete ret._id;
         delete ret.password;
         delete ret.__v;
+        delete ret.seenItems;
       },
     },
   }
 );
-userSchema.pre("save", async function (done) {
-  if (this.isModified("password")) {
-    const hashed = await hashPassword(this.get("password"));
-    this.set("password", hashed);
+userSchema.pre('save', async function (done) {
+  if (this.isModified('password')) {
+    const hashed = await hashPassword(this.get('password'));
+    this.set('password', hashed);
   }
   done();
 });
@@ -102,6 +126,6 @@ userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 };
 
-const User = mongoose.model<UserDoc, UserModel>("User", userSchema);
+const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
 export { User };

@@ -1,16 +1,21 @@
 SuccessStatus:
+
 ```
 200 OK
 201 Created
 ```
+
 ErrorStatus:
+
 ```
 400 Bad Request
 401 Unauthorized
 403 Forbidden
 404 Not Found
 ```
+
 User:
+
 ```
 {
   firstName: string;
@@ -23,107 +28,312 @@ User:
   postalCode: string;
   isPremiumMember: boolean;
   dislikedItemIds: string[];
+  seenItems: string[];
+  postedItems: string[];
+  purchasedItems: string[];
+  favouriteItems: string[];
 }
 ```
 
-# Examples ##
-**POST /api/users - add a new user**
+# Examples
+
+**`GET` /api/users/{userId} - get a user by id**
+
+```
+request {}
+
+response Ok:
+{
+    "status": "200",
+    "message": "Success",
+    "data": {
+        "user": {
+            "email": "test@test.com",
+            "firstName": "Tae Kwon",
+            "lastName": "Doe",
+            "photo": "base64 or other format",
+            "lat": 123,
+            "lng": 456,
+            "postalCode": "N5Y 2S1",
+            "isPremiumMember": false,
+            "dislikedItemIds": [],
+            "postedItems": [
+                "615db35ce0dc99ab6c21a13c",
+                "615dc4630bebd86cbcc412c5"
+            ],
+            "purchasedItems": [],
+            "favouriteItems": [
+                "615dc4630bebd86cbcc412c5"
+            ],
+            "id": "615d6c858882db424487b6ae"
+        }
+    }
+}
+
+response Error:
+{
+    status: 500,
+    message: "Unexpected Error - ${err.message}"
+}
+```
+
+**`GET` /api/users/{userId}/posts - get a user's posted items**
+
+```
+request {}
+
+response Ok:
+{
+    "status": "200",
+    "message": "Success",
+    "data": {
+        "items": [
+            {
+                "isSold": false,
+                "name": "Test Item",
+                "category": "Electronic",
+                "images": [
+                    "imageUrl_1",
+                    "imageUrl_2",
+                    "imageUrl_3"
+                ],
+                "price": 13.99,
+                "description": "Item Description",
+                "views": 3,
+                "isActive": true,
+                "postedBy": "615d6c858882db424487b6ae",
+                "createdAt": "10/06/2021",
+                "updatedAt": "10/06/2021",
+                "id": "615db35ce0dc99ab6c21a13c"
+            },
+            {
+                ...item2
+            }
+        ]
+    }
+}
+
+response Error:
+{
+    status: 500,
+    message: "Unexpected Error - ${err.message}"
+}
+```
+
+**`GET` /api/users/{userId}/purchased - get a user's purchased items**
+
+```
+request {}
+
+response Ok:
+{
+    "status": "200",
+    "message": "Success",
+    "data": {
+        "items": [
+            {
+                "isSold": false,
+                "name": "Test Item",
+                "category": "Electronic",
+                "images": [
+                    "imageUrl_1",
+                    "imageUrl_2",
+                    "imageUrl_3"
+                ],
+                "price": 13.99,
+                "description": "Item Description",
+                "views": 3,
+                "isActive": true,
+                "postedBy": "615d6c858882db424487b6ae",
+                "createdAt": "10/06/2021",
+                "updatedAt": "10/06/2021",
+                "id": "615db35ce0dc99ab6c21a13c"
+            },
+            {
+                ...item2
+            }
+        ]
+    }
+}
+
+response Error:
+{
+    status: 500,
+    message: "Unexpected Error - ${err.message}"
+}
+```
+
+**`GET` /api/users/{userId}/favourite - get a user's favourite items**
+
+```
+request {}
+
+response Ok:
+{
+    "status": "200",
+    "message": "Success",
+    "data": {
+        "results": 2,
+        "items": [
+            {
+                "isSold": false,
+                "name": "Test Item",
+                "category": "Electronic",
+                "images": [
+                    "imageUrl_1",
+                    "imageUrl_2",
+                    "imageUrl_3"
+                ],
+                "price": 13.99,
+                "description": "Item Description",
+                "views": 3,
+                "isActive": true,
+                "postedBy": "615d6c858882db424487b6ae",
+                "createdAt": "10/06/2021",
+                "updatedAt": "10/06/2021",
+                "id": "615db35ce0dc99ab6c21a13c"
+            },
+            {
+                ...item2
+            }
+        ]
+    }
+}
+
+response Error:
+{
+    status: 500,
+    message: "Unexpected Error - ${err.message}"
+}
+```
+
+**`PATCH` /api/users/{userId} - update user info**
+
 ```
 request
 {
-    user: {
-        User
-    }
+    "firstName": "value",    // Optional
+    "lastName": "value",    // Optional
+    "photo": "value",    // Optional
+    "lat": value,    // Optional
+    "lng": value,    // Optional
+    "postalCode": "valid Canadian postal code"    // Optional
 }
-response OK
+
+response Ok:
 {
-    status: 201,
-    message: "success",
-    data:{
-        user: User
+    "status": "200",
+    "message": "User updated successfully",
+    "data": {
+        "user": {
+            "email": "test@test.com",
+            "firstName": "Tae Kwon",
+            "lastName": "Doe",
+            "photo": "base64 or other format",
+            "lat": 123,
+            "lng": 456,
+            "postalCode": "N5Y 2S1",
+            "isPremiumMember": false,
+            "dislikedItemIds": [],
+            "postedItems": [
+                "615db35ce0dc99ab6c21a13c",
+                "615dc4630bebd86cbcc412c5"
+            ],
+            "purchasedItems": [],
+            "favouriteItems": [
+                "615dc4630bebd86cbcc412c5"
+            ],
+            "id": "615d6c858882db424487b6ae"
+        }
     }
 }
-response Error
+
+response Error:
+{
+    status: 500,
+    message: "Unexpected Error - ${err.message}"
+}
+```
+
+**`PATCH` /api/users/{userId}/seen - update user's seen items**
+
+- Update seen item **_MUST_** be called after an item is passed to ensure the user will not get the item again
+
+```
+request
+{
+    "itemId": "value"
+}
+
+response Ok:
+{
+    "status": "200",
+    "message": "Seen Items updated successfully",
+}
+
+response Error:
 {
     status: 400,
-    message: "invalid token"
+    message: "User not found"
+}
+
+response Error:
+{
+    status: 500,
+    message: "Unexpected Error - ${err.message}"
 }
 ```
 
-**GET /api/users/{userId} - get a user profile**
-```
-response OK
-{
-    status: 200,
-    message: "success",
-    data:{
-        user: User
-    }
-}
-resopnse Error
-{
-    status: 404,
-    message: "user not found"
-}
-```
+**`POST` /api/users/{userId}/favourite - add an item to favourite list**
 
-**GET  /api/users/{userId}/posts - get posted items for a user**
 ```
-response OK
+request
 {
-    status: 200,
-    message: "success",
-    data:{
-        items: [
-            Item...
-        ]
+    "itemId": "value"
+}
 
-    }
-}
-response Error
+response Ok:
 {
-    status: 401,
-    message: "account is suspended"
+    "status": "200",
+    "message": "Favourite Item added successfully",
 }
-```
-**GET /api/users/{userId}/purchasedItem - get purchased history for a user**
-```
-response OK
-{
-    status: 200,
-    message: "success",
-    data: {
-        purchasedItems: [
-            Item...
-        ]
-    }
-}
-response Error
-{
-    status: 404,
-    message: "account not found"
-}
-```
 
-**PUT  /api/users/{userId} - update user info**
-```
-request 
-{
-    user: {
-        User
-    }
-}
-response OK
-{
-    status: 200,
-    message: "success",
-    data: {
-        user: User
-    }
-}
-response Error
+response Error:
 {
     status: 400,
-    message: "unexpected error"
+    message: "User not found"
+}
+
+response Error:
+{
+    status: 500,
+    message: "Unexpected Error - ${err.message}"
+}
+```
+
+**`DELETE` /api/users/{userId}/favourite - delete an item to favourite list**
+
+```
+request
+{
+    "itemId": "value"
+}
+
+response Ok:
+{
+    "status": "200",
+    "message": "Favourite Item removed successfully",
+}
+
+response Error:
+{
+    status: 400,
+    message: "User not found"
+}
+
+response Error:
+{
+    status: 500,
+    message: "Unexpected Error - ${err.message}"
 }
 ```
