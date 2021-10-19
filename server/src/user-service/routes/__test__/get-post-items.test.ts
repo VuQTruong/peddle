@@ -78,7 +78,7 @@ it("fails due to invalid user id", async () => {
     .send()
     .expect(400);
 
-  expect(itemRes.body.message).toContain("User id is not valid");
+  expect(itemRes.body.errors[0].message).toContain("User id is not valid");
 });
 
 it("fails due to user not found", async () => {
@@ -89,7 +89,7 @@ it("fails due to user not found", async () => {
     .send()
     .expect(400);
 
-  expect(itemRes.body.message).toContain("User not found");
+  expect(itemRes.body.errors[0].message).toContain("User not found");
 });
 
 it("fails due to invalid session", async () => {

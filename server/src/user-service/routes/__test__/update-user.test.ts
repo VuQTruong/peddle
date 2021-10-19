@@ -27,7 +27,7 @@ it("fails to updates user with invalid session", async () => {
     .send({ 'firstName': 'abcde' })
     .expect(401);
 
-  expect(res.body.message).toBe('Not authorized');
+  expect(res.body.errors[0].message).toBe('Not authorized');
 });
 
 it("fails to updates user when user doesn't exist", async () => {
@@ -39,7 +39,7 @@ it("fails to updates user when user doesn't exist", async () => {
     .send({ firstName: 'abcde' })
     .expect(400);
 
-  expect(res.body.message).toBe('User not found');
+  expect(res.body.errors[0].message).toBe('User not found');
 });
 
 it("fails to updates user with invalid data", async () => {
@@ -58,5 +58,5 @@ it("fails to updates user with invalid data", async () => {
     .send({ 'postalCode':  invalidPostal })
     .expect(400);
 
-  expect(res.body.message).toBe('Invalid request - One or more field is invalid.');
+  expect(res.body.errors[0].message).toBe('Invalid value');
 })

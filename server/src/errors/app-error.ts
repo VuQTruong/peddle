@@ -6,5 +6,5 @@ export abstract class AppError extends Error {
     Object.setPrototypeOf(this, AppError.prototype)
   }
 
-  abstract getErrors(): {message: string, field?: string}[];
+  abstract getErrors(): {message: string, field?: string}[] | {message: string, field?: string};
 }

@@ -15,6 +15,7 @@ const validations = [
   body('images').isArray().withMessage('Invalid images'),
   body('price').isNumeric().withMessage('Price not valid'),
   body('description').isString().not().isEmpty().withMessage('Description not valid'),
+  body('postedBy').isMongoId().withMessage('Item owner id not in valid MongoId form'),
 ];
 
 router.post(

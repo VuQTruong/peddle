@@ -1,8 +1,10 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import Item from "../../models/item";
 import { BadRequestError } from "../../errors/bad-request-error";
 import { currentUser } from "../../middlewares/current-user";
 import { requireAuth } from "../../middlewares/require-auth";
+import { param } from "express-validator";
+import { validateRequest } from "../../middlewares/validate-request";
 
 const router = express.Router();
 
@@ -13,7 +15,7 @@ currentUser,
 requireAuth, 
 validations,
 validateRequest,
-async (req, res, next) => {
+async (req : Request, res: Response, next: NextFunction) => {
 
   const itemId = req.params.itemId;
   const item = await Item.findById(itemId).populate(

@@ -110,7 +110,7 @@ it("does not add favourite items with invalid session", async () => {
     .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
     .send({ itemId: itemRes.body.data.item.id })
     .expect(401);
-  expect(res.body.message).toBe("Not authorized");
+  expect(res.body.errors[0].message).toBe("Not authorized");
 });
 
 it("does not add favourite items with invalid request body", async () => {
@@ -139,5 +139,5 @@ it("does not add favourite items with invalid request body", async () => {
       .send({ item: itemRes.body.data.item.id })
       .set("Cookie", cookie)
       .expect(400);
-    expect(res.body.message).toBe("Invalid request - One or more field is invalid.");
+    expect(res.body.errors[0].message).toBe("Invalid value");
   })

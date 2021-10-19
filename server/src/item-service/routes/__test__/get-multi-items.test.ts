@@ -57,5 +57,5 @@ it("does not get items with invalid session", async () => {
     expect(res.body.data.items.length).toBe(2);
 
     const r = await request(app).get("/api/items").send().expect(401);
-    expect(r.body.message).toBe("Not authorized");
+    expect(r.body.errors[0].message).toBe("Not authorized");
 });

@@ -34,8 +34,8 @@ it('returns a 400 with an invalid passowrd', async () => {
       dislikedItemIds: [],
     })
     .expect(400);
-  expect(response.body.message).toBe(
-    'Invalid request - One or more field is invalid.'
+  expect(response.body.errors[0].message).toBe(
+    'Password must be between 4 and 20 characters'
   );
 });
 it('returns a 400 with an invalid email', async () => {
@@ -54,8 +54,8 @@ it('returns a 400 with an invalid email', async () => {
       dislikedItemIds: [],
     })
     .expect(400);
-  expect(response.body.message).toBe(
-    'Invalid request - One or more field is invalid.'
+  expect(response.body.errors[0].message).toBe(
+    'Email must be valid'
   );
 });
 
@@ -74,9 +74,10 @@ it('returns a 400 with missing required attriture', async () => {
       dislikedItemIds: [],
     })
     .expect(400);
-  expect(response.body.message).toBe(
-    'Invalid request - One or more field is invalid.'
+  expect(response.body.errors[0].message).toBe(
+    'Password must be between 4 and 20 characters'
   );
+
 });
 
 it('returns a 400 with incorrect data type in request body', async () => {
@@ -94,8 +95,8 @@ it('returns a 400 with incorrect data type in request body', async () => {
       dislikedItemIds: [],
     })
     .expect(400);
-  expect(response.body.message).toBe(
-    'Invalid request - One or more field is invalid.'
+  expect(response.body.errors[0].message).toBe(
+    'Password must be between 4 and 20 characters'
   );
 });
 

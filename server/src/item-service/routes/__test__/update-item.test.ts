@@ -55,7 +55,7 @@ it("does not update an item with valid session", async () => {
     .send({ isSold: true })
     .expect(401);
 
-  expect(patchRes.body.message).toBe("Not authorized");
+  expect(patchRes.body.errors[0].message).toBe("Not authorized");
 });
 
 it("does not update an item with invalid attributes", async () => {
@@ -76,8 +76,8 @@ it("does not update an item with invalid attributes", async () => {
     .set("Cookie", cookie)
     .expect(400);
 
-  expect(patchRes.body.message).toBe(
-    "Invalid request - One or more field is invalid."
+  expect(patchRes.body.errors[0].message).toBe(
+    "Invalid value"
   );
 });
 
@@ -99,7 +99,7 @@ it("does not update an item with when item doesn't belong a user", async () => {
     .send({ isSold: true })
     .expect(401);
 
-  expect(patchRes.body.message).toBe("Not authorized");
+  expect(patchRes.body.errors[0].message).toBe("Not authorized");
 });
 
 it("fails when item doesn't exist", async () => {
@@ -125,5 +125,5 @@ it("fails when item doesn't exist", async () => {
     .send({ isSold: true })
     .expect(400);
 
-  expect(patchRes.body.message).toBe("Bad request - item doesn not exist");
+  expect(patchRes.body.errors[0].message).toBe("Bad request - item doesn not exist");
 });

@@ -43,5 +43,5 @@ it("does not get an item with invalid session", async () => {
       .get(`/api/items/${itemId}`)
       .send()
       .expect(401);
-    expect(res.body.message).toBe('Not authorized')
+    expect(res.body.errors[0].message).toBe('Not authorized')
   })

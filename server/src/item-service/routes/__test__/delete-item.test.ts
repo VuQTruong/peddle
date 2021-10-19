@@ -48,7 +48,7 @@ it("fails to delete an item because the item id is invalid mongodb id", async ()
     .set("Cookie", cookie)
     .send()
     .expect(400);
-    expect(response.body.message).toContain("Item id is not valid");
+    expect(response.body.errors[0].message).toBe("itemId not in Mongo Id form");
 });
 
 it("fails to delete an item because the item user tries to delete doesn't belong her/him", async () => {
@@ -106,7 +106,7 @@ it("fails to delete an item because the item doesn't exist", async () => {
     .send()
     .expect(400);
 
-    expect(response.body.message).toContain("Item not found");
+    expect(response.body.errors[0].message).toContain("Item not found");
 })
 
 

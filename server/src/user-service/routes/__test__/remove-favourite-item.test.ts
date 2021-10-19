@@ -108,7 +108,7 @@ it("fails to remove an item because the item does not exist", async () => {
     .send({ itemId: itemRes.body.data.item.id })
     .expect(400);
 
-  expect(res.body.message).toContain("Item does not exist in favourite items");
+  expect(res.body.errors[0].message).toContain("Item does not exist in favourite items");
 });
 
 it("fails to delete favourite items with invalid session", async () => {
@@ -116,7 +116,7 @@ it("fails to delete favourite items with invalid session", async () => {
     .delete(`/api/users/${validMongoseId}/favourite`)
     .send({ itemId: validMongoseId })
     .expect(401);
-  expect(res.body.message).toBe("Not authorized");
+  expect(res.body.errors[0].message).toBe("Not authorized");
 });
 
 it("does not remove favourite items because item id is in invalid format", async () => {
@@ -134,7 +134,7 @@ it("does not remove favourite items because item id is in invalid format", async
     .send({itemId: 'abc'})
     .expect(400);
 
-  expect(addFavRes.body.message).toBe('Item id is not valid');
+  expect(addFavRes.body.errors[0].message).toBe('Item id is not valid');
 })
 
 it("does not remove favourite items because user id is in invalid format", async () => {
@@ -158,5 +158,5 @@ it("does not remove favourite items because user id is in invalid format", async
     .send({itemId: itemRes.body.data.item.id})
     .expect(400);
 
-  expect(addFavRes.body.message).toBe('User id is not valid');
+  expect(addFavRes.body.errors[0].message).toBe('User id is not valid');
 })

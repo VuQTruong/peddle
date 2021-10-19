@@ -43,7 +43,7 @@ it("creates an item even with string type for the price as long as it's numeric"
 it("does not create an item with invalid session", async () => {
   const res = await request(app).post("/api/items").send(item).expect(401);
 
-  expect(res.body.message).toBe("Not authorized")
+  expect(res.body.errors[0].message).toBe("Not authorized")
 });
 
 it("does not create an item with invalid item", async () => {
@@ -53,7 +53,8 @@ it("does not create an item with invalid item", async () => {
     .set("Cookie", cookie)
     .send({})
     .expect(400);
-    expect(res.body.message).toContain("Invalid request - One or more field is invalid.");
+
+    expect(res.body.errors[0].message).toContain("Invalid value");
 });
 
 it("does not creates an item with invalid price type", async () => {
@@ -70,6 +71,6 @@ it("does not creates an item with invalid price type", async () => {
     .post("/api/items")
     .set("Cookie", cookie)
     .send(item)
-    expect(res.body.message).toBe("Invalid request - One or more field is invalid.");
+    expect(res.body.errors[0].message).toBe("Price not valid");
 ;
 });
