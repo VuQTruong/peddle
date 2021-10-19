@@ -25,7 +25,11 @@ router.delete(
 
     const public_id = imageUrl.split('/').pop().split('.')[0];
 
-    await cloudinary.v2.uploader.destroy(public_id);
+    try {
+      await cloudinary.v2.uploader.destroy(public_id);
+    } catch (err) {
+      console.log(err);
+    }
 
     return res.status(200).json({
       status: '200',

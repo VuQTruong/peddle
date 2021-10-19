@@ -1,3 +1,4 @@
+import multer from 'multer';
 import express from 'express';
 import cloudinary from 'cloudinary';
 import uploadImage from '../../middlewares/multer';
@@ -7,15 +8,16 @@ import { requireAuth } from '../../middlewares/require-auth';
 import { BadRequestError } from '../../errors/bad-request-error';
 
 const router = express.Router();
+const upload = uploadImage.array('file', 20);
 
-router.post(
-  '/api/images',
-  currentUser,
-  requireAuth,
-  uploadImage.array('file', 20),
-  async (req: any, res, next) => {
+router.post('/api/images', currentUser, requireAuth, (req: any, res, next) => {
+  upload(req, res, async (err) => {
+    if (err) {
+      return next(new BadRequestError(err.message));
+    }
+
     if (!req.files || req.files.length === 0) {
-      throw new BadRequestError('No Image Attached');
+      return next(new BadRequestError('No Image Attached'));
     }
 
     // Step 1: Upload image to a temp folder on our server and get the url of the image
@@ -42,7 +44,7 @@ router.post(
         images,
       },
     });
-  }
-);
+  });
+});
 
 export { router as uploadImage };
