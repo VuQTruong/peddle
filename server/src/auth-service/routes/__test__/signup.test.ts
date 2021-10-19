@@ -1,103 +1,111 @@
-import request from "supertest";
-import { app } from "../../../server";
+import request from 'supertest';
+import { app } from '../../../server';
 
 const userTestData = {
-  "firstName" : "Tae Kwon",
-  "lastName" : "Doe",
-  "photo" : "base64 or other format",
-  "email" : "test@test.com",
-  "password" : "password",
-  "lat" : 123,
-  "lng" : 456,
-  "postalCode" : "N6H 1A2",
-  "isPremiumMember" : false,
-  "dislikedItemIds" : []
+  firstName: 'Tae Kwon',
+  lastName: 'Doe',
+  photo: 'base64 or other format',
+  email: 'test@test.com',
+  password: 'password',
+  lat: 123,
+  lng: 456,
+  postalCode: 'N6H 1A2',
+  isPremiumMember: false,
+  dislikedItemIds: [],
 };
 
-it("returns a 201 on successful signup", async () => {
-  await request(app).post("/api/auth/signup").send(userTestData).expect(201);
+it('returns a 201 on successful signup', async () => {
+  await request(app).post('/api/auth/signup').send(userTestData).expect(201);
 });
 
-it("returns a 400 with an invalid passowrd", async () => {
+it('returns a 400 with an invalid passowrd', async () => {
   const response = await request(app)
-    .post("/api/auth/signup")
+    .post('/api/auth/signup')
     .send({
-      firstName: "string",
-      lastName: "string",
-      photo: "string",
-      email: "test@test.com",
-      password: "a",
+      firstName: 'string',
+      lastName: 'string',
+      photo: 'string',
+      email: 'test@test.com',
+      password: 'a',
       lat: 123,
-      lng: "456",
-      postalCode: "string",
+      lng: '456',
+      postalCode: 'string',
       isPremiumMember: false,
       dislikedItemIds: [],
     })
     .expect(400);
-  expect(response.body.message).toBe("Invalid request - One or more field is invalid.");
+  expect(response.body.message).toBe(
+    'Invalid request - One or more field is invalid.'
+  );
 });
-it("returns a 400 with an invalid email", async () => {
+it('returns a 400 with an invalid email', async () => {
   const response = await request(app)
-    .post("/api/auth/signup")
+    .post('/api/auth/signup')
     .send({
-      firstName: "string",
-      lastName: "string",
-      photo: "string",
-      email: "test@",
-      password: "password",
+      firstName: 'string',
+      lastName: 'string',
+      photo: 'string',
+      email: 'test@',
+      password: 'password',
       lat: 123,
-      lng: "456",
-      postalCode: "string",
+      lng: '456',
+      postalCode: 'string',
       isPremiumMember: false,
       dislikedItemIds: [],
     })
     .expect(400);
-  expect(response.body.message).toBe("Invalid request - One or more field is invalid.");
+  expect(response.body.message).toBe(
+    'Invalid request - One or more field is invalid.'
+  );
 });
 
-it("returns a 400 with missing required attriture", async () => {
+it('returns a 400 with missing required attriture', async () => {
   const response = await request(app)
-    .post("/api/auth/signup")
+    .post('/api/auth/signup')
     .send({
-      firstName: "string",
-      lastName: "string",
-      photo: "string",
-      email: "test@test.com",
+      firstName: 'string',
+      lastName: 'string',
+      photo: 'string',
+      email: 'test@test.com',
       lat: 123,
       lng: 456,
-      postalCode: "string",
+      postalCode: 'string',
       isPremiumMember: false,
       dislikedItemIds: [],
     })
     .expect(400);
-  expect(response.body.message).toBe("Invalid request - One or more field is invalid.");
+  expect(response.body.message).toBe(
+    'Invalid request - One or more field is invalid.'
+  );
 });
 
-it("returns a 400 with incorrect data type in request body", async () => {
+it('returns a 400 with incorrect data type in request body', async () => {
   const response = await request(app)
-    .post("/api/auth/signup")
+    .post('/api/auth/signup')
     .send({
-      firstName: "string",
-      lastName: "string",
-      photo: "string",
-      email: "test@test.com",
-      lat: "123", //  should be a number
+      firstName: 'string',
+      lastName: 'string',
+      photo: 'string',
+      email: 'test@test.com',
+      lat: '123', //  should be a number
       lng: 456,
-      postalCode: "string",
+      postalCode: 'string',
       isPremiumMember: false,
       dislikedItemIds: [],
     })
     .expect(400);
-  expect(response.body.message).toBe("Invalid request - One or more field is invalid.");
+  expect(response.body.message).toBe(
+    'Invalid request - One or more field is invalid.'
+  );
 });
 
-it("disallows duplicate emails", async () => {
+it('disallows duplicate emails', async () => {
   const cookie = await global.signin();
 
-  await request(app).post("/api/auth/signup").send(userTestData).expect(400);
+  await request(app).post('/api/auth/signup').send(userTestData).expect(400);
 });
 
-it("sets a cookie after successful signup", async () => {
+it('sets a cookie after successful signup', async () => {
   const cookie = await global.signin();
   expect(cookie).toBeDefined();
 });

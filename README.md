@@ -52,8 +52,8 @@ issue  ```npm run dev``` command under your server folder
 
 ```git push``` Issue this command to update github repo
 
-```git checkout -b "feature/my branch name"``` **create** a new branch called 'feature/my branch name'
+```git checkout -b "feature/my-branch-name"``` **create** a new branch called 'feature/my-branch-name'
 
-```git checkout "feature/my branch name"``` **checkout** to an existing branch called 'feature/my branch name'
+```git checkout "feature/my-branch-name"``` **checkout** to an existing branch called 'feature/my-branch-name'
 
 ---
