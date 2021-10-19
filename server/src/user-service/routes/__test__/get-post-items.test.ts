@@ -12,7 +12,7 @@ it("gets an empty post item array", async () => {
     .expect(200);
 
   const itemRes = await request(app)
-    .get(`/api/users/${userRes.body.data.currentUser.id}/posts`)
+    .get('/api/users/posts')
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -56,44 +56,12 @@ it("gets post item array", async () => {
     .expect(201);
 
   const itemRes = await request(app)
-    .get(`/api/users/${userRes.body.data.currentUser.id}/posts`)
+    .get(`/api/users/posts`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
 
   expect(itemRes.body.data.items.length).toBe(2);
-});
-
-it("fails due to invalid user id", async () => {
-  const cookie = await global.signin();
-
-  const userRes = await request(app)
-    .get(`/api/auth/currentuser`)
-    .set("Cookie", cookie)
-    .send()
-    .expect(200);
-
-  const itemRes = await request(app)
-    .get(`/api/users/asdf/posts`)
-    .set("Cookie", cookie)
-    .send()
-    .expect(400);
-
-  expect(itemRes.body.errors[0].message).toContain("User id is not valid");
-});
-
-it("fails due to user not found", async () => {
-  const cookie = await global.signin();
-
-  const fakeUserId = "507f1f77bcf86cd799439011";
-
-  const itemRes = await request(app)
-    .get(`/api/users/${fakeUserId}/posts`)
-    .set("Cookie", cookie)
-    .send()
-    .expect(400);
-
-  expect(itemRes.body.errors[0].message).toContain("User not found");
 });
 
 it("fails due to invalid session", async () => {
@@ -106,7 +74,7 @@ it("fails due to invalid session", async () => {
     .expect(200);
 
   const itemRes = await request(app)
-    .get(`/api/users/${userRes.body.data.currentUser.id}/posts`)
+    .get(`/api/users/posts`)
     .send()
     .expect(401);
 });

@@ -6,24 +6,25 @@ import { requireAuth } from '../../middlewares/require-auth';
 const router = express.Router();
 
 router.get(
-  '/api/users/purchased',
+  '/api/users/seen',
   currentUser,
   requireAuth,
   async (req, res) => {
     const userId = req.currentUser?.id;
 
-    const purchasedItems = await User.findById(userId)
-      .select('purchasedItems')
-      .populate('purchasedItems');
+    const response = await User.findById(userId)
+      .select('seenItems')
+      .populate('seenItems');
+    console.log(response)
 
     return res.status(200).send({
       status: '200',
       message: 'Success',
       data: {
-        items: purchasedItems?.purchasedItems,
+        items: response?.seenItems,
       },
     });
   }
 );
 
-export { router as getPurchasedListRouter };
+export { router as getSeenItems };

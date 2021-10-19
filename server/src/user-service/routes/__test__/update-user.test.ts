@@ -13,7 +13,7 @@ it("updates user with valid session", async () => {
     .expect(200);
 
   const res = await request(app)
-    .patch(`/api/users/${userRes.body.data.currentUser.id}`)
+    .patch(`/api/users/currentuser`)
     .set("Cookie", cookie)
     .send({ 'firstName': 'abcde' })
     .expect(200);
@@ -23,24 +23,24 @@ it("updates user with valid session", async () => {
 
 it("fails to updates user with invalid session", async () => {
   const res = await request(app)
-    .patch(`/api/users/${randomMongoseId}`)
+    .patch(`/api/users/currentuser`)
     .send({ 'firstName': 'abcde' })
     .expect(401);
 
   expect(res.body.errors[0].message).toBe('Not authorized');
 });
 
-it("fails to updates user when user doesn't exist", async () => {
-  const cookie = await global.signin();
+// it("fails to updates user when user doesn't exist", async () => {
+//   const cookie = await global.signin();
 
-  const res = await request(app)
-    .patch(`/api/users/${randomMongoseId}`)
-    .set('Cookie', cookie)
-    .send({ firstName: 'abcde' })
-    .expect(400);
+//   const res = await request(app)
+//     .patch(`/api/users/${randomMongoseId}`)
+//     .set('Cookie', cookie)
+//     .send({ firstName: 'abcde' })
+//     .expect(400);
 
-  expect(res.body.errors[0].message).toBe('User not found');
-});
+//   expect(res.body.errors[0].message).toBe('User not found');
+// });
 
 it("fails to updates user with invalid data", async () => {
   const cookie = await global.signin();
@@ -53,7 +53,7 @@ it("fails to updates user with invalid data", async () => {
 
   const invalidPostal = 'N6N6N6';// needs to be 7 digits
   const res = await request(app)
-    .patch(`/api/users/${userRes.body.data.currentUser.id}`)
+    .patch(`/api/users/currentuser`)
     .set("Cookie", cookie)
     .send({ 'postalCode':  invalidPostal })
     .expect(400);

@@ -1,7 +1,6 @@
 import request from "supertest";
 import { app } from "../../../server";
 
-const validMongoseId = "507f1f77bcf86cd799439011";
 
 it("gets empty fav items for a user", async () => {
   const cookie = await global.signin();
@@ -14,7 +13,7 @@ it("gets empty fav items for a user", async () => {
 
   // user 1 gets user2's info
   const res = await request(app)
-    .get(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .get(`/api/users/favourite`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -47,14 +46,14 @@ it("gets favourite item array for a user", async () => {
     .expect(201);
 
   await request(app)
-    .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .post(`/api/users/favourite`)
     .set("Cookie", cookie)
     .send({ itemId: itemRes.body.data.item.id })
     .expect(200);
 
   // user 1 gets user2's info
   const res = await request(app)
-    .get(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .get(`/api/users/favourite`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -67,22 +66,9 @@ it("gets favourite item array for a user", async () => {
 it("fails to get user fav items due to invalid session", async () => {
   // user 1 gets user2's info
   const res = await request(app)
-    .get(`/api/users/${validMongoseId}/favourite`)
+    .get(`/api/users/favourite`)
     .send()
     .expect(401);
 
   expect(res.body.errors[0].message).toBe("Not authorized");
-});
-
-it("fails to get user fav items due to bad user id", async () => {
-  const cookie = await global.signin();
-
-  // user 1 gets user2's info
-  const res = await request(app)
-    .get(`/api/users/abcde/favourite`)
-    .set("Cookie", cookie)
-    .send()
-    .expect(400);
-
-  expect(res.body.errors[0].message).toBe("User id is not valid");
 });

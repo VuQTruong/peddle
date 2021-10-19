@@ -374,13 +374,10 @@ response Error:
 }
 ```
 
-**`DELETE` /api/users/{userId}/favourite - delete an item to favourite list**
+**`DELETE` /api/users/favourite/{itemId} - delete an item to favourite list**
 
 ```
-request
-{
-    "itemId": "value"
-}
+request{}
 
 response Ok:
 {

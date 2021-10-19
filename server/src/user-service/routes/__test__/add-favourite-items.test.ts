@@ -24,14 +24,14 @@ it("gets fav item  arr for a user", async () => {
     .expect(201);
 
   await request(app)
-    .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .post(`/api/users/favourite`)
     .set("Cookie", cookie)
     .send({ itemId: itemRes.body.data.item.id })
     .expect(200);
 
   // user 1 gets user2's info
   const res = await request(app)
-    .get(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .get(`/api/users/favourite`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -64,20 +64,20 @@ it("does not add duplicate items", async () => {
     .expect(201);
 
   await request(app)
-    .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .post(`/api/users/favourite`)
     .set("Cookie", cookie)
     .send({ itemId: itemRes.body.data.item.id })
     .expect(200);
 
   await request(app)
-    .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .post(`/api/users/favourite`)
     .set("Cookie", cookie)
     .send({ itemId: itemRes.body.data.item.id })
     .expect(200);
 
   // user 1 gets user2's info
   const res = await request(app)
-    .get(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .get(`/api/users/favourite`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -110,7 +110,7 @@ it("does not add favourite items with invalid session", async () => {
     .expect(201);
 
   const res = await request(app)
-    .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+    .post(`/api/users/favourite`)
     .send({ itemId: itemRes.body.data.item.id })
     .expect(401);
   expect(res.body.errors[0].message).toBe("Not authorized");
@@ -139,9 +139,10 @@ it("does not add favourite items with invalid request body", async () => {
       .expect(201);
   
     const res = await request(app)
-      .post(`/api/users/${userRes.body.data.currentUser.id}/favourite`)
+      .post(`/api/users/favourite`)
       .send({ item: itemRes.body.data.item.id })
       .set("Cookie", cookie)
       .expect(400);
-    expect(res.body.errors[0].message).toBe("Invalid value");
+
+    expect(res.body.errors[0].message).toBe("Invalid item Id");
   })

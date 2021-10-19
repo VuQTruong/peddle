@@ -1,38 +1,34 @@
 import express, { Request, Response } from 'express';
 import { User } from '../../models/user';
-import { body } from 'express-validator';
+import { body, param } from 'express-validator';
 import { ServerError } from '../../errors/server-error';
 import { currentUser } from '../../middlewares/current-user';
 import { requireAuth } from '../../middlewares/require-auth';
 import { validateRequest } from '../../middlewares/validate-request';
 import { BadRequestError } from '../../errors/bad-request-error';
+import Item from '../../models/item';
 
 const router = express.Router();
 
-const validations = [body('itemId').isString()];
+const validations = [
+  body('itemId').isArray().isMongoId().withMessage("Invalid item Id(s)"),
+];
 
 router.patch(
-  '/api/users/:userId/seen',
+  '/api/users/seen',
   currentUser,
   requireAuth,
   validations,
   validateRequest,
   async (req: Request, res: Response) => {
-    const itemId = req.body.itemId;
-    const userId = req.params.userId;
-
-    if (!itemId.match(/^[0-9a-fA-F]{24}$/)) {
-      throw new BadRequestError('Item id is not valid');
-    }
-
-    if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
-      throw new BadRequestError('Item id is not valid');
-    }
+    const itemIds = req.body.itemId;
+    const userId = req.currentUser?.id;
 
     const updatedUser = await User.findById(userId);
 
     if (updatedUser) {
-      updatedUser.seenItems.push(itemId);
+      const newSeenItems =  updatedUser.seenItems.concat(itemIds)
+      updatedUser.seenItems = newSeenItems;
       await updatedUser.save();
 
       return res.status(200).send({

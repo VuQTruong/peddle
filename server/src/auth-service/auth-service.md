@@ -82,6 +82,7 @@ request:
   "lat" : 123,
   "lng" : 456,
   "postalCode" : "N6H 1A2",
+  "postedBy" : "616e3e166a736fbdcebb3670"
 }
 
 response:

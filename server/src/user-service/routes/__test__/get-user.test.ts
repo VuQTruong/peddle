@@ -13,7 +13,7 @@ it("gets a user by id with valid session", async () => {
 
   // user 1 gets user2's info
   const res = await request(app)
-    .get(`/api/users/${user2Res.body.data.currentUser.id}`)
+    .get(`/api/users/id/${user2Res.body.data.currentUser.id}`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -33,7 +33,7 @@ it("returns a bad request error when the user id does not exist", async () => {
 
   // user 1 gets user2's info
   const res = await request(app)
-    .get(`/api/users/${user2Res.body.data.currentUser.id}`)
+    .get(`/api/users/id/${user2Res.body.data.currentUser.id}`)
     .send()
     .expect(401);
 
@@ -44,7 +44,7 @@ it("returns bad request error when the user is not found", async () => {
   const cookie = await global.signin();
 
   const res = await request(app)
-    .get(`/api/users/${validMongoseId}`)
+    .get(`/api/users/id/${validMongoseId}`)
     .set("Cookie", cookie)
     .send()
     .expect(400);
