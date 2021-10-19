@@ -9,8 +9,8 @@ import { comparePassword } from '../../utilities/password-util';
 
 const router = express.Router();
 const validations = [
-  body('email').isEmail(),
-  body('password').trim().notEmpty(),
+  body('email').isEmail().withMessage("Email must be valid"),
+  body('password').trim().notEmpty().withMessage("Password not supplied"),
 ];
 
 router.post(

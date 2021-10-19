@@ -1,22 +1,24 @@
-import express from "express";
+import express, { Request, NextFunction, Response } from "express";
 import Item from "../../models/item";
 import { BadRequestError, ServerError } from "../../errors";
 import { currentUser } from "../../middlewares/current-user";
 import { requireAuth } from "../../middlewares/require-auth";
 import { User } from "../../models/user";
+import { param } from "express-validator";
+import { validateRequest } from "../../middlewares/validate-request";
 
 const router = express.Router();
+
+const validations = [param('itemId').isMongoId().withMessage('itemId not in Mongo Id form')]
 
 router.delete(
   "/api/items/:itemId",
   currentUser,
   requireAuth,
-  async (req, res, next) => {
+  validations,
+  validateRequest,
+  async (req : Request, res: Response, next: NextFunction) => {
     const itemId = req.params.itemId;
-
-    if (!itemId.match(/^[0-9a-fA-F]{24}$/)) {
-      return next(new BadRequestError("Item id is not valid"));
-    }
 
     const item = await Item.findById(itemId);
     if (!item) {

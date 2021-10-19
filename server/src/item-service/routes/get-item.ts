@@ -6,13 +6,16 @@ import { requireAuth } from "../../middlewares/require-auth";
 
 const router = express.Router();
 
-router.get("/api/items/:itemId", currentUser, requireAuth, async (req, res, next) => {
+const validations = [param('itemId').isMongoId().withMessage('itemId not in Mongo Id form')]
+
+router.get("/api/items/:itemId", 
+currentUser, 
+requireAuth, 
+validations,
+validateRequest,
+async (req, res, next) => {
+
   const itemId = req.params.itemId;
-
-  if (!itemId.match(/^[0-9a-fA-F]{24}$/)) {
-    return next(new BadRequestError("Item id is not valid"));
-  }
-
   const item = await Item.findById(itemId).populate(
     "postedBy",
     "firstName lastName photo lat lng postedItems"

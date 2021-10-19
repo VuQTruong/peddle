@@ -26,15 +26,15 @@ interface SignupData {
 
 const validations = [
   body("email").isEmail().withMessage("Email must be valid"),
-  body("firstName").isString().trim().not().isEmpty(),
-  body("lastName").isString().trim().not().isEmpty(),
+  body("firstName").isString().trim().not().isEmpty().withMessage('First name not supplied'),
+  body("lastName").isString().trim().not().isEmpty().withMessage('Last name not supplied'),
   body("password")
     .trim()
     .isLength({ min: 4, max: 20 })
     .withMessage("Password must be between 4 and 20 characters"),
-  body("postalCode").isString().trim().isLength({ min: 7, max: 7 }).isPostalCode('CA'),
-  body("lat").isNumeric(),
-  body("lng").isNumeric(),
+  body("postalCode").isString().trim().isLength({ min: 7, max: 7 }).isPostalCode('CA').withMessage('Not valid canadian postal code'),
+  body("lat").isNumeric().withMessage('Latitude not valid'),
+  body("lng").isNumeric().withMessage('Longitude not valid')
   // body("photo").trim().isBase64()
 ];
 

@@ -9,7 +9,7 @@ export class NotAuthorizedError extends AppError {
 
     Object.setPrototypeOf(this, NotAuthorizedError.prototype);
   }
-  getErrorMessage() {
-    return this.reason;
+  getErrors() {
+    return [{ message: this.reason}];
   }
 }

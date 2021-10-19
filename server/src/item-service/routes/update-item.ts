@@ -10,13 +10,13 @@ import { NotAuthorizedError } from "../../errors";
 const router = express.Router();
 
 const validations = [
-  body("name").isString().optional(),
-  body("category").isString().optional(),
-  body("images").isString().isArray().optional(),
-  body("price").isNumeric().optional(),
-  body("description").isString().optional(),
-  body("isActive").isBoolean().optional(),
-  body("isSold").isBoolean().optional(),
+  body("name").isString().optional().withMessage('Invalid name'),
+  body("category").isString().optional().withMessage('Invalid category'),
+  body("images").isString().isArray().optional().withMessage('Invalid images'),
+  body("price").isNumeric().optional().withMessage('Invalid price'),
+  body("description").isString().optional().withMessage('Invalid description'),
+  body("isActive").isBoolean().optional().withMessage('Invalid isActive'),
+  body("isSold").isBoolean().optional().withMessage('Invalid isSold'),
 ];
 
 router.patch(
