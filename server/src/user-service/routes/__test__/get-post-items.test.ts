@@ -6,13 +6,13 @@ it("gets an empty post item array", async () => {
   const cookie = await global.signin();
 
   const userRes = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get(`/api/auth/current-user`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
 
   const itemRes = await request(app)
-    .get('/api/users/posts')
+    .get('/api/users/post-items')
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -25,7 +25,7 @@ it("gets post item array", async () => {
   const cookie = await global.signin();
 
   const userRes = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get(`/api/auth/current-user`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -56,7 +56,7 @@ it("gets post item array", async () => {
     .expect(201);
 
   const itemRes = await request(app)
-    .get(`/api/users/posts`)
+    .get(`/api/users/post-items`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -68,13 +68,13 @@ it("fails due to invalid session", async () => {
   const cookie = await global.signin();
 
   const userRes = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get(`/api/auth/current-user`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
 
   const itemRes = await request(app)
-    .get(`/api/users/posts`)
+    .get(`/api/users/post-items`)
     .send()
     .expect(401);
 });

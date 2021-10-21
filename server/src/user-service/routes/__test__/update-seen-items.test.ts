@@ -6,7 +6,7 @@ it('updates seen item ' , async () => {
   const cookie2 = await global.signin2();
 
   const userRes = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get(`/api/auth/current-user`)
     .set('Cookie', cookie)
     .send()
     .expect(200);
@@ -33,13 +33,13 @@ it('updates seen item ' , async () => {
     .expect(201);
 
   await request(app)
-    .patch('/api/users/seen')
+    .patch('/api/users/seen-items')
     .set('Cookie', cookie2)
     .send({itemId: [ itemRes1.body.data.item.id, itemRes2.body.data.item.id ]})
     .expect(200);
 
   const res = await request(app)
-    .get('/api/users/seen')
+    .get('/api/users/seen-items')
     .set('Cookie', cookie2)
     .send()
     .expect(200);
@@ -51,13 +51,13 @@ it('does not updates seen item because the item does not exist' , async () => {
   const cookie = await global.signin();
 
   await request(app)
-    .patch('/api/users/seen')
+    .patch('/api/users/seen-items')
     .set('Cookie', cookie)
     .send({itemId: ["507f1f77bcf86cd799439011", "507f1f77bcf86cd799439011"]})
     .expect(200);
 
   const res = await request(app)
-    .get('/api/users/seen')
+    .get('/api/users/seen-items')
     .set('Cookie', cookie)
     .send()
     .expect(200);
@@ -69,7 +69,7 @@ it('does not update seen item because the request body is invalid' , async () =>
   const cookie = await global.signin();
 
   const res = await request(app)
-    .patch('/api/users/seen')
+    .patch('/api/users/seen-items')
     .set('Cookie', cookie)
     .send({itemId: "asdf"})
     .expect(400);
@@ -80,7 +80,7 @@ it('does not update seen item because the request body is invalid' , async () =>
 it('does not update seen item due to invalid session' , async () => {
 
   const res = await request(app)
-    .patch('/api/users/seen')
+    .patch('/api/users/seen-items')
     .send({itemId: "asdf"})
     .expect(401);
 

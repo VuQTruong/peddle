@@ -17,7 +17,7 @@ const validations = [
 ];
 
 router.patch(
-  '/api/users/currentuser',
+  '/api/users/current-user',
   currentUser,
   requireAuth,
   validations,

@@ -7,7 +7,7 @@ it("removes a favourite item from favourite item array", async () => {
   const cookie = await global.signin();
 
   const userRes = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get(`/api/auth/current-user`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -44,7 +44,7 @@ it("removes a favourite item from favourite item array", async () => {
     .expect(200);
 
   const res = await request(app)
-    .get(`/api/users/favourite`)
+    .get('/api/users/favourite-items')
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -59,8 +59,8 @@ it("removes a favourite item from favourite item array", async () => {
     .expect(200);
 
   const res1 = await request(app)
-    .get(`/api/users/favourite`)
-    .set("Cookie", cookie)
+  .get('/api/users/favourite-items')
+  .set("Cookie", cookie)
     .send()
     .expect(200);
 
@@ -73,7 +73,7 @@ it("fails to remove an item because the item does not exist", async () => {
   const cookie = await global.signin();
 
   const userRes = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get(`/api/auth/current-user`)
     .set("Cookie", cookie)
     .send()
     .expect(200);

@@ -7,7 +7,7 @@ import { User } from '../../models/user';
 const router = express.Router();
 
 router.get(
-  '/api/users/favourite',
+  '/api/users/favourite-items',
   currentUser,
   requireAuth,
   async (req, res) => {

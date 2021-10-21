@@ -3,6 +3,7 @@ import Item from '../../models/item';
 import { User } from '../../models/user';
 import { currentUser } from '../../middlewares/current-user';
 import { requireAuth } from '../../middlewares/require-auth';
+import { BadRequestError } from '../../errors';
 
 const router = express.Router();
 
@@ -10,12 +11,15 @@ router.get('/api/items', currentUser, requireAuth, async (req, res) => {
   // Get user seen items
   const userId = req.currentUser?.id;
   const userInfo = await User.findById(userId);
-  const seenItems = userInfo?.seenItems;
+  if(!userInfo){
+    throw new BadRequestError('User not found')
+  }
+  const postedItems = userInfo.postedItems;
 
   // Get items
   const items = await Item.find({
     _id: {
-      $nin: seenItems,
+      $nin: [...postedItems]
     },
   }).limit(10);
 

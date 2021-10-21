@@ -6,7 +6,7 @@ it('gets seen item', async () => {
   const cookie2 = await global.signin2();
 
   const userRes = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get(`/api/auth/current-user`)
     .set('Cookie', cookie)
     .send()
     .expect(200);
@@ -33,13 +33,13 @@ it('gets seen item', async () => {
     .expect(201);
 
   await request(app)
-    .patch('/api/users/seen')
+    .patch('/api/users/seen-items')
     .set('Cookie', cookie2)
     .send({itemId: [ itemRes1.body.data.item.id, itemRes2.body.data.item.id ]})
     .expect(200);
 
   const res = await request(app)
-    .get('/api/users/seen')
+    .get('/api/users/seen-items')
     .set('Cookie', cookie2)
     .send()
     .expect(200);
@@ -51,7 +51,7 @@ it('gets an empty seen item array', async () => {
   const cookie = await global.signin();
 
   const res = await request(app)
-    .get('/api/users/seen')
+    .get('/api/users/seen-items')
     .set('Cookie', cookie)
     .send()
     .expect(200);
@@ -62,7 +62,7 @@ it('gets an empty seen item array', async () => {
 
 it('fails to get seen items due to invalid session', async () => {
   const res = await request(app)
-    .get('/api/users/seen')
+    .get('/api/users/seen-items')
     .send()
     .expect(401);
 

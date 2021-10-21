@@ -5,7 +5,7 @@ it("gets fav item  arr for a user", async () => {
   const cookie = await global.signin();
 
   const userRes = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get(`/api/auth/current-user`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -29,9 +29,8 @@ it("gets fav item  arr for a user", async () => {
     .send({ itemId: itemRes.body.data.item.id })
     .expect(200);
 
-  // user 1 gets user2's info
   const res = await request(app)
-    .get(`/api/users/favourite`)
+    .get('/api/users/favourite-items')
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -45,7 +44,7 @@ it("does not add duplicate items", async () => {
   const cookie = await global.signin();
 
   const userRes = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get(`/api/auth/current-user`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -75,10 +74,9 @@ it("does not add duplicate items", async () => {
     .send({ itemId: itemRes.body.data.item.id })
     .expect(200);
 
-  // user 1 gets user2's info
   const res = await request(app)
-    .get(`/api/users/favourite`)
-    .set("Cookie", cookie)
+  .get('/api/users/favourite-items')
+  .set("Cookie", cookie)
     .send()
     .expect(200);
 
@@ -91,7 +89,7 @@ it("does not add favourite items with invalid session", async () => {
   const cookie = await global.signin();
 
   const userRes = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get(`/api/auth/current-user`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -120,7 +118,7 @@ it("does not add favourite items with invalid request body", async () => {
     const cookie = await global.signin();
   
     const userRes = await request(app)
-      .get(`/api/auth/currentuser`)
+      .get(`/api/auth/current-user`)
       .set("Cookie", cookie)
       .send()
       .expect(200);

@@ -10,7 +10,7 @@ const router = express.Router();
 
 const validations = [param('userId').isMongoId().withMessage('User id is not in valid MongodId format')];
 
-router.get('/api/users/id/:userId', currentUser, requireAuth, validations, validateRequest, async (req: Request, res: Response, next: NextFunction) => {
+router.get('/api/users/:userId', currentUser, requireAuth, validations, validateRequest, async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
 
   const user = await User.findById(userId);

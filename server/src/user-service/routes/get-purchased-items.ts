@@ -6,7 +6,7 @@ import { requireAuth } from '../../middlewares/require-auth';
 const router = express.Router();
 
 router.get(
-  '/api/users/purchased',
+  '/api/users/purchased-items',
   currentUser,
   requireAuth,
   async (req, res) => {
@@ -26,4 +26,4 @@ router.get(
   }
 );
 
-export { router as getPurchasedListRouter };
+export { router as getPurchasedItemRouter };

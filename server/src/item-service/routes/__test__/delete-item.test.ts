@@ -9,7 +9,7 @@ interface ItemResponse extends request.Response{
 it("deletes an item and responds with a common success object", async () => {
   const cookie = await global.signin();
   const userRes = await request(app)
-  .get("/api/auth/currentuser")
+  .get("/api/auth/current-user")
   .set('Cookie', cookie)
   .send();
   const item = {
@@ -40,7 +40,7 @@ it("deletes an item and responds with a common success object", async () => {
 it("fails to delete an item because the item id is invalid mongodb id", async () => {
   const cookie = await global.signin();
   const res = await request(app)
-  .get("/api/auth/currentuser")
+  .get("/api/auth/current-user")
   .set('Cookie', cookie)
   .send();
 
@@ -56,13 +56,13 @@ it("fails to delete an item because the item user tries to delete doesn't belong
   const user1Cookie = await global.signin();
   const user2Cookie = await global.signin2();
   const user1 = await request(app)
-  .get("/api/auth/currentuser")
+  .get("/api/auth/current-user")
   .set('Cookie', user1Cookie)
   .send()
   .expect(200);
 
   const user2 = await request(app)
-  .get("/api/auth/currentuser")
+  .get("/api/auth/current-user")
   .set('Cookie', user2Cookie)
   .send()
   .expect(200);
@@ -96,7 +96,7 @@ it("fails to delete an item because the item user tries to delete doesn't belong
 it("fails to delete an item because the item doesn't exist", async () => {
   const cookie = await global.signin();
   const userRes = await request(app)
-  .get("/api/auth/currentuser")
+  .get("/api/auth/current-user")
   .set('Cookie', cookie)
   .send();
   const item = {

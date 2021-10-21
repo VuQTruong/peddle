@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 router.get(
-  '/api/users/posts',
+  '/api/users/post-items',
   currentUser,
   requireAuth,
   async (req, res) => {

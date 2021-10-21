@@ -6,7 +6,7 @@ import { requireAuth } from '../../middlewares/require-auth';
 const router = express.Router();
 
 router.get(
-  '/api/users/seen',
+  '/api/users/seen-items',
   currentUser,
   requireAuth,
   async (req, res) => {

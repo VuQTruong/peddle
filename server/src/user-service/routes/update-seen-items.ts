@@ -15,7 +15,7 @@ const validations = [
 ];
 
 router.patch(
-  '/api/users/seen',
+  '/api/users/seen-items',
   currentUser,
   requireAuth,
   validations,

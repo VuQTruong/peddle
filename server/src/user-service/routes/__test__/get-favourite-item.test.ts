@@ -6,14 +6,13 @@ it("gets empty fav items for a user", async () => {
   const cookie = await global.signin();
 
   const userRes = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get('/api/auth/current-user')
     .set("Cookie", cookie)
     .send()
     .expect(200);
 
-  // user 1 gets user2's info
   const res = await request(app)
-    .get(`/api/users/favourite`)
+    .get('/api/users/favourite-items')
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -27,7 +26,7 @@ it("gets favourite item array for a user", async () => {
   const cookie = await global.signin();
 
   const userRes = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get(`/api/auth/current-user`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -51,10 +50,9 @@ it("gets favourite item array for a user", async () => {
     .send({ itemId: itemRes.body.data.item.id })
     .expect(200);
 
-  // user 1 gets user2's info
   const res = await request(app)
-    .get(`/api/users/favourite`)
-    .set("Cookie", cookie)
+  .get('/api/users/favourite-items')
+  .set("Cookie", cookie)
     .send()
     .expect(200);
 
@@ -64,10 +62,9 @@ it("gets favourite item array for a user", async () => {
 });
 
 it("fails to get user fav items due to invalid session", async () => {
-  // user 1 gets user2's info
   const res = await request(app)
-    .get(`/api/users/favourite`)
-    .send()
+  .get('/api/users/favourite-items')
+  .send()
     .expect(401);
 
   expect(res.body.errors[0].message).toBe("Not authorized");

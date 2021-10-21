@@ -12,7 +12,7 @@ import {
 import {
   getUserRouter,
   getPostItemsRouter,
-  getPurchasedListRouter,
+  getPurchasedItemRouter,
   updateUserRouter,
   updateSeenItemsRouter,
   addFavouriteItemRouter,
@@ -69,15 +69,15 @@ app.use(signoutRouter);
 app.use(signinRouter);
 
 // User Services
-app.use(getUserRouter);
+app.use(addFavouriteItemRouter);
 app.use(getPostItemsRouter);
-app.use(getPurchasedListRouter);
+app.use(getPurchasedItemRouter);
 app.use(updateUserRouter);
 app.use(updateSeenItemsRouter);
-app.use(addFavouriteItemRouter);
 app.use(removeFavouriteItemRouter);
 app.use(getFavouriteItemsRouter);
 app.use(getSeenItems)
+app.use(getUserRouter);
 
 // Category Services
 app.use(createCategoryRouter);
