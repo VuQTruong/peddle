@@ -57,13 +57,15 @@ response Error:
 }
 ```
 
-**`DELETE` /api/images - delete an image**
+**`DELETE` /api/images/:imageName - delete an image**
+
+- What is `imageName` param?
+  - Example image URL: https://res.cloudinary.com/dz4cswhcz/image/upload/v1634673435/ahl0n5smdagavmwnl2fa.jpg
+  - `imageName = ahl0n5smdagavmwnl2fa`
+  - Request to `/api/images/ahl0n5smdagavmwnl2fa`
 
 ```json
-request
-{
-    "imageUrl": "image-url"
-}
+request {}
 
 response OK:
 {
@@ -73,12 +75,7 @@ response OK:
 
 response Error:
 {
-    "status": "400",
-    "message": "No Image Selected!"
-}
-
-{
-    "status": "400",
-    "message": "Invalid request - One or more field is invalid."
+    "status": "500",
+    "message": "Something went wrong"
 }
 ```
