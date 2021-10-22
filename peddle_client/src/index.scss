@@ -1,0 +1,15 @@
+/* Base styles */
+@import './styles/variables';
+@import './styles/base';
+@import './styles/flex';
+
+/* Components */
+@import './components/Header/header';
+@import './components/NavBar/navbar';
+
+/* Containers */
+@import './containers/Page404/page404';
+@import './containers/Home/home';
+@import './containers/SignIn/signIn';
+@import './containers/SignUp/signUp';
+@import './containers/UserInfo/userInfo';
