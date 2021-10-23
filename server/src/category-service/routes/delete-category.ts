@@ -19,8 +19,8 @@ router.delete(
 
     await Category.findByIdAndDelete(categoryId);
 
-    return res.status(204).send({
-      status: '204',
+    return res.status(200).send({
+      status: '200',
       message: 'Category deleted successfully',
     });
   }
