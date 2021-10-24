@@ -151,7 +151,11 @@ response Error:
 ```
 request {}
 
-response OK - 204 - No Content: {}
+response OK
+{
+    status: 200,
+    message: 'Category deleted successfully',
+}
 
 response Error:
 {
