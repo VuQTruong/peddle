@@ -14,9 +14,9 @@
 body {
   font-family: $ff-primary;
   font-size: 1rem;
-  color: $clr-text;
+  color: $clr-txt-primary;
   line-height: 1.6;
-  background-color: $clr-secondary;
+  background-color: $clr-bg;
 }
 
 img {
@@ -27,4 +27,10 @@ img {
 ul[class],
 ol[class] {
   list-style: none;
+}
+
+a {
+  font-weight: 700;
+  color: $clr-primary;
+  text-decoration: none;
 }
