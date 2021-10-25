@@ -3,7 +3,7 @@ import Avatar from 'react-avatar';
 
 export default function Home() {
   return (
-    <section className='home__container'>
+    <main className='home__container'>
       <section className='home__header'>
         <div className='home__user-info'>
           <div className='home__greeting'>Welcome back, Gary!</div>
@@ -41,6 +41,6 @@ export default function Home() {
           <i className='bx bx-chevron-right'></i>
         </button>
       </section>
-    </section>
+    </main>
   );
 }

@@ -11,7 +11,7 @@ export default function SignIn() {
   };
 
   return (
-    <section className='signin__container'>
+    <main className='signin__container'>
       <section className='signin__header'>
         <h1 className='signin__title'>Peddle.</h1>
         <WavyDivider position='top' />
@@ -62,6 +62,6 @@ export default function SignIn() {
           </Link>
         </span>
       </section>
-    </section>
+    </main>
   );
 }

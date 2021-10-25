@@ -14,7 +14,7 @@ export default function SignUp() {
   };
 
   return (
-    <section className='signup__container'>
+    <main className='signup__container'>
       <WavyDivider position='top' />
 
       <form className='signup__form' onSubmit={registerHandler}>
@@ -96,6 +96,6 @@ export default function SignUp() {
           </Link>
         </span>
       </section>
-    </section>
+    </main>
   );
 }
