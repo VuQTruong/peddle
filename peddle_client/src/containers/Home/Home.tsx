@@ -1,5 +1,6 @@
 import WavyDivider from '../../components/WavyDivider/WavyDivider';
 import Avatar from 'react-avatar';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
   return (
@@ -21,9 +22,13 @@ export default function Home() {
       </section>
 
       <section className='home__content'>
-        <button className='btn btn-primary home__btn home__btn--shop'>
-          Start Shopping
-        </button>
+        
+      
+          <Link to='/shopping' className='btn btn-primary home__btn home__btn--shop'>
+            Start Shopping 
+          </Link>
+      
+
         <button className='btn btn-secondary home__btn home__btn--option'>
           Profile
           <i className='bx bx-chevron-right'></i>

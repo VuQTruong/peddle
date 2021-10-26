@@ -6,7 +6,7 @@
 .btn {
   font-size: $fs-24;
   font-weight: 700;
-
+  font-family: $ff-primary;
   cursor: pointer;
   border: none;
 }
@@ -16,6 +16,7 @@
   color: $clr-txt-secondary;
   padding: 0.5em 2.5em;
   border-radius: 20px;
+  text-align: center;
 }
 
 .btn-secondary {

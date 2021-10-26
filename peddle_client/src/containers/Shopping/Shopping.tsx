@@ -2,24 +2,25 @@
 //! Install 
 //?  react-swipeable
 //?  faker & @types/faker
+
 import React, { useEffect, useRef, useState, useReducer, Component } from 'react';
 import faker from "faker";
 import SwipeableHook from './SwipeableHook';
-import './App.css';
 
+import "./shopping.css";
 
 import NavBar from '../../components/NavBar/NavBar';
 
-//import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
+
+
 //import { addItem, incrementTest } from './actions';
 
 //* Constants */
 const SPACING = 20;
-const DIRECTIONS = ['Left', 'Right', 'Up', 'Down'];
 const SCROLL_SENSITIVITY = 400;
 const ITEM_ROTATION = 25;
-
-
 
 let CURR_ITEM_IDX = 0;
 
@@ -58,13 +59,10 @@ const initialState = {
   onSwipedDownApplied: true,
 };
 
-
 function Main() {
 
   //const dispatch = useDispatch();
   //const cart = useSelector((state:any) => state.ItemCartReducer);
-
-
   const reducer = (state:any, newState:any) => ({ ...state, ...newState });
   const [state, setState] = useReducer(reducer, initialState);
 
@@ -95,17 +93,6 @@ function Main() {
       swiped: false,
       swipingDirection: args.dir,
     });
-  }
-
-  const onTap = (args: any) => {
-    //console.log('tap args: ', args)
-    //console.log(cart);
-
-    setState({
-      swiping: false,
-      swiped: false,
-      tapped: true
-    })
   }
 
   const onSwiped = (args: any) => {
@@ -142,6 +129,18 @@ function Main() {
       swiped: true,
       swiping: false,
     });
+  }
+
+  //? Mainly used for debugging
+  const onTap = (args: any) => {
+    //console.log('tap args: ', args)
+    //console.log(cart);
+
+    setState({
+      swiping: false,
+      swiped: false,
+      tapped: true
+    })
   }
 
   const scrollNextItem = () => {
@@ -196,7 +195,6 @@ function Main() {
 
   const swipeableStyle = {fontSize: "0.75rem"};
 
-  //const boundSwipes = getBoundSwipes();{...boundSwipes}
   let swipeableDirProps: any = {};
   if (onSwipingApplied) {
     // @ts-ignore
@@ -212,37 +210,36 @@ function Main() {
   }
 
   return (
-    <main>
+    <div className="row">
       <div className="small-12 column">
-          <SwipeableHook
-          
-          {...swipeableDirProps}
-          delta={deltaNum}
-          preventDefaultTouchmoveEvent={preventDefaultTouchmoveEvent}
-          trackTouch={trackTouch}
-          trackMouse={trackMouse}
-          rotationAngle={rotationAngleNum}
-          className="callout hookComponent"
-          style={swipeableStyle}>
-              <header className="App-header" onWheel = {(e) => ScrollToNextItem(e)}>
-              {
-                RAND_DATA.map((item, i) => (
-                  <div key={i} className="Item" id={`item-${i}`} style={{padding: SPACING, marginBottom: SPACING, borderRadius: 12}}>
-                    <img src={item.image} alt="img" />
-                    <div className="Item-text">
-                      <h2>{item.name}</h2>
-                      <h2>${item.price}</h2>
-                      <h4>{item.description}</h4>
-                      <h6>Sold By: {item.seller}</h6>
-                    </div>
+        <SwipeableHook
+        {...swipeableDirProps}
+        delta={deltaNum}
+        preventDefaultTouchmoveEvent={preventDefaultTouchmoveEvent}
+        trackTouch={trackTouch}
+        trackMouse={trackMouse}
+        rotationAngle={rotationAngleNum}
+        className="callout hookComponent"
+        style={swipeableStyle}>
+            <header className="App-header" onWheel = {(e) => ScrollToNextItem(e)}>
+            {
+              RAND_DATA.map((item, i) => (
+                <div key={i} className="Item" id={`item-${i}`} style={{borderRadius: 12}}>
+                  <img src={item.image} alt="img" />
+                  <div className="Item-text">
+                    <h2>{item.name}</h2>
+                    <h2>${item.price}</h2>
+                    <h4>{item.description}</h4>
+                    <h6>Sold By: {item.seller}</h6>
                   </div>
-                ))
-              }
-              </header>
+                </div>
+              ))
+            }
+            </header>
         </SwipeableHook>
       </div>
       <NavBar />
-    </main>
+    </div>
   )
   
 }
