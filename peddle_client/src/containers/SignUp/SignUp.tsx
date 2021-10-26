@@ -1,92 +1,129 @@
-import { useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import WavyDivider from '../../components/WavyDivider/WavyDivider';
+import * as Yup from 'yup';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+
+type SignUpFormType = {
+  name: string;
+  phoneno: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
+
+const formInitialValues: SignUpFormType = {
+  name: '',
+  phoneno: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
+
+const validationSchema = Yup.object({
+  name: Yup.string().required('Name is required'),
+  phoneno: Yup.string().required('Phone Number is required'),
+  email: Yup.string().email('Invalid Email').required('Email is requried'),
+  password: Yup.string().required('Password is required'),
+  confirmPassword: Yup.string()
+    .required('Confirm password is required')
+    .test('confirm-password', 'Confirm password must match', function (value) {
+      return this.parent.password === value;
+    }),
+});
 
 export default function SignUp() {
-  const [name, setName] = useState('');
-  const [phoneno, setPhoneno] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-
-  const registerHandler = (event: FormEvent) => {
-    event.preventDefault();
+  const registerHandler = (values: SignUpFormType) => {
+    console.log(values);
   };
 
   return (
     <main className='signup__container'>
       <WavyDivider position='top' />
 
-      <form className='signup__form' onSubmit={registerHandler}>
-        <div className='signup__form-header'>
-          <i className='bx bx-left-arrow-alt'></i>
-          <p className='signup__form-title'>Create Account</p>
-        </div>
+      <Formik
+        initialValues={formInitialValues}
+        onSubmit={registerHandler}
+        validationSchema={validationSchema}
+      >
+        <Form className='signup__form'>
+          <div className='signup__form-header'>
+            <i className='bx bx-left-arrow-alt'></i>
+            <p className='signup__form-title'>Create Account</p>
+          </div>
 
-        <div className='form__input--text'>
-          <label htmlFor='name'>Full Name</label>
-          <input
-            type='text'
-            name='name'
-            placeholder='Your Name'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <i className='bx bx-user'></i>
-        </div>
+          <div className='form__control--text'>
+            <label htmlFor='name'>Full Name</label>
+            <Field type='text' name='name' id='name' placeholder='Your Name' />
+            <i className='bx bx-user'></i>
+            <ErrorMessage name='name'>
+              {(errorMsg) => <div className='form__error'>{errorMsg}</div>}
+            </ErrorMessage>
+          </div>
 
-        <div className='form__input--text'>
-          <label htmlFor='phoneno'>Phone Number</label>
-          <input
-            type='text'
-            name='phoneno'
-            placeholder='Phone number'
-            value={phoneno}
-            onChange={(e) => setPhoneno(e.target.value)}
-          />
-          <i className='bx bx-mobile-alt'></i>
-        </div>
+          <div className='form__control--text'>
+            <label htmlFor='phoneno'>Phone Number</label>
+            <Field
+              type='text'
+              name='phoneno'
+              id='phoneno'
+              placeholder='Phone number'
+            />
+            <i className='bx bx-mobile-alt'></i>
+            <ErrorMessage name='phoneno'>
+              {(errorMsg) => <div className='form__error'>{errorMsg}</div>}
+            </ErrorMessage>
+          </div>
 
-        <div className='form__input--text'>
-          <label htmlFor='email'>Email Address</label>
-          <input
-            type='email'
-            name='email'
-            placeholder='example@gmail.com'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <i className='bx bx-envelope'></i>
-        </div>
+          <div className='form__control--text'>
+            <label htmlFor='email'>Email Address</label>
+            <Field
+              type='email'
+              name='email'
+              id='email'
+              placeholder='example@gmail.com'
+            />
+            <i className='bx bx-envelope'></i>
+            <ErrorMessage name='email'>
+              {(errorMsg) => <div className='form__error'>{errorMsg}</div>}
+            </ErrorMessage>
+          </div>
 
-        <div className='form__input--text'>
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            name='password'
-            placeholder='Password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <i className='bx bx-lock'></i>
-        </div>
+          <div className='form__control--text'>
+            <label htmlFor='password'>Password</label>
+            <Field
+              type='password'
+              name='password'
+              id='password'
+              placeholder='Password'
+            />
+            <i className='bx bx-lock'></i>
+            <ErrorMessage name='password'>
+              {(errorMsg) => <div className='form__error'>{errorMsg}</div>}
+            </ErrorMessage>
+          </div>
 
-        <div className='form__input--text'>
-          <label htmlFor='confirmpassword'>Confirm Password</label>
-          <input
-            type='password'
-            name='confirmpassword'
-            placeholder='Confirm Password'
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <i className='bx bx-lock'></i>
-        </div>
+          <div className='form__control--text'>
+            <label htmlFor='confirmPassword'>Confirm Password</label>
+            <Field
+              type='password'
+              name='confirmPassword'
+              id='confirmPassword'
+              placeholder='Confirm Password'
+            />
+            <i className='bx bx-lock'></i>
+            <ErrorMessage name='confirmPassword'>
+              {(errorMsg) => <div className='form__error'>{errorMsg}</div>}
+            </ErrorMessage>
+          </div>
 
-        <button type='submit' className='btn btn-primary signup__btn-register'>
-          Sign up
-        </button>
-      </form>
+          <button
+            type='submit'
+            className='btn btn-primary signup__btn-register'
+          >
+            Sign up
+          </button>
+        </Form>
+      </Formik>
 
       <section className='signup__footer'>
         Already a member?{' '}

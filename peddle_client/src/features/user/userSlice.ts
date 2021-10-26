@@ -3,7 +3,9 @@ import { User } from '../../types/user';
 
 export const signIn = createAsyncThunk(
   'user/signin',
-  async (_, thunkAPI) => {}
+  async (values: object, thunkAPI) => {
+    console.log('🚀 ~ file: userSlice.ts ~ line 7 ~ values', values);
+  }
 );
 
 export const signUp = createAsyncThunk(

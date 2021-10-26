@@ -1,4 +1,4 @@
-.form__input--text {
+.form__control--text {
   display: flex;
   flex-direction: column;
 
@@ -53,4 +53,9 @@
     font-size: $fs-20;
     font-weight: 300;
   }
+}
+
+.form__error {
+  font-style: italic;
+  color: $clr-danger;
 }
