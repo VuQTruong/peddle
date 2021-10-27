@@ -13,7 +13,7 @@ export interface User {
 }
 
 export interface UserState {
-  user: User;
+  userInfo: User;
   loading: boolean;
   error: string;
 }

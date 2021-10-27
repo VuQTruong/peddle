@@ -1,9 +1,12 @@
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import WavyDivider from '../../components/WavyDivider/WavyDivider';
 import { signIn } from '../../features/user/userSlice';
+import { State } from '../../store';
+import { useEffect } from 'react';
 
 type SignInFormType = {
   email: string;
@@ -21,7 +24,15 @@ const validationSchema = Yup.object({
 });
 
 export default function SignIn() {
+  const location = useLocation();
   const dispatch = useDispatch();
+  const user = useSelector((state: State) => state.user);
+  const { userInfo, loading, error } = user;
+
+  useEffect(() => {
+    if (userInfo) {
+    }
+  }, [userInfo]);
 
   const loginHandler = async (values: SignInFormType) => {
     dispatch(signIn(values));
@@ -69,6 +80,8 @@ export default function SignIn() {
               {(errorMsg) => <div className='form__error'>{errorMsg}</div>}
             </ErrorMessage>
           </div>
+
+          {error && <div className='form__error'>{error}</div>}
 
           <div className='signin__form--btn flex col'>
             <button type='submit' className='btn btn-primary signin_btn-login'>

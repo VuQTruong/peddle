@@ -9,12 +9,12 @@ export default function PrivateRoute({
 }: {
   component: React.FC<any>;
 } & Partial<any>) {
-  const { user } = useSelector((state: State) => state.user);
+  const { userInfo } = useSelector((state: State) => state.user);
   return (
     <Route
       {...rest}
       render={(props) =>
-        user ? <Component {...props} /> : <Redirect to='/signin' />
+        userInfo ? <Component {...props} /> : <Redirect to='/signin' />
       }
     />
   );

@@ -1,10 +1,27 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { User } from '../../types/user';
+
+type ResponseType = {
+  status: string;
+  message: string;
+  data: object;
+};
 
 export const signIn = createAsyncThunk(
   'user/signin',
   async (values: object, thunkAPI) => {
-    console.log('🚀 ~ file: userSlice.ts ~ line 7 ~ values', values);
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const { data } = await axios.post<ResponseType>(
+        '/api/auth/signin',
+        values
+      );
+
+      return data.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -38,7 +55,7 @@ export const userSlice = createSlice({
     },
     [signIn.rejected.type]: (state, action) => {
       state.loading = false;
-      state.error = action.error;
+      state.error = action.payload.message;
       state.userInfo = null;
     },
     [signUp.pending.type]: (state, action) => {

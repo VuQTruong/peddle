@@ -1,5 +1,6 @@
 import WavyDivider from '../../components/WavyDivider/WavyDivider';
 import Avatar from 'react-avatar';
+import { Link } from 'react-router-dom';
 
 export default function Home() {
   return (
@@ -21,25 +22,28 @@ export default function Home() {
       </section>
 
       <section className='home__content'>
-        <button className='btn btn-primary home__btn home__btn--shop'>
+        <Link
+          to='/shopping'
+          className='btn btn-primary home__btn home__btn--shop'
+        >
           Start Shopping
-        </button>
-        <button className='btn btn-secondary home__btn home__btn--option'>
+        </Link>
+        <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
           Profile
           <i className='bx bx-chevron-right'></i>
-        </button>
-        <button className='btn btn-secondary home__btn home__btn--option'>
+        </Link>
+        <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
           Shopping Cart (3)
           <i className='bx bx-chevron-right'></i>
-        </button>
-        <button className='btn btn-secondary home__btn home__btn--option'>
+        </Link>
+        <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
           My Items (4)
           <i className='bx bx-chevron-right'></i>
-        </button>
-        <button className='btn btn-secondary home__btn home__btn--option'>
+        </Link>
+        <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
           Settings
           <i className='bx bx-chevron-right'></i>
-        </button>
+        </Link>
       </section>
     </main>
   );
