@@ -1,12 +1,13 @@
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import WavyDivider from '../../components/WavyDivider/WavyDivider';
-import { signIn } from '../../features/user/userSlice';
+import { resetUserState, signIn } from '../../features/user/userSlice';
 import { State } from '../../store';
 import { useEffect } from 'react';
+import swal from 'sweetalert';
 
 type SignInFormType = {
   email: string;
@@ -24,15 +25,31 @@ const validationSchema = Yup.object({
 });
 
 export default function SignIn() {
-  const location = useLocation();
+  const history = useHistory();
   const dispatch = useDispatch();
+
   const user = useSelector((state: State) => state.user);
   const { userInfo, loading, error } = user;
 
   useEffect(() => {
     if (userInfo) {
+      swal({
+        text: 'Login Successfully',
+        icon: 'success',
+      }).then((value) => {
+        history.push('/');
+      });
     }
-  }, [userInfo]);
+
+    if (error) {
+      swal({
+        title: error,
+        icon: 'error',
+      }).then((value) => {
+        dispatch(resetUserState());
+      });
+    }
+  }, [dispatch, error, history, userInfo]);
 
   const loginHandler = async (values: SignInFormType) => {
     dispatch(signIn(values));
@@ -81,11 +98,13 @@ export default function SignIn() {
             </ErrorMessage>
           </div>
 
-          {error && <div className='form__error'>{error}</div>}
-
           <div className='signin__form--btn flex col'>
             <button type='submit' className='btn btn-primary signin_btn-login'>
-              Login
+              {loading ? (
+                <i className='bx bx-loader-alt bx-spin bx-rotate-90'></i>
+              ) : (
+                'Login'
+              )}
             </button>
             <Link to='/forgotpassword' className='signin__link'>
               Forgot Password?

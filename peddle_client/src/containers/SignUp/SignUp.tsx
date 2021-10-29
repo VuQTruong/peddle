@@ -1,39 +1,98 @@
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import WavyDivider from '../../components/WavyDivider/WavyDivider';
 import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { State } from '../../store';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import swal from 'sweetalert';
+import { isValidPostalCode } from '../../utilities/validators';
+import { signUp } from '../../features/user/userSlice';
 
 type SignUpFormType = {
-  name: string;
-  phoneno: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   confirmPassword: string;
+  postalCode: string;
+  // phoneno: string;
 };
 
 const formInitialValues: SignUpFormType = {
-  name: '',
-  phoneno: '',
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
   confirmPassword: '',
+  postalCode: '',
+  // phoneno: '',
 };
 
 const validationSchema = Yup.object({
-  name: Yup.string().required('Name is required'),
-  phoneno: Yup.string().required('Phone Number is required'),
+  firstName: Yup.string().required('First name is required'),
+  lastName: Yup.string().required('Last Name is required'),
   email: Yup.string().email('Invalid Email').required('Email is requried'),
-  password: Yup.string().required('Password is required'),
+  password: Yup.string()
+    .min(4, 'Minimum is 4 characters')
+    .max(20, 'Maximum is 20 characters')
+    .required('Password is required'),
   confirmPassword: Yup.string()
     .required('Confirm password is required')
     .test('confirm-password', 'Confirm password must match', function (value) {
       return this.parent.password === value;
     }),
+  postalCode: Yup.string()
+    .required('Postal code is required')
+    .test('postal-code', 'Invalid Postal Code: XXX-XXX', function (value) {
+      return isValidPostalCode(value);
+    }),
+  // phoneno: Yup.string().required('Phone Number is required'),
 });
 
 export default function SignUp() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state: State) => state.user);
+  const { userInfo, error, loading } = user;
+
+  useEffect(() => {
+    if (userInfo) {
+      swal({
+        text: 'Account Created Successfully',
+        icon: 'success',
+      }).then((value) => {
+        history.push('/');
+      });
+    }
+
+    if (error) {
+      swal({
+        title: error,
+        icon: 'error',
+      });
+    }
+  }, [error, history, userInfo]);
+
   const registerHandler = (values: SignUpFormType) => {
-    console.log(values);
+    navigator.geolocation.getCurrentPosition((position) => {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
+      dispatch(
+        signUp({
+          ...values,
+          lat,
+          lng,
+        })
+      );
+    });
+  };
+
+  const returnHandler = () => {
+    history.goBack();
   };
 
   return (
@@ -47,20 +106,53 @@ export default function SignUp() {
       >
         <Form className='signup__form'>
           <div className='signup__form-header'>
-            <i className='bx bx-left-arrow-alt'></i>
+            <i className='bx bx-left-arrow-alt' onClick={returnHandler}></i>
             <p className='signup__form-title'>Create Account</p>
           </div>
 
           <div className='form__control--text'>
-            <label htmlFor='name'>Full Name</label>
-            <Field type='text' name='name' id='name' placeholder='Your Name' />
+            <label htmlFor='firstName'>First Name</label>
+            <Field
+              type='text'
+              name='firstName'
+              id='firstName'
+              placeholder='Your First Name'
+            />
             <i className='bx bx-user'></i>
-            <ErrorMessage name='name'>
+            <ErrorMessage name='firstName'>
               {(errorMsg) => <div className='form__error'>{errorMsg}</div>}
             </ErrorMessage>
           </div>
 
           <div className='form__control--text'>
+            <label htmlFor='lastName'>Last Name</label>
+            <Field
+              type='text'
+              name='lastName'
+              id='lastName'
+              placeholder='Your Last Name'
+            />
+            <i className='bx bx-user'></i>
+            <ErrorMessage name='lastName'>
+              {(errorMsg) => <div className='form__error'>{errorMsg}</div>}
+            </ErrorMessage>
+          </div>
+
+          <div className='form__control--text'>
+            <label htmlFor='postalCode'>Postal Code</label>
+            <Field
+              type='text'
+              name='postalCode'
+              id='postalCode'
+              placeholder='Postal Code'
+            />
+            <i className='bx bx-home'></i>
+            <ErrorMessage name='postalCode'>
+              {(errorMsg) => <div className='form__error'>{errorMsg}</div>}
+            </ErrorMessage>
+          </div>
+
+          {/* <div className='form__control--text'>
             <label htmlFor='phoneno'>Phone Number</label>
             <Field
               type='text'
@@ -72,7 +164,7 @@ export default function SignUp() {
             <ErrorMessage name='phoneno'>
               {(errorMsg) => <div className='form__error'>{errorMsg}</div>}
             </ErrorMessage>
-          </div>
+          </div> */}
 
           <div className='form__control--text'>
             <label htmlFor='email'>Email Address</label>
@@ -120,7 +212,11 @@ export default function SignUp() {
             type='submit'
             className='btn btn-primary signup__btn-register'
           >
-            Sign up
+            {loading ? (
+              <i className='bx bx-loader-alt bx-spin bx-rotate-90'></i>
+            ) : (
+              'Sign up'
+            )}
           </button>
         </Form>
       </Formik>

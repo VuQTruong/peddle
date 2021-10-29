@@ -1,21 +1,29 @@
+import { useSelector } from 'react-redux';
 import WavyDivider from '../../components/WavyDivider/WavyDivider';
 import Avatar from 'react-avatar';
 import { Link } from 'react-router-dom';
+import { State } from '../../store';
+import { isURL } from '../../utilities/validators';
 
 export default function Home() {
+  const user = useSelector((state: State) => state.user);
+  const { userInfo } = user;
+
   return (
     <main className='home__container'>
       <section className='home__header'>
         <div className='home__user-info'>
-          <div className='home__greeting'>Welcome back, Gary!</div>
+          <div className='home__greeting'>
+            Welcome back, {userInfo.firstName}!
+          </div>
 
           <Avatar
             className='home__user-avatar'
-            name='Gary'
+            name={`${userInfo.firstName} ${userInfo.lastName}`}
             round={true}
             size='100'
             textSizeRatio={3}
-            // src='http://www.gravatar.com/avatar/a16a38cdfe8b2cbd38e8a56ab93238d3'
+            src={isURL(userInfo.photo) ? userInfo.photo : ''}
           />
         </div>
         <WavyDivider position='top' />
@@ -28,7 +36,10 @@ export default function Home() {
         >
           Start Shopping
         </Link>
-        <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
+        <Link
+          to='/user'
+          className='btn btn-secondary home__btn home__btn--option'
+        >
           Profile
           <i className='bx bx-chevron-right'></i>
         </Link>

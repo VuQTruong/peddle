@@ -9,16 +9,16 @@ import Page404 from './containers/Page404/Page404';
 import Home from './containers/Home/Home';
 import SignIn from './containers/SignIn/SignIn';
 import SignUp from './containers/SignUp/SignUp';
-import UserInfo from './containers/UserInfo/UserInfo';
+import Profile from './containers/Profile/Profile';
 
 function App() {
   return (
     <Router>
       <Switch>
-        <PrivateRoute path='/user' component={UserInfo} />
+        <PrivateRoute path='/user' component={Profile} />
         <Route path='/signin' component={SignIn} />
         <Route path='/signup' component={SignUp} />
-        <Route path='/' component={Home} exact />
+        <PrivateRoute path='/' component={Home} exact />
         <Route path='*' component={Page404} />
       </Switch>
     </Router>

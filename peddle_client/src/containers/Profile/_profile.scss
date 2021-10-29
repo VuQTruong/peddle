@@ -1,0 +1,55 @@
+.profile__header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2em 0 1.5em;
+}
+
+.profile__header i {
+  font-size: $fs-32;
+  position: absolute;
+  top: 0.5em;
+  left: 0.5em;
+  transform: translateY(-50%);
+}
+
+.profile__user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__user-name {
+  font-size: $fs-24;
+}
+
+.profile__features {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.profile__btn {
+  font-size: $fs-18;
+  padding: 0.75em 1em;
+  margin-bottom: 0.75em;
+}
+
+.profile__btn--upgrade {
+  margin-bottom: 1.5em;
+  align-self: center;
+}
+
+.profile__btn--option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 300;
+}
+
+.profile__btn--option i {
+  font-size: $fs-26;
+  font-weight: 300;
+}
