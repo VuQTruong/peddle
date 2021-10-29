@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import swal from 'sweetalert';
 import { isValidPostalCode } from '../../utilities/validators';
 import { signUp } from '../../features/user/userSlice';
+import { setSessionTTL } from '../../features/session/sessionSlice';
 
 type SignUpFormType = {
   firstName: string;
@@ -64,6 +65,7 @@ export default function SignUp() {
         text: 'Account Created Successfully',
         icon: 'success',
       }).then((value) => {
+        dispatch(setSessionTTL(30 * 60 * 1000));
         history.push('/');
       });
     }
@@ -74,7 +76,7 @@ export default function SignUp() {
         icon: 'error',
       });
     }
-  }, [error, history, userInfo]);
+  }, [dispatch, error, history, userInfo]);
 
   const registerHandler = (values: SignUpFormType) => {
     navigator.geolocation.getCurrentPosition((position) => {

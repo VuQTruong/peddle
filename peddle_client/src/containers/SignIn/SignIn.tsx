@@ -8,6 +8,7 @@ import { resetUserState, signIn } from '../../features/user/userSlice';
 import { State } from '../../store';
 import { useEffect } from 'react';
 import swal from 'sweetalert';
+import { setSessionTTL } from '../../features/session/sessionSlice';
 
 type SignInFormType = {
   email: string;
@@ -37,6 +38,7 @@ export default function SignIn() {
         text: 'Login Successfully',
         icon: 'success',
       }).then((value) => {
+        dispatch(setSessionTTL(30 * 60 * 1000));
         history.push('/');
       });
     }
