@@ -1,5 +1,6 @@
 import express from 'express';
 import 'express-async-errors';
+import cloudinary from 'cloudinary';
 
 import dotenv from 'dotenv';
 
@@ -37,6 +38,7 @@ import {
 import { NotFoundError } from './errors/not-found-error';
 import { errorHandler } from './middlewares/error-handler';
 import cookieSession from 'cookie-session';
+import { deleteImage, uploadImage } from './file-service/routes';
 
 dotenv.config();
 
@@ -53,6 +55,13 @@ app.use(
 
 app.use(express.urlencoded({ extended: true }));
 
+/* Config Cloudinary */
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 /* Home Route */
 app.get('/health', (req, res) => {
   res.status(200).json({
@@ -67,6 +76,10 @@ app.use(currentUserRouter);
 app.use(signUpRouter);
 app.use(signoutRouter);
 app.use(signinRouter);
+
+// File Routes
+app.use(uploadImage);
+app.use(deleteImage);
 
 // User Services
 app.use(addFavouriteItemRouter);

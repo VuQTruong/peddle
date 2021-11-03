@@ -19,8 +19,6 @@ router.delete(
 
     const categoryId  = req.params.categoryId;
     const doc = await Category.findByIdAndDelete(categoryId);
-    console.log('hey')
-    console.log(doc)
     if(!doc){
       throw new BadRequestError('Category does not exist')
     }
