@@ -5,7 +5,7 @@ it("creates an item with valid session", async () => {
   const cookie = await global.signin();
 
   const currUser = await request(app)
-    .get("/api/auth/currentuser")
+    .get("/api/auth/current-user")
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -29,7 +29,7 @@ it("creates an item with valid session", async () => {
 it("creates an item even with string type for the price as long as it's numeric", async () => {
   const cookie = await global.signin();
   const currUser = await request(app)
-    .get("/api/auth/currentuser")
+    .get("/api/auth/current-user")
     .set("Cookie", cookie)
     .send()
     .expect(200);
@@ -73,7 +73,7 @@ it("does not create an item with invalid item", async () => {
 it("does not creates an item with invalid price type", async () => {
   const cookie = await global.signin();
   const currUser = await request(app)
-    .get("/api/auth/currentuser")
+    .get("/api/auth/current-user")
     .set("Cookie", cookie)
     .send()
     .expect(200);
