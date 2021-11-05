@@ -1,0 +1,53 @@
+.signin__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.signin__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-style: italic;
+  font-size: $fs-64;
+
+  padding: 1.2em 0;
+
+  background-color: $clr-primary;
+  border: none;
+}
+
+.signin__form {
+  flex-grow: 1;
+  width: 80%;
+  margin: 1.5em auto;
+}
+
+.signin__form-title {
+  font-size: $fs-24;
+  font-weight: 300;
+  margin-bottom: 0.25em;
+  margin-left: 0.5em;
+}
+
+.signin__form--btn {
+  align-items: center;
+  margin-top: 2em;
+}
+
+.signin_btn-login {
+  margin-bottom: 0.5em;
+  border-radius: 50px;
+}
+
+.signin__link {
+  font-size: $fs-14;
+}
+
+.signin__footer {
+  font-size: $fs-14;
+  text-align: center;
+  margin-bottom: 1em;
+}

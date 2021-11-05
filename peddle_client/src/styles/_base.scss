@@ -1,0 +1,36 @@
+// Reset CSS
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+*:focus {
+  outline-color: $clr-primary;
+}
+
+body {
+  font-family: $ff-primary;
+  font-size: 1rem;
+  color: $clr-txt-primary;
+  line-height: 1.6;
+  background-color: $clr-bg;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+a {
+  font-weight: 700;
+  color: $clr-primary;
+  text-decoration: none;
+}

@@ -1,0 +1,20 @@
+.navbar__container {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+}
+
+.navbar__content {
+  background-color: $clr-primary;
+}
+
+.navbar__list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.navbar__item i {
+  font-size: $fs-36;
+  color: $clr-txt-secondary;
+}
