@@ -32,6 +32,7 @@ import {
   updateItemRouter,
   deleteItemRouter,
 } from './item-service/routes';
+import { purchaseRoute } from './purchase-service/routes/purchase-item';
 
 import { NotFoundError } from './errors/not-found-error';
 import { errorHandler } from './middlewares/error-handler';
@@ -89,6 +90,9 @@ app.use(getItemRouter);
 app.use(createItemRouter);
 app.use(updateItemRouter);
 app.use(deleteItemRouter);
+
+// Purchase Services
+app.use(purchaseRoute);
 
 /* Unhandled Routes */
 app.all('*', async (req, res) => {

@@ -7,6 +7,7 @@ export interface Item {
   views: number;
   isActive: boolean;
   isSold: boolean;
+  purchasedBy: string;
   postedBy: string;
   createdAt: Date;
   updatedAt: Date;
