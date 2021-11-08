@@ -12,8 +12,6 @@ interface UserAttrs {
   lat: number;
   lng: number;
   postalCode: string;
-  isPremiumMember: boolean;
-  dislikedItemIds: string[];
 }
 
 // an interface that describe the properties
@@ -78,11 +76,18 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    dislikedItemIds: {
-      type: [String],
-      required: true,
-    },
-    seenItems: [String],
+    dislikedItemIds: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
+      },
+    ],
+    seenItems: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
+      },
+    ],
     postedItems: [
       {
         type: mongoose.Schema.Types.ObjectId,

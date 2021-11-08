@@ -1,26 +1,30 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import Category from '../../models/category';
 import { BadRequestError } from '../../errors/bad-request-error';
 import { currentUser } from '../../middlewares/current-user';
 import { requireAuth } from '../../middlewares/require-auth';
+import { param } from 'express-validator';
+import { validateRequest } from '../../middlewares/validate-request';
 
 const router = express.Router();
 
+const validations = [param('categoryId').isMongoId().withMessage('Invalid category Id')]
 router.delete(
   '/api/categories/:categoryId',
   currentUser,
   requireAuth,
-  async (req, res) => {
-    const categoryId = req.params.categoryId;
+  validations,
+  validateRequest,
+  async (req: Request, res: Response) => {
 
-    if (!categoryId.match(/^[0-9a-fA-F]{24}$/)) {
-      throw new BadRequestError('Item id is not valid');
+    const categoryId  = req.params.categoryId;
+    const doc = await Category.findByIdAndDelete(categoryId);
+    if(!doc){
+      throw new BadRequestError('Category does not exist')
     }
 
-    await Category.findByIdAndDelete(categoryId);
-
-    return res.status(204).send({
-      status: '204',
+    return res.status(200).send({
+      status: '200',
       message: 'Category deleted successfully',
     });
   }

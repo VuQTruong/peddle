@@ -11,10 +11,6 @@ interface UserPayload {
   lng: number;
   postalCode: string;
   isPremiumMember: boolean;
-  dislikedItemIds: [];
-  postedItems: string[];
-  purchasedItems: string[];
-  favouriteItems: string[];
 }
 
 declare global {

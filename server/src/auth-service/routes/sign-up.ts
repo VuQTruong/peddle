@@ -60,6 +60,13 @@ router.post("/api/auth/signup", validations, validateRequest, async (req: Reques
       {
         id: user.id,
         email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        photo: user.photo,
+        lat: user.lat,
+        lng: user.lng,
+        postalCode: user.postalCode,
+        isPremiumMember: user.isPremiumMember,
       },
       process.env.ACCESS_TOKEN_SECRET!
     );
