@@ -6,7 +6,7 @@ it('purchase an item with valid session', async () => {
   const buyer = await global.signin2();
 
   const sellerSession = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get(`/api/auth/current-user`)
     .set('Cookie', seller)
     .send()
     .expect(200);
@@ -57,7 +57,7 @@ it('does not make a purchase becuase item is already sold', async () => {
   const buyer = await global.signin2();
 
   const sellerSession = await request(app)
-    .get(`/api/auth/currentuser`)
+    .get(`/api/auth/current-user`)
     .set('Cookie', seller)
     .send()
     .expect(200);
@@ -95,7 +95,7 @@ it('does not make a purchase becuase user is trying to buying from themselves', 
     const seller = await global.signin();
   
     const sellerSession = await request(app)
-      .get(`/api/auth/currentuser`)
+      .get(`/api/auth/current-user`)
       .set('Cookie', seller)
       .send()
       .expect(200);
