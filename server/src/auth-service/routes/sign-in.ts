@@ -33,13 +33,6 @@ router.post(
     if (!passwordMatch) {
       throw new BadRequestError('Invalid credentials');
     }
-    const sessionData = {
-      id: existingUser.id,
-      email: existingUser.email,
-      firstName: existingUser.firstName,
-      lastName: existingUser.lastName,
-    };
-
 
     const sessionData = {
         id: existingUser.id,
