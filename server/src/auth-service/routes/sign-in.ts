@@ -34,8 +34,7 @@ router.post(
       throw new BadRequestError("Invalid credentials");
     }
 
-    const userJwt = jwt.sign(
-      {
+    const sessionData = {
         id: existingUser.id,
         email: existingUser.email,
         firstName: existingUser.firstName,
@@ -44,16 +43,11 @@ router.post(
         lng: existingUser.lng,
         postalCode: existingUser.postalCode,
         isPremiumMember: existingUser.isPremiumMember,
-        dislikedItemIds: existingUser.dislikedItemIds,
-        postedItems: existingUser.postedItems,
-        purchasedItems: existingUser.purchasedItems,
-        favouriteItems: existingUser.favouriteItems,
-      },
-      process.env.ACCESS_TOKEN_SECRET!,
-      {
-        expiresIn: 1800, // 30 minutes
-      }
-    );
+    };
+
+    const userJwt = jwt.sign(sessionData, process.env.ACCESS_TOKEN_SECRET!, {
+      expiresIn: 1800, // 30 minutes
+    });
 
     // store jwt in a cookie
     req.session = {
