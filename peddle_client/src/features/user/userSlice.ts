@@ -4,7 +4,17 @@ import axios from 'axios';
 type ResponseType = {
   status: string;
   message: string;
-  data: object;
+  data: {
+    id: string;
+  };
+};
+
+type UserResponse = {
+  status: string;
+  message: string;
+  data: {
+    user: any;
+  };
 };
 
 export const signIn = createAsyncThunk(
@@ -12,12 +22,15 @@ export const signIn = createAsyncThunk(
   async (values: object, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const { data } = await axios.post<ResponseType>(
+      const {data}  = await axios.post<ResponseType>(
         '/api/auth/signin',
         values
       );
-
-      return data.data;
+      const userRes = await axios.get<UserResponse>(
+        `/api/users/${data.data.id}`,
+        values
+      );
+      return userRes.data.data.user;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }

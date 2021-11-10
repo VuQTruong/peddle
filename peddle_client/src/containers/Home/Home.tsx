@@ -48,7 +48,7 @@ export default function Home() {
           <i className='bx bx-chevron-right'></i>
         </Link>
         <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
-          My Items (4)
+          My Items ({userInfo.postedItems.length})
           <i className='bx bx-chevron-right'></i>
         </Link>
         <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
