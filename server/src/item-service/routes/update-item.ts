@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import Item from "../../models/item";
-import { body, param } from "express-validator";
+import { body, param, matchedData } from "express-validator";
 import { BadRequestError } from "../../errors/bad-request-error";
 import { currentUser } from "../../middlewares/current-user";
 import { validateRequest } from "../../middlewares/validate-request";
@@ -12,11 +12,11 @@ const router = express.Router();
 const validations = [
   body("name").isString().optional().withMessage('Invalid name'),
   body("category").isString().optional().withMessage('Invalid category'),
-  body("images").isString().isArray().optional().withMessage('Invalid images'),
-  body("price").isNumeric().optional().withMessage('Invalid price'),
+  body("images").isArray().optional().withMessage('Invalid images'),
+  body("price").isNumeric().optional().withMessage('Invalid price value'),
   body("description").isString().optional().withMessage('Invalid description'),
-  body("isActive").isBoolean().optional().withMessage('Invalid isActive'),
-  body("isSold").isBoolean().optional().withMessage('Invalid isSold'),
+  body("isActive").isBoolean().optional().withMessage('Invalid isActive value'),
+  body("isSold").isBoolean().optional().withMessage('Invalid isSold value'),
   param('itemId').isMongoId().withMessage('Item Id is in invalid format')
 ];
 
@@ -34,7 +34,6 @@ router.patch(
     if(!item){
       return next(new BadRequestError('Bad request - item doesn not exist'))
     }
-
     if (item?.postedBy.toString() !== req.currentUser?.id) {
       return next(new NotAuthorizedError())
     }

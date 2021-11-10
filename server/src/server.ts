@@ -33,6 +33,7 @@ import {
   createItemRouter,
   updateItemRouter,
   deleteItemRouter,
+  incrementMatchesRouter
 } from './item-service/routes';
 import { purchaseRoute } from './purchase-service/routes/purchase-item';
 
@@ -40,6 +41,7 @@ import { NotFoundError } from './errors/not-found-error';
 import { errorHandler } from './middlewares/error-handler';
 import cookieSession from 'cookie-session';
 import { deleteImage, uploadImage } from './file-service/routes';
+import { getUserItemsRouter } from './item-service/routes/get-items-by-userId';
 
 dotenv.config();
 
@@ -105,7 +107,8 @@ app.use(getItemRouter);
 app.use(createItemRouter);
 app.use(updateItemRouter);
 app.use(deleteItemRouter);
-
+app.use(getUserItemsRouter);
+app.use(incrementMatchesRouter);
 // Purchase Services
 app.use(purchaseRoute);
 

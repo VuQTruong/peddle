@@ -22,14 +22,16 @@ export const signIn = createAsyncThunk(
   async (values: object, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const {data}  = await axios.post<ResponseType>(
+      const { data }  = await axios.post<ResponseType>(
         '/api/auth/signin',
         values
       );
+
       const userRes = await axios.get<UserResponse>(
         `/api/users/${data.data.id}`,
         values
       );
+
       return userRes.data.data.user;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
@@ -61,7 +63,7 @@ export const signOut = createAsyncThunk('user/signout', async (_, thunkAPI) => {
   try {
     const { data } = await axios.post<ResponseType>('/api/auth/signout');
 
-    return data.data;
+    return null;
   } catch (error: any) {
     return rejectWithValue(error.response.data);
   }

@@ -47,8 +47,8 @@ export default function Home() {
           Shopping Cart (3)
           <i className='bx bx-chevron-right'></i>
         </Link>
-        <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
-          My Items ({userInfo.postedItems.length})
+        <Link to='/my-items' className='btn btn-secondary home__btn home__btn--option'>
+          My Items ({userInfo.postedItems?.length || '0'})
           <i className='bx bx-chevron-right'></i>
         </Link>
         <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
