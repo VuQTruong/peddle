@@ -19,6 +19,7 @@ import {
   addFavouriteItemRouter,
   removeFavouriteItemRouter,
   getFavouriteItemsRouter,
+  getSeenItems,
 } from './user-service/routes';
 
 import {
@@ -34,12 +35,14 @@ import {
   updateItemRouter,
   deleteItemRouter,
 } from "./item-service/routes";
+
 import {
   getChatsRouter,
   createChatRouter,
   updateChatRouter,
   getChatsByUserRouter,
-} from './item-service/routes';
+} from './chat-service/routes';
+
 import { purchaseRoute } from './purchase-service/routes/purchase-item';
 import { NotFoundError } from "./errors/not-found-error";
 import { errorHandler } from "./middlewares/error-handler";
