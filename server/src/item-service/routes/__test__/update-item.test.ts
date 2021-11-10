@@ -4,7 +4,7 @@ import { app } from "../../../server";
 it("updates an item with valid session", async () => {
   const cookie = await global.signin();
   const userRes = await request(app)
-  .get(`/api/auth/currentuser`)
+  .get(`/api/auth/current-user`)
   .set("Cookie", cookie)
   .send()
   .expect(200);
@@ -48,7 +48,7 @@ it("updates an item with valid session", async () => {
 it("does not update an item with valid session", async () => {
   const cookie = await global.signin();
   const userRes = await request(app)
-  .get(`/api/auth/currentuser`)
+  .get(`/api/auth/current-user`)
   .set("Cookie", cookie)
   .send()
   .expect(200);
@@ -80,7 +80,7 @@ it("does not update an item with valid session", async () => {
 it("does not update an item with invalid attributes", async () => {
   const cookie = await global.signin();
   const userRes = await request(app)
-  .get(`/api/auth/currentuser`)
+  .get(`/api/auth/current-user`)
   .set("Cookie", cookie)
   .send()
   .expect(200);
@@ -117,7 +117,7 @@ it("does not update an item with when item doesn't belong a user", async () => {
   const cookie = await global.signin();
   const cookie2 = await global.signin2();
   const userRes = await request(app)
-  .get(`/api/auth/currentuser`)
+  .get(`/api/auth/current-user`)
   .set("Cookie", cookie)
   .send()
   .expect(200);
@@ -150,7 +150,7 @@ it("does not update an item with when item doesn't belong a user", async () => {
 it("fails when item doesn't exist", async () => {
   const cookie = await global.signin();
   const userRes = await request(app)
-  .get(`/api/auth/currentuser`)
+  .get(`/api/auth/current-user`)
   .set("Cookie", cookie)
   .send()
   .expect(200);

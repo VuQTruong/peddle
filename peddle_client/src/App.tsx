@@ -1,25 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+/* Custom Routes */
+import PrivateRoute from './routes/PrivateRoute';
+
+/* Components */
+import SessionExpiredModal from './components/SessionExpiredModal/SessionExpiredModal';
+
+/* Containers */
+import Page404 from './containers/Page404/Page404';
+import Home from './containers/Home/Home';
+import SignIn from './containers/SignIn/SignIn';
+import SignUp from './containers/SignUp/SignUp';
+import Profile from './containers/Profile/Profile';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <SessionExpiredModal />
+      <Router>
+        <Switch>
+          <PrivateRoute path='/user' component={Profile} />
+          <Route path='/signin' component={SignIn} />
+          <Route path='/signup' component={SignUp} />
+          <PrivateRoute path='/' component={Home} exact />
+          <Route path='*' component={Page404} />
+        </Switch>
+      </Router>
+    </>
   );
 }
 

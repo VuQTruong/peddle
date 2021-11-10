@@ -7,15 +7,11 @@ import { User } from '../../models/user';
 const router = express.Router();
 
 router.get(
-  '/api/users/:userId/favourite',
+  '/api/users/favourite-items',
   currentUser,
   requireAuth,
   async (req, res) => {
-    const userId = req.params.userId;
-
-    if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
-      throw new BadRequestError('User id is not valid');
-    }
+    const userId = req.currentUser?.id;
 
     const favouriteItems = await User.findById(userId)
       .select('favouriteItems')

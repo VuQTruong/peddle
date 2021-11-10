@@ -30,85 +30,83 @@ Failure Response:
     errors: [
         {
             message: string // detail message
-            field?: string 
+            field?: string
         }
     ]
 }
 ```
 
-## User model
+### User session info
+
 ```json
-    example
      {
         "status": 200,
         "message": "Sucess",
         "data": {
             "currentUser": {
+                "id": "616b7731ac2fb9470f888aa9",
                 "email": "test2@test.com",
                 "firstName": "test",
                 "lastName": "user",
-                "lat": 1.111,
-                "lng": -1.111,
-                "postalCode": "N6N 6N6",
-                "isPremiumMember": false,
-                "dislikedItemIds": [],
-                "postedItems": [
-                    "616e3e166a736fbdcebb3670",
-                    "616e3ea40cd2b4bd16c195a4"
-                ],
-                "purchasedItems": [],
-                "favouriteItems": [
-                    "507f1f77bcf86cd799439011",
-                    "507f1f77bcf86cd799439012"
-                ],
                 "iat": 1634616544,
                 "exp": 1634618344
             }
         }
-    } 
+    }
 ```
 
-## Examples
+## **`POST` /api/auth/signup**
 
-**POST /api/auth/signup**
+### request
 
 ```json
-request:
 {
-  "firstName" : "Tae Kwon",
-  "lastName" : "Doe",
-  "email" : "test@test.com",
-  "password" : "password",
-  "lat" : 123,
-  "lng" : 456,
-  "postalCode" : "N6H 1A2",
-}
-
-response:
- see User model
+  "firstName": "Tae Kwon",
+  "lastName": "Doe",
+  "email": "test@test.com",
+  "password": "password",
+  "lat": 123,
+  "lng": 456,
+  "postalCode": "N6H 1A2"
+} // all fields are required
 ```
 
-**POST /api/auth/signout**
+### response
+
+### [user session info](#user-session-info)
+
+</br>
+
+## **`POST` /api/auth/signout**
+
+### request
 
 ```json
-request:
 {}
-response:
-{
-    "status": 200,
-    "message": "user signed out"
-}
-
 ```
-**GET /api/auth/currentuser**
+
+### response
 
 ```json
-request:
+{
+  "status": 200,
+  "message": "user signed out"
+}
+```
+
+## **`GET` /api/auth/current-user**
+
+### request
+
+```json
 GET {}
+```
 
 response:
- see User modeld
-```
+
+### [user session info](#user-session-info)
+
+<br>
 
 ### Authorization
 
@@ -116,57 +114,44 @@ response:
   pass the **currentUser** and **requireAuth** middlewares to your route handler. Example:
 
 ```js
-    import express from 'express';
-    import { currentUser } from '../../middlewares/current-user';
-    import { requireAuth } from '../../middlewares/require-auth';
-    const myRoute = express.Router();
+import express from 'express';
+import { currentUser } from '../../middlewares/current-user';
+import { requireAuth } from '../../middlewares/require-auth';
+const myRoute = express.Router();
 
-    myRoute.get('/api/items/purchase', curentUser, requireAuth, (req, res) =>{
-
-        // if you reach here, it means the user is authenticated
-
-    })
+myRoute.get('/api/items/purchase', curentUser, requireAuth, (req, res) => {
+  // if you reach here, it means the user is authorized.
+});
 ```
 
 - How to get the current user information that is put in the session cookie?
-  pass the **currentUser** middlewares to your route handler, and then you can access current user in request body. Example:
+  pass the **currentUser** middlewares to your route handler, and then you can access current user in request body.
+
+  **important**: current-user route provides basic info only for security reasons. To get a user's full information, call `GET /api/users/:userId`
+
+  ### Example
 
 ```js
-    import express from 'express';
-    import { currentUser } from '../../middlewares/current-user';
-    const myRoute = express.Router();
+import express from 'express';
+import { currentUser } from '../../middlewares/current-user';
+const myRoute = express.Router();
 
-    myRoute.get('/api/items/purchase', curentUser, (req, res) =>{
-
-    console.log(req.body.currentUser);
-    /** prints:
+myRoute.get('/api/items/purchase', curentUser, (req, res) => {
+  console.log(req.body.currentUser);
+  /** prints:
     {
         "status": 200,
         "message": "Sucess",
         "data": {
             "currentUser": {
+                "id": "klas98234kl23kj4098234lk"
                 "email": "test2@test.com",
                 "firstName": "test",
                 "lastName": "user",
-                "lat": 1.111,
-                "lng": -1.111,
-                "postalCode": "N6N 6N6",
-                "isPremiumMember": false,
-                "dislikedItemIds": [],
-                "postedItems": [
-                    "616e3e166a736fbdcebb3670",
-                    "616e3ea40cd2b4bd16c195a4"
-                ],
-                "purchasedItems": [],
-                "favouriteItems": [
-                    "507f1f77bcf86cd799439011",
-                    "507f1f77bcf86cd799439012"
-                ],
                 "iat": 1634616544,
                 "exp": 1634618344
-            }
         }
     }
     **/
-})
+});
 ```

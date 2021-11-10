@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { User } from "../../models/user";
-import { body } from "express-validator";
+import { param } from "express-validator";
 import { currentUser } from "../../middlewares/current-user";
 import { requireAuth } from "../../middlewares/require-auth";
 import { validateRequest } from "../../middlewares/validate-request";
@@ -8,27 +8,20 @@ import { BadRequestError } from "../../errors/bad-request-error";
 
 const router = express.Router();
 
-const validations = [body('itemId').isMongoId()];
+const validations = [param('itemId').isMongoId().withMessage('Item id is not in valid MongodId format')];
 
 router.delete(
-  "/api/users/:userId/favourite",
+  "/api/users/favourite/:itemId",
   currentUser,
   requireAuth,
   validations,
   validateRequest,
   async (req: Request, res: Response) => {
-    const itemId = req.body.itemId;
-    const userId = req.params.userId;
-
-    if (!itemId.match(/^[0-9a-fA-F]{24}$/)) {
-      throw new BadRequestError("Item id is not valid");
-    }
-
-    if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
-      throw new BadRequestError("User id is not valid");
-    }
+    const userId = req.currentUser?.id;
+    const itemId = req.params.itemId;
 
     const user = await User.findById(userId);
+
     if (!user) {
       throw new BadRequestError("User not found");
     }

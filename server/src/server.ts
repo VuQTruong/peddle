@@ -13,13 +13,14 @@ import {
 import {
   getUserRouter,
   getPostItemsRouter,
-  getPurchasedListRouter,
+  getPurchasedItemRouter,
   updateUserRouter,
   updateSeenItemsRouter,
   addFavouriteItemRouter,
   removeFavouriteItemRouter,
   getFavouriteItemsRouter,
-} from "./user-service/routes";
+} from './user-service/routes';
+
 import {
   createCategoryRouter,
   getAllCategoriesRouter,
@@ -38,8 +39,8 @@ import {
   createChatRouter,
   updateChatRouter,
   getChatsByUserRouter,
-} from "./chat-service/routes";
-
+} from './item-service/routes';
+import { purchaseRoute } from './purchase-service/routes/purchase-item';
 import { NotFoundError } from "./errors/not-found-error";
 import { errorHandler } from "./middlewares/error-handler";
 import cookieSession from "cookie-session";
@@ -87,14 +88,15 @@ app.use(uploadImage);
 app.use(deleteImage);
 
 // User Services
-app.use(getUserRouter);
+app.use(addFavouriteItemRouter);
 app.use(getPostItemsRouter);
-app.use(getPurchasedListRouter);
+app.use(getPurchasedItemRouter);
 app.use(updateUserRouter);
 app.use(updateSeenItemsRouter);
-app.use(addFavouriteItemRouter);
 app.use(removeFavouriteItemRouter);
 app.use(getFavouriteItemsRouter);
+app.use(getSeenItems)
+app.use(getUserRouter);
 
 // Category Services
 app.use(createCategoryRouter);
@@ -109,10 +111,14 @@ app.use(createItemRouter);
 app.use(updateItemRouter);
 app.use(deleteItemRouter);
 
+
 app.use(getChatsRouter);
 app.use(updateChatRouter);
 app.use(createChatRouter);
 app.use(getChatsByUserRouter);
+
+// Purchase Services
+app.use(purchaseRoute);
 
 /* Unhandled Routes */
 app.all("*", async (req, res) => {
