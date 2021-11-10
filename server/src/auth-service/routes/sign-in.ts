@@ -33,12 +33,18 @@ router.post(
     if (!passwordMatch) {
       throw new BadRequestError('Invalid credentials');
     }
+
     const sessionData = {
-      id: existingUser.id,
-      email: existingUser.email,
-      firstName: existingUser.firstName,
-      lastName: existingUser.lastName,
+        id: existingUser.id,
+        email: existingUser.email,
+        firstName: existingUser.firstName,
+        lastName: existingUser.lastName,
+        lat: existingUser.lat,
+        lng: existingUser.lng,
+        postalCode: existingUser.postalCode,
+        isPremiumMember: existingUser.isPremiumMember,
     };
+
 
     const userJwt = jwt.sign(sessionData, process.env.ACCESS_TOKEN_SECRET!, {
       expiresIn: 1800, // 30 minutes
