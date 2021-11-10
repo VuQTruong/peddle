@@ -38,7 +38,6 @@ router.patch(
     if (item?.postedBy.toString() !== req.currentUser?.id) {
       return next(new NotAuthorizedError())
     }
-
     const updatedItem = await Item.findByIdAndUpdate(itemId, req.body, {
       new: true,
       runValidators: true,

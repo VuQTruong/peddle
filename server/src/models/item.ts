@@ -1,4 +1,4 @@
-import mongoose, { Mongoose } from 'mongoose';
+import mongoose from 'mongoose';
 import { dateFormat } from '../utilities/utils';
 
 export interface ItemDocument extends mongoose.Document {
@@ -10,6 +10,7 @@ export interface ItemDocument extends mongoose.Document {
   views: number;
   isActive: boolean;
   isSold: boolean;
+  purchasedBy: string;
   postedBy: string;
   createdAt: Date;
   updatedAt: Date;
@@ -45,6 +46,11 @@ const ItemSchema = new mongoose.Schema(
     isSold: {
       type: Boolean,
       default: false,
+    },
+    purchasedBy:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: false,
     },
     postedBy: {
       type: mongoose.Schema.Types.ObjectId,

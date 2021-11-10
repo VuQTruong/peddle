@@ -44,7 +44,7 @@ Failure Response:
         "message": "Sucess",
         "data": {
             "currentUser": {
-                "id": "klas98234kl23kj4098234lk"
+                "id": "616b7731ac2fb9470f888aa9",
                 "email": "test2@test.com",
                 "firstName": "test",
                 "lastName": "user",
