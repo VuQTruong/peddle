@@ -1,0 +1,76 @@
+.manage-item__images {
+  height: 12em;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.manage-item__loading {
+  font-size: $fs-36;
+  position: absolute;
+  top: 45%;
+  left: 45%;
+}
+
+.images__slide.hidden {
+  display: none;
+}
+
+.images__input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.5em;
+  height: 100%;
+}
+
+.images__icon {
+  position: absolute;
+  top: 0.5em;
+  left: 0.5em;
+
+  font-size: $fs-24;
+}
+
+.images__upload-btn {
+  display: flex;
+  align-items: center;
+
+  align-self: center;
+  font-size: 1em;
+
+  padding: 0.5em 1.25em;
+  border-radius: 10px;
+
+  i {
+    font-size: $fs-28;
+    margin-right: 0.25em;
+  }
+}
+
+.images__file-input {
+  display: none;
+}
+
+.images-btns {
+  display: flex;
+  justify-content: space-around;
+
+  margin-bottom: 1em;
+
+  & .btn {
+    font-size: $fs-20;
+    padding: 0.5em 1.25em;
+  }
+}
+
+.manage-item__description {
+  min-height: 5em;
+
+  & + i {
+    top: 1em;
+  }
+}
