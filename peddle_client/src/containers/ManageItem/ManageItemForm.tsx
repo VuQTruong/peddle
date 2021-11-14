@@ -9,9 +9,11 @@ type Props = {
   itemId: string;
   mode: string;
   submitLoading: boolean;
+  deleteLoading: boolean;
   initialValues: FormValues;
   onSubmit: (values: FormValues) => void;
   onReturn: (imageUrls: string[], isModified: boolean) => void;
+  onDelete: () => void;
 };
 
 type FormValues = {
@@ -22,8 +24,16 @@ type FormValues = {
 };
 
 export default function ManageItemForm(props: Props) {
-  const { itemId, mode, onSubmit, onReturn, initialValues, submitLoading } =
-    props;
+  const {
+    itemId,
+    mode,
+    onSubmit,
+    onReturn,
+    onDelete,
+    initialValues,
+    submitLoading,
+    deleteLoading,
+  } = props;
 
   // imageUrlRef is used to track the image urls of the images have been uploaded to delete it from the cloudinary server if the item is not created or updated
   const newImageUrlsRef = useRef<string[]>(initialValues.images);
@@ -305,13 +315,29 @@ export default function ManageItemForm(props: Props) {
               </ErrorMessage>
             </div>
 
-            <button type='submit' className='btn btn-primary'>
-              {submitLoading ? (
-                <i className='bx bx-loader-alt bx-spin bx-rotate-90'></i>
-              ) : (
-                'Save'
+            <div className='manage-item__btns'>
+              <button type='submit' className='btn btn-primary'>
+                {submitLoading ? (
+                  <i className='bx bx-loader-alt bx-spin bx-rotate-90'></i>
+                ) : (
+                  'Save'
+                )}
+              </button>
+
+              {mode === 'edit' && (
+                <button
+                  type='button'
+                  className='btn btn-danger'
+                  onClick={onDelete}
+                >
+                  {deleteLoading ? (
+                    <i className='bx bx-loader-alt bx-spin bx-rotate-90'></i>
+                  ) : (
+                    'Delete'
+                  )}
+                </button>
               )}
-            </button>
+            </div>
           </Form>
         );
       }}

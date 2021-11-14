@@ -21,6 +21,7 @@ export default function ManageItem(props: Props) {
   const history = useHistory();
   const [itemInfo, setItemInfo] = useState<any>(null);
   const [submitLoading, setSubmitLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const itemId = props.match.params.itemId;
 
   //Getting userId from localStorage
@@ -159,6 +160,60 @@ export default function ManageItem(props: Props) {
     }
   };
 
+  const deleteItemHandler = () => {
+    swal({
+      title: 'Warning',
+      text: 'Are you sure you want to delete this item?',
+      icon: 'warning',
+      dangerMode: true,
+      buttons: {
+        deny: {
+          text: 'Cancel',
+          value: null,
+        },
+        confirm: {
+          text: 'Yes',
+          value: true,
+        },
+      },
+    }).then((willDelete) => {
+      if (willDelete) {
+        setDeleteLoading(true);
+
+        // Delete the item's images
+        const promises = itemInfo.images.map((imageUrl: string) => {
+          const imageName = imageUrl.split('/').pop();
+          const imageId = imageName!.split('.')[0];
+          return axios.delete(`/api/images/${imageId}`);
+        });
+
+        Promise.all(promises);
+
+        // Delete the item in the database
+        axios
+          .delete(`/api/items/${itemId}`)
+          .then(() => {
+            setDeleteLoading(false);
+            swal({
+              title: 'Success',
+              text: 'Item deleted successfully',
+              icon: 'success',
+            }).then(() => {
+              history.push('/user/items');
+            });
+          })
+          .catch((error) => {
+            setDeleteLoading(false);
+            swal({
+              title: 'Error',
+              text: error.response.data.message,
+              icon: 'error',
+            });
+          });
+      }
+    });
+  };
+
   return (
     <main className='manage-item__container'>
       <WavyDivider position='top' />
@@ -168,7 +223,9 @@ export default function ManageItem(props: Props) {
         initialValues={initialValues!}
         onSubmit={onSubmit}
         onReturn={returnHandler}
+        onDelete={deleteItemHandler}
         submitLoading={submitLoading}
+        deleteLoading={deleteLoading}
       />
     </main>
   );
