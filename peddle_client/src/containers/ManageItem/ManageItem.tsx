@@ -1,9 +1,11 @@
 // import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import swal from 'sweetalert';
 import WavyDivider from '../../components/WavyDivider/WavyDivider';
+import { State } from '../../store';
 import ManageItemForm from './ManageItemForm';
 
 type Props = {
@@ -25,16 +27,29 @@ export default function ManageItem(props: Props) {
   const itemId = props.match.params.itemId;
 
   //Getting userId from localStorage
-  const { id: userId } = JSON.parse(localStorage.getItem('userInfo')!);
+  // const { id: userId } = JSON.parse(localStorage.getItem('userInfo')!);
+  const { userInfo } = useSelector((state: State) => state.user);
+  const { id: userId } = userInfo;
 
   // If the mode is "edit", fetch the item info from the server
   useEffect(() => {
     if (itemId) {
-      axios.get(`/api/items/${itemId}`).then(({ data }: any) => {
-        setItemInfo(data.data.item);
-      });
+      axios
+        .get(`/api/items/${itemId}`)
+        .then(({ data }: any) => {
+          setItemInfo(data.data.item);
+        })
+        .catch((err) => {
+          swal({
+            title: 'Error',
+            text: err.response.data.message,
+            icon: 'error',
+          }).then(() => {
+            history.push('/user/items');
+          });
+        });
     }
-  }, [itemId]);
+  }, [history, itemId]);
 
   let initialValues: FormValues | null = null;
 

@@ -42,7 +42,9 @@ export default function ManageItemForm(props: Props) {
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Product Name is required'),
-    price: Yup.string().required('Price is required'),
+    price: Yup.number()
+      .typeError('Price must be a number')
+      .required('Price is required'),
     description: Yup.string().required('Description is required'),
     images: Yup.array().min(1, 'At least one image is required'),
   });
