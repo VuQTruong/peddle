@@ -108,7 +108,7 @@ it('does not update an item with invalid attributes', async () => {
     .set('Cookie', cookie)
     .expect(400);
 
-  expect(patchRes.body.errors[0].message).toBe('Invalid value');
+  expect(patchRes.body.errors[0].message).toBe('Invalid images');
 });
 
 it("does not update an item with when item doesn't belong a user", async () => {
