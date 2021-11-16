@@ -4,7 +4,7 @@ import axios from 'axios';
 type ResponseType = {
   status: string;
   message: string;
-  data: object;
+  data: any;
 };
 
 export const signIn = createAsyncThunk(
@@ -24,8 +24,7 @@ export const signIn = createAsyncThunk(
   }
 );
 
-export const signUp = createAsyncThunk(
-  'user/signup',
+export const signUp = createAsyncThunk('user/signup',
   async (values: object, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
@@ -51,6 +50,23 @@ export const signOut = createAsyncThunk('user/signout', async (_, thunkAPI) => {
     return data.data;
   } catch (error: any) {
     return rejectWithValue(error.response.data);
+  }
+});
+
+export const updateUser = createAsyncThunk('users/update', async(values: object, thunkAPI) => {
+  console.log('updating user');
+  const {rejectWithValue} = thunkAPI;
+
+  try {
+    const {data} = await axios.patch<ResponseType>(
+      '/api/users/current-user',
+      values
+    );
+    //console.log(data.data);
+    return data.data.user;
+  }
+  catch (error:any) {
+    return rejectWithValue(error.response.data.message);
   }
 });
 
@@ -125,6 +141,23 @@ export const userSlice = createSlice({
     [signOut.rejected.type]: (state, action) => {
       state.loading = false;
       state.error = action.error;
+      state.userInfo = null; 
+    },
+
+    /* Update User Reducer */
+    [updateUser.pending.type]: (state, action) => {
+      state.loading = true;
+      localStorage.removeItem('userInfo');
+    },
+    [updateUser.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.userInfo = action.payload;
+      // Update userInfo to localStorage
+      localStorage.setItem('userInfo', JSON.stringify(action.payload));
+    },
+    [updateUser.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
       state.userInfo = null;
     },
   },

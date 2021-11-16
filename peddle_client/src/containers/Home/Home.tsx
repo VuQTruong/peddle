@@ -51,7 +51,7 @@ export default function Home() {
           My Items (4)
           <i className='bx bx-chevron-right'></i>
         </Link>
-        <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
+        <Link to='/settings' className='btn btn-secondary home__btn home__btn--option'>
           Settings
           <i className='bx bx-chevron-right'></i>
         </Link>
