@@ -13,6 +13,7 @@ import Home from './containers/Home/Home';
 import SignIn from './containers/SignIn/SignIn';
 import SignUp from './containers/SignUp/SignUp';
 import Profile from './containers/Profile/Profile';
+import Shopping from './containers/Shopping/Shopping';
 import Settings from "./containers/Settings/Settings";
 
 function App() {
@@ -25,6 +26,8 @@ function App() {
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />
           <PrivateRoute path='/' component={Home} exact />
+          <PrivateRoute path='/' component={Home} exact />
+          <PrivateRoute path='/shopping' component={Shopping} exact />
           <PrivateRoute path='/settings' component={Settings} exact />
           <Route path='*' component={Page404} />
         </Switch>

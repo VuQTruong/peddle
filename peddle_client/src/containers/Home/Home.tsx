@@ -8,7 +8,7 @@ import { isURL } from '../../utilities/validators';
 export default function Home() {
   const user = useSelector((state: State) => state.user);
   const { userInfo } = user;
-
+ 
   return (
     <main className='home__container'>
       <section className='home__header'>
