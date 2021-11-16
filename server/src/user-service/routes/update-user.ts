@@ -26,12 +26,10 @@ router.patch(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.currentUser?.id;
  
-    if (req.body.password !== null) {
+    if (req.body.password !== null)
       req.body.password = await hashPassword(req.body.password);
-    }
-    else {
+    else 
       delete req.body.password;
-    } 
     
     const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
       new: true,
