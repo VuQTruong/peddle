@@ -59,7 +59,6 @@ export default function Settings() {
     switch(e.target.id)
     {
       case "name": {
-        // Assumes user will only enter two names. Might fix later
         let splitName = e.target.value.split(" ");
         setState({firstName: splitName[0]});
         setState({lastName: splitName[1]});
