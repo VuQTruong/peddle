@@ -39,6 +39,7 @@ import {
 import {
   getChatsRouter,
   createChatRouter,
+  deleteChatRouter,
   updateChatRouter,
   getChatsByUserRouter,
 } from "./chat-service/routes";
@@ -117,6 +118,7 @@ app.use(deleteItemRouter);
 app.use(getChatsRouter);
 app.use(updateChatRouter);
 app.use(createChatRouter);
+app.use(deleteChatRouter);
 app.use(getChatsByUserRouter);
 
 // Purchase Services
