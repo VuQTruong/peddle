@@ -1,0 +1,21 @@
+.page404__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.page404__img {
+  width: 80%;
+  margin-bottom: 2em;
+}
+
+.page404__title {
+  font-size: $fs-70;
+  letter-spacing: 5px;
+  line-height: 1.1;
+}
+
+.page404__subtitle {
+  letter-spacing: 1px;
+}
