@@ -38,6 +38,7 @@ import {
   createChatRouter,
   updateChatRouter,
   getChatsByUserRouter,
+  deleteChatRouter,
 } from "./chat-service/routes";
 
 import { NotFoundError } from "./errors/not-found-error";
@@ -112,6 +113,7 @@ app.use(deleteItemRouter);
 app.use(getChatsRouter);
 app.use(updateChatRouter);
 app.use(createChatRouter);
+app.use(deleteChatRouter);
 app.use(getChatsByUserRouter);
 
 /* Unhandled Routes */

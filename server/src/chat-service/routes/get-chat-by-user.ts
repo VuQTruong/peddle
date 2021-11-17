@@ -1,35 +1,43 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import Chat from "../../models/chat";
-import { ServerError } from "../../errors/server-error";
+import { param } from "express-validator";
 import { currentUser } from "../../middlewares/current-user";
 import { requireAuth } from "../../middlewares/require-auth";
+import { BadRequestError } from "../../errors";
+import { validateRequest } from "../../middlewares/validate-request";
 
 const router = express.Router();
+
+const validations = [
+  param("userId").isMongoId().withMessage("UserId is not valid MongoId"),
+];
 
 router.get(
   "/api/chat/user/:userId",
   currentUser,
   requireAuth,
-  async (req, res) => {
-    try {
-      const userId = req.params.userId;
-      const chats = await Chat.find();
+  validations,
+  validateRequest,
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.userId;
+    const chatForUser = await (
+      await Chat.find()
+    ).filter(
+      (chat) =>
+        chat.sender.toString() == userId || chat.receiver.toString() == userId
+    );
 
-      let chatForUser = chats.filter(
-        (chat) =>
-          chat.user1.toString() == userId || chat.user2.toString() == userId
-      );
-
-      return res.status(200).send({
-        status: "200",
-        message: "Success",
-        data: {
-          chatForUser,
-        },
-      });
-    } catch (err) {
-      throw new ServerError("Something went wrong");
+    if (chatForUser.length == 0) {
+      return next(new BadRequestError("chat not found for this userId"));
     }
+
+    return res.status(200).send({
+      status: "200",
+      message: "Success",
+      data: {
+        chatForUser,
+      },
+    });
   }
 );
 
