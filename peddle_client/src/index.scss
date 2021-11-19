@@ -9,6 +9,8 @@
 @import './components/Header/header';
 @import './components/NavBar/navbar';
 @import './components/Item/item-tile';
+@import './components/SlickImages/slickImages';
+
 
 /* Containers */
 @import './containers/Page404/page404';
@@ -17,3 +19,5 @@
 @import './containers/SignUp/signUp';
 @import './containers/Profile/profile';
 @import './containers/MyItems/my-items'
+@import './containers/ManageItem/manageItemForm';
+
