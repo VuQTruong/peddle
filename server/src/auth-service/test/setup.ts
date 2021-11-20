@@ -42,8 +42,6 @@ global.signin = async () => {
       lat: 42.97835888354304,
       lng: -81.26441944180407,
       postalCode: "N6H 1A2",
-      isPremiumMember: false,
-      dislikedItemIds: [],
     })
     .expect(201);
 
@@ -63,8 +61,6 @@ global.signin2 = async () => {
       lat: 42.97835888354304,
       lng: -81.26441944180407,
       postalCode: "N6H 1A2",
-      isPremiumMember: false,
-      dislikedItemIds: [],
     })
     .expect(201);
 

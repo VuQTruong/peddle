@@ -53,9 +53,7 @@ export default function WavyDivider({ position }: WavyDividerProps) {
   return (
     <div
       style={
-        position === 'top'
-          ? { overflow: 'hidden', marginTop: '-1px' }
-          : { overflow: 'hidden', marginBottom: '-8px' }
+        position === 'top' ? { marginTop: '-1px' } : { marginBottom: '-8px' }
       }
     >
       {renderSVG()}

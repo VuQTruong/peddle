@@ -86,7 +86,7 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:5000/api/auth/currentuser",
+							"raw": "localhost:5000/api/auth/current-user",
 							"host": [
 								"localhost"
 							],

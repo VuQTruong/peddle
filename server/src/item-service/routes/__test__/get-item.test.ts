@@ -14,7 +14,7 @@ it("gets an item with valid session", async () => {
   const cookie = await global.signin();
 
   const currUser = await request(app)
-    .get("/api/auth/currentuser")
+    .get("/api/auth/current-user")
     .set("Cookie", cookie)
     .send()
     .expect(200);

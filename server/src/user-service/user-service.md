@@ -60,7 +60,7 @@ Failure Response:
 
 **`GET` /api/users/{userId} - get a user by id**
 
-```
+```json
 request {}
 
 response Ok:
@@ -93,19 +93,19 @@ response Ok:
 
 response Error:
 {
-    status: 500,
-    message: "Unexpected Error - ${err.message}",
-    errors:[
+    "status": 500,
+    "message": "Unexpected Error - ${err.message}",
+    "errors":[
         {
-            message: "Unexpected Error - ${err.message}",
+            "message": "Unexpected Error - ${err.message}",
         }
     ]
 }
 ```
 
-**`GET` /api/users/{userId}/posts - get a user's posted items**
+**`GET` /api/users/post-items - get a user's posted items**
 
-```
+```json
 request {}
 
 response Ok:
@@ -140,19 +140,19 @@ response Ok:
 }
 
 {
-    status: 500,
-    message: "Unexpected Error - ${err.message}",
-    errors:[
+    "status": 500,
+    "message": "Unexpected Error - ${err.message}",
+    "errors":[
         {
-            message: "Unexpected Error - ${err.message}",
+            "message": "Unexpected Error - ${err.message}",
         }
     ]
 }
 ```
 
-**`GET` /api/users/{userId}/purchased - get a user's purchased items**
+**`GET` /api/users/purchased-items - get a user's purchased items**
 
-```
+```json
 request {}
 
 response Ok:
@@ -188,19 +188,19 @@ response Ok:
 
 response Error:
 {
-    status: 500,
-    message: "Unexpected Error - ${err.message}",
-    errors:[
+    "status": 500,
+    "message": "Unexpected Error - ${err.message}",
+    "errors":[
         {
-            message: "Unexpected Error - ${err.message}",
+            "message": "Unexpected Error - ${err.message}",
         }
     ]
 }
 ```
 
-**`GET` /api/users/{userId}/favourite - get a user's favourite items**
+**`GET` /api/users/favourite-items - get a user's favourite items**
 
-```
+```json
 request {}
 
 response Ok:
@@ -237,19 +237,19 @@ response Ok:
 
 response Error:
 {
-    status: 500,
-    message: "Unexpected Error - ${err.message}",
-    errors:[
+    "status": 500,
+    "message": "Unexpected Error - ${err.message}",
+    "errors":[
         {
-            message: "Unexpected Error - ${err.message}",
+            "message": "Unexpected Error - ${err.message}",
         }
     ]
 }
 ```
 
-**`PATCH` /api/users/{userId} - update user info**
+**`PATCH` /api/users/current-user - update user info**
 
-```
+``` json
 request
 {
     "firstName": "value",    // Optional
@@ -290,24 +290,24 @@ response Ok:
 
 response Error:
 {
-    status: 500,
-    message: "Unexpected Error - ${err.message}",
-    errors:[
+    "status": 500,
+    "message": "Unexpected Error - ${err.message}",
+    "errors":[
         {
-            message: "Unexpected Error - ${err.message}",
+            "message": "Unexpected Error - ${err.message}",
         }
     ]
 }
 ```
 
-**`PATCH` /api/users/{userId}/seen - update user's seen items**
+**`PATCH` /api/users/seen-items - update user's seen items**
 
 - Update seen item **_MUST_** be called after an item is passed to ensure the user will not get the item again
 
-```
+``` json
 request
 {
-    "itemId": "value"
+    "itemId": "SDKJ934kldf88234DFLK9ALKlsdkfj" //valid mongo id 
 }
 
 response Ok:
@@ -318,30 +318,30 @@ response Ok:
 
 response Error:
 {
-    status: 400,
-    message: "User not found",
-    errors: [
+    "status": 400,
+    "message": "User not found",
+    "errors":[
         {
-            message: "User not found",
+            "message": "User not found",
         }
     ]
 }
 
 response Error:
 {
-    status: 500,
-    message: "Unexpected Error - ${err.message}",
-    errors:[
+    "status": 500,
+    "message": "Unexpected Error - ${err.message}",
+    "errors":[
         {
-            message: "Unexpected Error - ${err.message}",
+            "message": "Unexpected Error - ${err.message}",
         }
     ]
 }
 ```
 
-**`POST` /api/users/{userId}/favourite - add an item to favourite list**
+**`POST` /api/users/favourite - add an item to favourite list**
 
-```
+``` json
 request
 {
     "itemId": "value"
@@ -355,32 +355,31 @@ response Ok:
 
 response Error:
 {
-    status: 400,
-    message: "User not found",
-    errors:[
-        message: "User not found",
+    "status": 400,
+    "message": "User not found",
+    "errors":[
+        {
+            "message": "User not found",
+        }
     ]
 }
 
 response Error:
 {
-    status: 500,
-    message: "Unexpected Error - ${err.message}",
-    errors:[
+    "status": 500,
+    "message": "Unexpected Error - ${err.message}",
+    "errors":[
         {
-            message: "Unexpected Error - ${err.message}",
+            "message": "Unexpected Error - ${err.message}",
         }
     ]
 }
 ```
 
-**`DELETE` /api/users/{userId}/favourite - delete an item to favourite list**
+**`DELETE` /api/users/favourite/{itemId} - delete an item to favourite list**
 
-```
-request
-{
-    "itemId": "value"
-}
+``` json
+request{}
 
 response Ok:
 {
@@ -390,22 +389,22 @@ response Ok:
 
 response Error:
 {
-    status: 400,
-    message: "User not found"
-    errors:[
+    "status": 400,
+    "message": "User not found",
+    "errors":[
         {
-            message: "User not found"
+            "message": "User not found",
         }
     ]
 }
 
 response Error:
 {
-    status: 500,
-    message: "Unexpected Error - ${err.message}",
-    errors:[
+    "status": 500,
+    "message": "Unexpected Error - ${err.message}",
+    "errors":[
         {
-            message: "Unexpected Error - ${err.message}",
+            "message": "Unexpected Error - ${err.message}",
         }
     ]
 }

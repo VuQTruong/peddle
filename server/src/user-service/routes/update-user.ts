@@ -1,34 +1,36 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { body } from 'express-validator';
+import { body, param } from 'express-validator';
 import { BadRequestError } from '../../errors/bad-request-error';
 import { currentUser } from '../../middlewares/current-user';
 import { requireAuth } from '../../middlewares/require-auth';
 import { validateRequest } from '../../middlewares/validate-request';
 import { User } from '../../models/user';
+import { hashPassword } from '../../utilities/password-util';
 const router = express.Router();
 
 const validations = [
-  body('firstName').isString().isLength({min: 1}).optional(),
-  body('lastName').isString().isLength({min: 1}).optional(),
-  body('photo').isString().optional(),
-  body('lat').isNumeric().optional(),
-  body('lng').isNumeric().optional(),
-  body("postalCode").isString().trim().isLength({ min: 7, max: 7 }).isPostalCode('CA').optional(),
+  body('firstName').isString().isLength({min: 1}).optional().withMessage("invalid first name"),
+  body('lastName').isString().isLength({min: 1}).optional().withMessage("invalid last name"),
+  body('photo').isString().optional().withMessage("invalid value for photo"),
+  body('lat').isNumeric().optional().withMessage("invalid latitude value"),
+  body('lng').isNumeric().optional().withMessage("invalid longitude value"),
+  body("postalCode").trim().isLength({ min: 7, max: 7 }).isPostalCode('CA').optional().withMessage("invalid postal code"),
 ];
 
 router.patch(
-  '/api/users/:userId',
+  '/api/users/current-user',
   currentUser,
   requireAuth,
   validations,
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    const userId = req.params.userId;
+    const userId = req.currentUser?.id;
 
-    if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
-      throw new BadRequestError('Item id is not valid');
-    }
-
+    if(req.body.password !== undefined) 
+      req.body.password = await hashPassword(req.body.password);
+    else 
+      delete req.body.password;
+    
     const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
       new: true,
       runValidators: true,

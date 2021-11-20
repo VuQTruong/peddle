@@ -4,6 +4,7 @@
 }
 
 .btn {
+  font-family: $ff-primary;
   font-size: $fs-24;
   font-weight: 700;
 
@@ -16,11 +17,19 @@
   color: $clr-txt-secondary;
   padding: 0.5em 2.5em;
   border-radius: 20px;
+  text-align: center;
 }
 
 .btn-secondary {
   background-color: $clr-secondary;
   color: $clr-txt-primary;
+  padding: 0.5em 1em;
+  border-radius: 20px;
+}
+
+.btn-danger {
+  background-color: $clr-danger;
+  color: white;
   padding: 0.5em 1em;
   border-radius: 20px;
 }

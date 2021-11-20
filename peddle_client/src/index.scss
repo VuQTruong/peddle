@@ -8,10 +8,14 @@
 /* Components */
 @import './components/Header/header';
 @import './components/NavBar/navbar';
+@import './components/SlickImages/slickImages';
 
 /* Containers */
 @import './containers/Page404/page404';
 @import './containers/Home/home';
 @import './containers/SignIn/signIn';
 @import './containers/SignUp/signUp';
-@import './containers/UserInfo/userInfo';
+@import './containers/Profile/profile';
+@import './containers/Settings/settings';
+@import './containers/ManageItem/manageItemForm';
+

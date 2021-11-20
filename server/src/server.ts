@@ -13,12 +13,13 @@ import {
 import {
   getUserRouter,
   getPostItemsRouter,
-  getPurchasedListRouter,
+  getPurchasedItemRouter,
   updateUserRouter,
   updateSeenItemsRouter,
   addFavouriteItemRouter,
   removeFavouriteItemRouter,
   getFavouriteItemsRouter,
+  getSeenItems,
 } from './user-service/routes';
 import {
   createCategoryRouter,
@@ -33,6 +34,7 @@ import {
   updateItemRouter,
   deleteItemRouter,
 } from './item-service/routes';
+import { purchaseRoute } from './purchase-service/routes/purchase-item';
 
 import { NotFoundError } from './errors/not-found-error';
 import { errorHandler } from './middlewares/error-handler';
@@ -81,14 +83,15 @@ app.use(uploadImage);
 app.use(deleteImage);
 
 // User Services
-app.use(getUserRouter);
+app.use(addFavouriteItemRouter);
 app.use(getPostItemsRouter);
-app.use(getPurchasedListRouter);
+app.use(getPurchasedItemRouter);
 app.use(updateUserRouter);
 app.use(updateSeenItemsRouter);
-app.use(addFavouriteItemRouter);
 app.use(removeFavouriteItemRouter);
 app.use(getFavouriteItemsRouter);
+app.use(getSeenItems)
+app.use(getUserRouter);
 
 // Category Services
 app.use(createCategoryRouter);
@@ -102,6 +105,9 @@ app.use(getItemRouter);
 app.use(createItemRouter);
 app.use(updateItemRouter);
 app.use(deleteItemRouter);
+
+// Purchase Services
+app.use(purchaseRoute);
 
 /* Unhandled Routes */
 app.all('*', async (req, res) => {
