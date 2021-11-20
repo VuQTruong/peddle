@@ -14,6 +14,7 @@ import SignIn from './containers/SignIn/SignIn';
 import SignUp from './containers/SignUp/SignUp';
 import Profile from './containers/Profile/Profile';
 import MyItems from './containers/MyItems/MyItems';
+import ManageItem from './containers/ManageItem/ManageItem';
 
 function App() {
   return (
@@ -21,6 +22,12 @@ function App() {
       <SessionExpiredModal />
       <Router>
         <Switch>
+          <PrivateRoute path='/user/items/new'>
+            <ManageItem mode='new' />
+          </PrivateRoute>
+          <PrivateRoute path='/user/items/:itemId'>
+            <ManageItem mode='edit' />
+          </PrivateRoute>
           <PrivateRoute path='/user' component={Profile} />
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />
