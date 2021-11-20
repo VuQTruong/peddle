@@ -62,7 +62,7 @@ export const signOut = createAsyncThunk('user/signout', async (_, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
 
   try {
-    const { data } = await axios.post<ResponseType>('/api/auth/signout');
+    await axios.post<ResponseType>('/api/auth/signout');
 
     return null;
   } catch (error: any) {
@@ -75,8 +75,7 @@ export const fetchCurrUser = createAsyncThunk('user/fetchCurrUser', async (_, th
 
   try {
     const { user } =  getState() as State;
-    const { data } = await axios.post<ResponseType>(`/api/user/${user.userInfo.id}`);
-
+    const { data } = await axios.get<ResponseType>(`/api/users/${user.userInfo.id}`);
     return data.data;
   } catch (error: any) {
     return rejectWithValue(error.response.data);
