@@ -7,7 +7,6 @@ import { validateRequest } from "../../middlewares/validate-request";
 import { requireAuth } from "../../middlewares/require-auth";
 import { NotAuthorizedError } from "../../errors";
 
-
 const router = express.Router();
 
 const validations = [
