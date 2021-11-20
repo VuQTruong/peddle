@@ -52,16 +52,14 @@ export default function Settings() {
     streetaddr: ''
   };
 
-
   const reducer = (state:any, newState:any) => ({ ...state, ...newState });
   const [state, setState] = useReducer(reducer, formInitialValues);
-
-  
 
   const handleChange = (e:any) => {
     switch(e.target.id)
     {
       case "name": {
+        // Assumes user will only enter two names. Might fix later
         let splitName = e.target.value.split(" ");
         setState({firstName: splitName[0]});
         setState({lastName: splitName[1]});
@@ -89,8 +87,6 @@ export default function Settings() {
   }
 
   const returnHandler = () => {
-    console.log("Changes saved -> ")
-    console.log(changesSaved);
     if (changesMade && !changesSaved) {
       swal({
         title: 'Changes have been made',
@@ -113,7 +109,6 @@ export default function Settings() {
           changesSaved = false;
           history.push('/');
         }
-          
       })
     }
     else {
@@ -125,12 +120,10 @@ export default function Settings() {
 
   const saveHandler = () => {
     changesSaved = true;
-    console.log("Changes saved -> ")
-    console.log(changesSaved);
     //? Update to only pass values that have been changed
     dispatch(
       updateUser({
-          firstName: state.firstName,
+          firstName : state.firstName,
           lastName: state.lastName,
           email: state.email,
           postalCode: state.postalCode,
@@ -149,9 +142,6 @@ export default function Settings() {
         <i className='bx bx-left-arrow-alt' onClick={returnHandler}/>
       </div>
       <Formik
-        onChange={(e:any) => {
-          console.log(e);
-        }}
         initialValues={formInitialValues}
         onSubmit={saveHandler}
         validationSchema={validationSchema}

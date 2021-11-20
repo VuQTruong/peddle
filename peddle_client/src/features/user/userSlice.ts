@@ -54,15 +54,12 @@ export const signOut = createAsyncThunk('user/signout', async (_, thunkAPI) => {
 });
 
 export const updateUser = createAsyncThunk('users/update', async(values: object, thunkAPI) => {
-  console.log('updating user');
   const {rejectWithValue} = thunkAPI;
-
   try {
     const {data} = await axios.patch<ResponseType>(
       '/api/users/current-user',
       values
     );
-    //console.log(data.data);
     return data.data.user;
   }
   catch (error:any) {
