@@ -25,8 +25,8 @@ router.patch(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.currentUser?.id;
- 
-    if (req.body.password !== null) {
+
+    if(req.body.password !== undefined) {
       req.body.password = await hashPassword(req.body.password);
     }
     else {
