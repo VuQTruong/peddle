@@ -29,7 +29,7 @@ export default function MyItems() {
                     { userItems.map(item=> <ItemTile key={item.id} item={{...item}} />) }
                 </div >
                 <div className='my-items__add-button-div' >
-                    <button className='my-items__add-button' type="button" onClick={(e) => console.log('button clicked')}>
+                    <button className='btn btn-primary my-items__add-button' type="button" onClick={(e) => console.log('button clicked')}>
                         <IoMdAddCircle style={{backgroundColor :'#507dbc'}} color='' size={40}/>
                         <p>{'Add item'}</p>
                     </button>

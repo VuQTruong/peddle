@@ -20,16 +20,11 @@
 .my-items__item-list {
     height:500px;
 }
+
 .my-items__add-button {
-    width: 160px;
-    border-radius: 8px;
-    justify-self: center;
-    background-color: $clr-primary;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
     align-items: center;
-    vertical-align: top;
+    padding: 0.5em 1em;
 }
 
 .my-items__add-button-div {
@@ -37,10 +32,10 @@
   justify-content: center;
 }
 
-.my-items__add-button p{
-    padding-right: 15px;
-    font-size: 20px;
+.my-items__add-button p {
+    padding-left: 15px;
 }
+
 button:active {
     margin: 1px 1px 1px 1px;
 }

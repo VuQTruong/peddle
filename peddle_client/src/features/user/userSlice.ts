@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { State } from '../../store';
 
 type ResponseType = {
   status: string;
@@ -64,6 +65,19 @@ export const signOut = createAsyncThunk('user/signout', async (_, thunkAPI) => {
     const { data } = await axios.post<ResponseType>('/api/auth/signout');
 
     return null;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const fetchCurrUser = createAsyncThunk('user/fetchCurrUser', async (_, thunkAPI) => {
+  const { rejectWithValue, getState } = thunkAPI;
+
+  try {
+    const { user } =  getState() as State;
+    const { data } = await axios.post<ResponseType>(`/api/user/${user.userInfo.id}`);
+
+    return data.data;
   } catch (error: any) {
     return rejectWithValue(error.response.data);
   }
@@ -138,6 +152,20 @@ export const userSlice = createSlice({
       localStorage.removeItem('userInfo');
     },
     [signOut.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+      state.userInfo = null;
+    },
+
+    // Fetch Curr User Reducer
+    [fetchCurrUser.pending.type]: (state, action) => {
+      state.loading = true;
+    },
+    [fetchCurrUser.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.userInfo = action.payload;
+    },
+    [fetchCurrUser.rejected.type]: (state, action) => {
       state.loading = false;
       state.error = action.error;
       state.userInfo = null;
