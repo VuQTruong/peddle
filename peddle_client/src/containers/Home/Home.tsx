@@ -52,6 +52,10 @@ export default function Home() {
           <i className='bx bx-chevron-right'></i>
         </Link>
         <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
+          Messages
+          <i className='bx bx-chevron-right'></i>
+        </Link>
+        <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
           Settings
           <i className='bx bx-chevron-right'></i>
         </Link>

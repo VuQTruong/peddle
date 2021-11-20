@@ -27,6 +27,7 @@ router.post(
     //get sender and receiver from the request body
     const sender = chatBody.sender;
     const receiver = chatBody.receiver;
+    const item = chatBody.itemId;
 
     //if sender and receiver are same, throw an error
     if (sender == receiver) {
@@ -40,17 +41,17 @@ router.post(
       await Chat.find()
     ).filter(
       (chat) =>
-        (chat.sender.toString() == sender ||
-          chat.receiver.toString() == sender) &&
-        (chat.sender.toString() == receiver ||
-          chat.receiver.toString() == receiver)
+        (chat.sender == sender || chat.receiver == sender) &&
+        (chat.sender == receiver || chat.receiver == receiver) &&
+        chat.itemId == item
     );
 
     //if chat exists between these users, throw an error
     if (chatForUser.length > 0) {
       return res.status(400).send({
         status: "400",
-        message: "Chat between sender and receiver already exists.",
+        message:
+          "Chat between sender and receiver already exists for this particular item.",
       });
     }
 

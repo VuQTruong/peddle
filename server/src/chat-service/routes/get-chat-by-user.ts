@@ -20,11 +20,11 @@ router.get(
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.params.userId;
-    const chatForUser = await (
-      await Chat.find()
-    ).filter(
+    const chats = await Chat.find();
+
+    let chatForUser = chats.filter(
       (chat) =>
-        chat.sender.toString() == userId || chat.receiver.toString() == userId
+        chat.sender?.toString() == userId || chat.receiver?.toString() == userId
     );
 
     if (chatForUser.length == 0) {
