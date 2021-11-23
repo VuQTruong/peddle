@@ -9,6 +9,7 @@ import { State } from '../../store';
 import { useEffect } from 'react';
 import swal from 'sweetalert';
 import { setSessionTTL } from '../../features/session/sessionSlice';
+import { getItemsByUserId } from '../../features/user/userItemsSlice';
 
 type SignInFormType = {
   email: string;
