@@ -10,6 +10,7 @@ export interface ItemDocument extends mongoose.Document {
   views: number;
   isActive: boolean;
   isSold: boolean;
+  matches: number;
   purchasedBy: string;
   postedBy: string;
   createdAt: Date;
@@ -30,6 +31,10 @@ const ItemSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: true,
+    },
+    matches: {
+      type: Number,
+      default: 0,
     },
     description: {
       type: String,
