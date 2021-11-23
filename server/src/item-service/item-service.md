@@ -49,7 +49,6 @@ request
     "images": ["imageUrl_1", "imageUrl_2", "imageUrl_3"],
     "price": 13.99,
     "description": "Item Description"
-    "postedBy": "a valid Mongo Id"
 }
 
 response OK:

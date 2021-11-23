@@ -1,0 +1,41 @@
+.my-items__header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+    margin: 2em 0 1.5em;
+}
+
+.my-items__header i{
+    position: absolute;
+    font-size:  $fs-32;
+    top: 0.5em;
+    left: 0.5em;
+    transform: translateY(-50%);
+}
+
+.my-items__title{
+    font-size: $fs-24;
+}
+.my-items__item-list {
+    height:500px;
+}
+
+.my-items__add-button {
+    display: flex;
+    align-items: center;
+    padding: 0.5em 1em;
+}
+
+.my-items__add-button-div {
+  display: flex;
+  justify-content: center;
+}
+
+.my-items__add-button p {
+    padding-left: 15px;
+}
+
+button:active {
+    margin: 1px 1px 1px 1px;
+}
