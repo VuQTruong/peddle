@@ -15,6 +15,7 @@ import SignUp from './containers/SignUp/SignUp';
 import Profile from './containers/Profile/Profile';
 import MyItems from './containers/MyItems/MyItems';
 import Settings from './containers/Settings/Settings';
+
 import ManageItem from './containers/ManageItem/ManageItem';
 
 function App() {
