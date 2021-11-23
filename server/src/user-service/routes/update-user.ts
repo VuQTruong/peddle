@@ -5,6 +5,7 @@ import { currentUser } from '../../middlewares/current-user';
 import { requireAuth } from '../../middlewares/require-auth';
 import { validateRequest } from '../../middlewares/validate-request';
 import { User } from '../../models/user';
+import { hashPassword } from '../../utilities/password-util';
 const router = express.Router();
 
 const validations = [
@@ -25,6 +26,11 @@ router.patch(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.currentUser?.id;
 
+    if(req.body.password !== undefined) 
+      req.body.password = await hashPassword(req.body.password);
+    else 
+      delete req.body.password;
+    
     const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
       new: true,
       runValidators: true,
