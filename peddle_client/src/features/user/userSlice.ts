@@ -88,7 +88,7 @@ export const updateUser = createAsyncThunk('users/update', async(values: object,
       '/api/users/current-user',
       values
     );
-    return data.data.user;
+    return data.data;
   }
   catch (error:any) {
     return rejectWithValue(error.response.data.message);
