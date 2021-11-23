@@ -79,7 +79,17 @@ export default function SignUp() {
   }, [dispatch, error, history, userInfo]);
 
   const registerHandler = (values: SignUpFormType) => {
-    navigator.geolocation.getCurrentPosition((position) => {
+   
+    const lat = 43.007800;
+    const lng = -81.192500;
+    dispatch(
+      signUp({
+        ...values,
+        lat,
+        lng,
+      })
+    );
+    /* navigator.geolocation.getCurrentPosition((position) => {
       const lat = position.coords.latitude;
       const lng = position.coords.longitude;
 
@@ -90,7 +100,7 @@ export default function SignUp() {
           lng,
         })
       );
-    });
+    }); */
   };
 
   const returnHandler = () => {
