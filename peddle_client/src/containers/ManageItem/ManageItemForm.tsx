@@ -292,18 +292,7 @@ export default function ManageItemForm(props: Props) {
 
             <div className='form__control--text'>
               <label htmlFor='price'>Price</label>
-              {/* <Field
-                type='text'
-                name='price'
-                id='price'
-                placeholder='Item Price'
-              /> */}
-              <Field
-                // type='text'
-                name='price'
-                // id='price'
-                // placeholder='Item Price'
-              >
+              <Field name='price'>
                 {({ field, form }: any) => {
                   return (
                     <Cleave
