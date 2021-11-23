@@ -195,7 +195,6 @@ export default function ManageItemForm(props: Props) {
       enableReinitialize
     >
       {(formik) => {
-        console.log(formik.values);
         return (
           <Form className='signup__form'>
             <div className='signup__form-header'>

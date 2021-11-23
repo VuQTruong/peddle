@@ -45,7 +45,7 @@ export default function ManageItem(props: Props) {
             text: err.response.data.message,
             icon: 'error',
           }).then(() => {
-            history.push('/user/items');
+            history.push('/my-items');
           });
         });
     }
@@ -91,7 +91,7 @@ export default function ManageItem(props: Props) {
             text: 'Item created successfully',
             icon: 'success',
           }).then(() => {
-            history.push('/user/items');
+            history.push('/my-items');
           });
         })
         .catch((error) => {
@@ -114,7 +114,7 @@ export default function ManageItem(props: Props) {
             text: 'Item updated successfully',
             icon: 'success',
           }).then(() => {
-            history.push('/user/items');
+            history.push('/my-items');
           });
         })
         .catch((error) => {
@@ -214,7 +214,7 @@ export default function ManageItem(props: Props) {
               text: 'Item deleted successfully',
               icon: 'success',
             }).then(() => {
-              history.push('/user/items');
+              history.push('/my-items');
             });
           })
           .catch((error) => {
