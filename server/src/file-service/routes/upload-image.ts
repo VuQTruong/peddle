@@ -1,4 +1,3 @@
-import multer from 'multer';
 import express from 'express';
 import cloudinary from 'cloudinary';
 import uploadImage from '../../middlewares/multer';

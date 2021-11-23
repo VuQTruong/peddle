@@ -1,10 +1,21 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { State } from '../../store';
 
 type ResponseType = {
   status: string;
   message: string;
-  data: any;
+  data: {
+    id: string;
+  };
+};
+
+type UserResponse = {
+  status: string;
+  message: string;
+  data: {
+    user: any;
+  };
 };
 
 export const signIn = createAsyncThunk(
@@ -12,12 +23,17 @@ export const signIn = createAsyncThunk(
   async (values: object, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const { data } = await axios.post<ResponseType>(
+      const { data }  = await axios.post<ResponseType>(
         '/api/auth/signin',
         values
       );
 
-      return data.data;
+      const userRes = await axios.get<UserResponse>(
+        `/api/users/${data.data.id}`,
+        values
+      );
+
+      return userRes.data.data.user;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
     }
@@ -45,8 +61,20 @@ export const signOut = createAsyncThunk('user/signout', async (_, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
 
   try {
-    const { data } = await axios.post<ResponseType>('/api/auth/signout');
+    await axios.post<ResponseType>('/api/auth/signout');
 
+    return null;
+  } catch (error: any) {
+    return rejectWithValue(error.response.data);
+  }
+});
+
+export const fetchCurrUser = createAsyncThunk('user/fetchCurrUser', async (_, thunkAPI) => {
+  const { rejectWithValue, getState } = thunkAPI;
+
+  try {
+    const { user } =  getState() as State;
+    const { data } = await axios.get<ResponseType>(`/api/users/${user.userInfo.id}`);
     return data.data;
   } catch (error: any) {
     return rejectWithValue(error.response.data);
@@ -155,6 +183,20 @@ export const userSlice = createSlice({
     [updateUser.rejected.type]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
+      state.userInfo = null;
+    },
+
+    // Fetch Curr User Reducer
+    [fetchCurrUser.pending.type]: (state, action) => {
+      state.loading = true;
+    },
+    [fetchCurrUser.fulfilled.type]: (state, action) => {
+      state.loading = false;
+      state.userInfo = action.payload;
+    },
+    [fetchCurrUser.rejected.type]: (state, action) => {
+      state.loading = false;
+      state.error = action.error;
       state.userInfo = null;
     },
   },
