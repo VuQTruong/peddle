@@ -152,22 +152,26 @@ export default function ManageItem(props: Props) {
         },
       }).then((willLeave) => {
         if (willLeave) {
-          swal({
-            title: 'Info',
-            text: 'Deleting Images...',
-            icon: 'info',
-          });
+          if (imageUrls.length > 0) {
+            swal({
+              title: 'Info',
+              text: 'Deleting Images...',
+              icon: 'info',
+            });
 
-          // The user has confirmed that they want to leave without saving images that have been uploaded to the server, we need to delete them to prevent orphan images and waste of space
-          const promises = imageUrls.map((imageUrl) => {
-            const imageName = imageUrl.split('/').pop();
-            const imageId = imageName!.split('.')[0];
-            return axios.delete(`/api/images/${imageId}`);
-          });
+            // The user has confirmed that they want to leave without saving images that have been uploaded to the server, we need to delete them to prevent orphan images and waste of space
+            const promises = imageUrls.map((imageUrl) => {
+              const imageName = imageUrl.split('/').pop();
+              const imageId = imageName!.split('.')[0];
+              return axios.delete(`/api/images/${imageId}`);
+            });
 
-          Promise.all(promises).then(() => {
+            Promise.all(promises).then(() => {
+              history.goBack();
+            });
+          } else {
             history.goBack();
-          });
+          }
         }
       });
     } else {

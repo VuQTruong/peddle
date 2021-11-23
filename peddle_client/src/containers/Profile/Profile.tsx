@@ -86,13 +86,6 @@ export default function UserInfo() {
             to='/user'
             className='btn btn-secondary profile__btn profile__btn--option'
           >
-            Settings
-            <i className='bx bx-chevron-right'></i>
-          </Link>
-          <Link
-            to='/user'
-            className='btn btn-secondary profile__btn profile__btn--option'
-          >
             Invite Friends
             <i className='bx bx-chevron-right'></i>
           </Link>
