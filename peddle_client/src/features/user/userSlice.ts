@@ -29,8 +29,7 @@ export const signIn = createAsyncThunk(
       );
 
       const userRes = await axios.get<UserResponse>(
-        `/api/users/${data.data.id}`,
-        values
+        `/api/users/${data.data.id}`
       );
 
       return userRes.data.data.user;
@@ -74,8 +73,9 @@ export const fetchCurrUser = createAsyncThunk('user/fetchCurrUser', async (_, th
 
   try {
     const { user } =  getState() as State;
-    const { data } = await axios.get<ResponseType>(`/api/users/${user.userInfo.id}`);
-    return data.data;
+    const { data } = await axios.get<UserResponse>(`/api/users/${user.userInfo.id}`);
+
+    return data.data.user;
   } catch (error: any) {
     return rejectWithValue(error.response.data);
   }
@@ -193,6 +193,8 @@ export const userSlice = createSlice({
     [fetchCurrUser.fulfilled.type]: (state, action) => {
       state.loading = false;
       state.userInfo = action.payload;
+
+      localStorage.setItem('userInfo', JSON.stringify(action.payload));
     },
     [fetchCurrUser.rejected.type]: (state, action) => {
       state.loading = false;

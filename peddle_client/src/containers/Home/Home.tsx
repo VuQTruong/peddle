@@ -1,13 +1,20 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import WavyDivider from '../../components/WavyDivider/WavyDivider';
 import Avatar from 'react-avatar';
 import { Link } from 'react-router-dom';
 import { State } from '../../store';
 import { isURL } from '../../utilities/validators';
+import { useEffect } from 'react';
+import { fetchCurrUser } from '../../features/user/userSlice';
 
 export default function Home() {
   const user = useSelector((state: State) => state.user);
+  const dispatch = useDispatch();
   const { userInfo } = user;
+
+  useEffect(() => {
+    dispatch(fetchCurrUser());
+  }, [])
 
   return (
     <main className='home__container'>
