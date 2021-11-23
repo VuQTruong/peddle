@@ -23,6 +23,11 @@ export default function NavBar() {
             </Link>
           </li>
           <li className='navbar__item'>
+            <Link to='/'>
+              <i className='bx bx-chat'></i>
+            </Link>
+          </li>
+          <li className='navbar__item'>
             <Link to='/user'>
               <i className='bx bx-user'></i>
             </Link>

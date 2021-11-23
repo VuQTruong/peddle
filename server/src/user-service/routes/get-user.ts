@@ -1,3 +1,4 @@
+
 import express, { NextFunction, Request, Response } from 'express';
 import { User } from '../../models/user';
 import { BadRequestError } from '../../errors/bad-request-error';
@@ -13,18 +14,19 @@ const validations = [param('userId').isMongoId().withMessage('User id is not in 
 router.get('/api/users/:userId', currentUser, requireAuth, validations, validateRequest, async (req: Request, res: Response, next: NextFunction) => {
   const userId = req.params.userId;
 
-  const user = await User.findById(userId);
-  if(!user){
-    return next(new BadRequestError('User not found'));
-  }
+    const user = await User.findById(userId);
+    if (!user) {
+      return next(new BadRequestError("User not found"));
+    }
 
-  return res.status(200).send({
-    status: '200',
-    message: 'Success',
-    data: {
-      user,
-    },
-  });
-});
+    return res.status(200).send({
+      status: "200",
+      message: "Success",
+      data: {
+        user,
+      },
+    });
+  }
+);
 
 export { router as getUserRouter };

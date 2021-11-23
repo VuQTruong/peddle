@@ -1,15 +1,15 @@
-import express from 'express';
-import 'express-async-errors';
-import cloudinary from 'cloudinary';
+import express from "express";
+import "express-async-errors";
+import cloudinary from "cloudinary";
 
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 import {
   signinRouter,
   signoutRouter,
   signUpRouter,
   currentUserRouter,
-} from './auth-service/routes';
+} from "./auth-service/routes";
 import {
   getUserRouter,
   getPostItemsRouter,
@@ -20,33 +20,40 @@ import {
   removeFavouriteItemRouter,
   getFavouriteItemsRouter,
   getSeenItems,
-} from './user-service/routes';
+} from "./user-service/routes";
+
 import {
   createCategoryRouter,
   getAllCategoriesRouter,
   updateCategoryRouter,
   deleteCategoryRouter,
-} from './category-service/routes';
+} from "./category-service/routes";
 import {
   getMultiItemsRouter,
   getItemRouter,
   createItemRouter,
   updateItemRouter,
   deleteItemRouter,
-  incrementMatchesRouter
-} from './item-service/routes';
-import { purchaseRoute } from './purchase-service/routes/purchase-item';
+} from "./item-service/routes";
 
-import { NotFoundError } from './errors/not-found-error';
-import { errorHandler } from './middlewares/error-handler';
-import cookieSession from 'cookie-session';
-import { deleteImage, uploadImage } from './file-service/routes';
-import { getUserItemsRouter } from './item-service/routes/get-items-by-userId';
+import {
+  getChatsRouter,
+  createChatRouter,
+  deleteChatRouter,
+  updateChatRouter,
+  getChatsByUserRouter,
+} from "./chat-service/routes";
+
+import { purchaseRoute } from "./purchase-service/routes/purchase-item";
+import { NotFoundError } from "./errors/not-found-error";
+import { errorHandler } from "./middlewares/error-handler";
+import cookieSession from "cookie-session";
+import { deleteImage, uploadImage } from "./file-service/routes";
 
 dotenv.config();
 
 const app = express();
-app.set('trust proxy', true);
+app.set("trust proxy", true);
 
 app.use(express.json());
 app.use(
@@ -66,10 +73,10 @@ cloudinary.v2.config({
 });
 
 /* Home Route */
-app.get('/health', (req, res) => {
+app.get("/health", (req, res) => {
   res.status(200).json({
-    status: 'success',
-    message: 'Server is ready',
+    status: "success",
+    message: "Server is ready",
   });
 });
 
@@ -92,7 +99,7 @@ app.use(updateUserRouter);
 app.use(updateSeenItemsRouter);
 app.use(removeFavouriteItemRouter);
 app.use(getFavouriteItemsRouter);
-app.use(getSeenItems)
+app.use(getSeenItems);
 app.use(getUserRouter);
 
 // Category Services
@@ -107,13 +114,18 @@ app.use(getItemRouter);
 app.use(createItemRouter);
 app.use(updateItemRouter);
 app.use(deleteItemRouter);
-app.use(getUserItemsRouter);
-app.use(incrementMatchesRouter);
+
+app.use(getChatsRouter);
+app.use(updateChatRouter);
+app.use(createChatRouter);
+app.use(deleteChatRouter);
+app.use(getChatsByUserRouter);
+
 // Purchase Services
 app.use(purchaseRoute);
 
 /* Unhandled Routes */
-app.all('*', async (req, res) => {
+app.all("*", async (req, res) => {
   throw new NotFoundError();
 });
 
