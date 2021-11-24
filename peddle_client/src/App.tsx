@@ -34,7 +34,7 @@ function App() {
           <PrivateRoute path='/user' component={Profile} />
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />
-          <Route path='/my-items' component={MyItems} />
+          <PrivateRoute path='/my-items' component={MyItems} />
           <PrivateRoute path='/' component={Home} exact />
           <PrivateRoute path='/settings' component={Settings} exact />
           <Route path='*' component={Page404} />
