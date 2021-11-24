@@ -31,8 +31,6 @@ type SettingsFormType = {
 const validationSchema = Yup.object({
   firstName: Yup.string().required('First name is required'),
   lastName: Yup.string().required('Last Name is required'),
-  // phoneno: Yup.string().required('Phone Number is required'),
-  // email: Yup.string().email('Invalid Email').required('Email is requried'),
   password: Yup.string()
     .min(4, 'Minimum is 4 characters')
     .max(20, 'Maximum is 20 characters')
@@ -45,7 +43,6 @@ const validationSchema = Yup.object({
   //! Not going to require address
 });
 
-// let changesMade = false;
 let changesSaved = false;
 
 export default function Settings() {
@@ -70,38 +67,6 @@ export default function Settings() {
     streetaddr: '',
   };
 
-  // const reducer = (state: any, newState: any) => ({ ...state, ...newState });
-  // const [state, setState] = useReducer(reducer, formInitialValues);
-
-  // const handleChange = (e: any) => {
-  //   switch (e.target.id) {
-  //     case 'name': {
-  //       // Assumes user will only enter two names. Might fix later
-  //       let splitName = e.target.value.split(' ');
-  //       setState({ firstName: splitName[0] });
-  //       setState({ lastName: splitName[1] });
-  //       break;
-  //     }
-  //     case 'email': {
-  //       setState({ email: e.target.value });
-  //       break;
-  //     }
-  //     case 'password': {
-  //       setState({ password: e.target.value });
-  //       break;
-  //     }
-  //     case 'postalcode': {
-  //       setState({ postalCode: e.target.value });
-  //       break;
-  //     }
-  //     case 'streetaddr': {
-  //       setState({ streetaddr: e.target.value });
-  //       break;
-  //     }
-  //   }
-  //   if (e.target.id !== 'streetaddr') changesMade = true;
-  // };
-
   const returnHandler = () => {
     if (formikRef.current?.dirty && !changesSaved) {
       swal({
@@ -121,13 +86,11 @@ export default function Settings() {
         },
       }).then((value) => {
         if (value) {
-          // changesMade = false;
           changesSaved = false;
           history.push('/');
         }
       });
     } else {
-      // changesMade = false;
       changesSaved = false;
       history.push('/');
     }
@@ -135,16 +98,6 @@ export default function Settings() {
 
   const saveHandler = async (values: FormikValues) => {
     changesSaved = true;
-    // //? Update to only pass values that have been changed
-    // dispatch(
-    //   updateUser({
-    //     firstName: state.firstName,
-    //     lastName: state.lastName,
-    //     email: state.email,
-    //     postalCode: state.postalCode,
-    //     password: state.password !== '          ' ? state.password : null,
-    //   })
-    // );
 
     //* Because the HTTP request is PATCH, it will only update the fields that have changed. So we just pass everything in the form to the reducer and the server side will take care the rest
     const actionResult: any = await dispatch(updateUser(values));
