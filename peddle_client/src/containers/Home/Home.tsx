@@ -51,6 +51,10 @@ export default function Home() {
           My Items ({userInfo.postedItems?.length || '0'})
           <i className='bx bx-chevron-right'></i>
         </Link>
+        <Link to='/user-messages' className='btn btn-secondary home__btn home__btn--option'>
+          Messages
+          <i className='bx bx-chevron-right'></i>
+        </Link>
         <Link to='/settings' className='btn btn-secondary home__btn home__btn--option'>
           Settings
           <i className='bx bx-chevron-right'></i>

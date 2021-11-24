@@ -15,6 +15,7 @@ import SignUp from './containers/SignUp/SignUp';
 import Profile from './containers/Profile/Profile';
 import MyItems from './containers/MyItems/MyItems';
 import Settings from "./containers/Settings/Settings";
+import UserMessages from "./containers/UserMessages/UserMessages";
 
 import ManageItem from './containers/ManageItem/ManageItem';
 
@@ -35,6 +36,7 @@ function App() {
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />
           <Route path='/my-items' component={MyItems} />
+          <Route path='/user-messages' component={UserMessages} />
           <PrivateRoute path='/' component={Home} exact />
           <PrivateRoute path='/settings' component={Settings} exact />
           <Route path='*' component={Page404} />
