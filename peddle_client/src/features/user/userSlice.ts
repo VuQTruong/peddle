@@ -181,7 +181,7 @@ export const userSlice = createSlice({
     /* Update User Reducer */
     [updateUser.pending.type]: (state, action) => {
       state.loading = true;
-      localStorage.removeItem('userInfo');
+      // localStorage.removeItem('userInfo');
     },
     [updateUser.fulfilled.type]: (state, action) => {
       state.loading = false;
@@ -192,7 +192,7 @@ export const userSlice = createSlice({
     [updateUser.rejected.type]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
-      state.userInfo = null;
+      // state.userInfo = null;
     },
 
     // Fetch Curr User Reducer
