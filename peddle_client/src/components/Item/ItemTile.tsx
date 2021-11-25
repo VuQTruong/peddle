@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Item } from '../../types/item';
+import { formatCurrency } from '../../utilities/utils';
 
 export const ItemTile = (props: { item: Item }) => {
   const item = props.item;
@@ -7,16 +8,6 @@ export const ItemTile = (props: { item: Item }) => {
     item.name.length > 30
       ? props.item.name.substring(0, 29) + '...'
       : props.item.name;
-
-  const formatCurrency = (n: number) => {
-    return (
-      '$' +
-      n
-        .toFixed(2)
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    );
-  };
 
   return (
     <div className='item-list-card__container'>

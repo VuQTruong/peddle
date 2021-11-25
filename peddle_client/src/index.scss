@@ -10,6 +10,7 @@
 @import './components/NavBar/navbar';
 @import './components/Item/item-tile';
 @import './components/SlickImages/slickImages';
+@import './components/MessageBox/messageBox';
 
 /* Containers */
 @import './containers/Page404/page404';
@@ -20,4 +21,4 @@
 @import './containers/MyItems/my-items';
 @import './containers/Settings/settings';
 @import './containers/ManageItem/manageItemForm';
-
+@import './containers/Cart/cart';

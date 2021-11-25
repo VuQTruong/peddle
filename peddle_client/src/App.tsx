@@ -15,8 +15,8 @@ import SignUp from './containers/SignUp/SignUp';
 import Profile from './containers/Profile/Profile';
 import MyItems from './containers/MyItems/MyItems';
 import Settings from './containers/Settings/Settings';
-
 import ManageItem from './containers/ManageItem/ManageItem';
+import Cart from './containers/Cart/Cart';
 
 function App() {
   return (
@@ -31,11 +31,12 @@ function App() {
             <ManageItem mode='edit' />
           </PrivateRoute>
           <PrivateRoute path='/user' component={Profile} />
+          <PrivateRoute path='/cart' component={Cart} />
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />
           <PrivateRoute path='/my-items' component={MyItems} />
+          <PrivateRoute path='/settings' component={Settings} />
           <PrivateRoute path='/' component={Home} exact />
-          <PrivateRoute path='/settings' component={Settings} exact />
           <Route path='*' component={Page404} />
         </Switch>
       </Router>

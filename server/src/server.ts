@@ -33,7 +33,7 @@ import {
   createItemRouter,
   updateItemRouter,
   deleteItemRouter,
-  incrementMatchesRouter
+  incrementMatchesRouter,
 } from './item-service/routes';
 import { purchaseRoute } from './purchase-service/routes/purchase-item';
 
@@ -42,6 +42,7 @@ import { errorHandler } from './middlewares/error-handler';
 import cookieSession from 'cookie-session';
 import { deleteImage, uploadImage } from './file-service/routes';
 import { getUserItemsRouter } from './item-service/routes/get-items-by-userId';
+import { hashPassword } from './utilities/password-util';
 
 dotenv.config();
 
@@ -73,6 +74,11 @@ app.get('/health', (req, res) => {
   });
 });
 
+app.get('/resetpassword', async (req, res) => {
+  const password = await hashPassword('password');
+  res.status(200).json({ password });
+});
+
 /* Routes */
 // Auth Services
 app.use(currentUserRouter);
@@ -92,7 +98,7 @@ app.use(updateUserRouter);
 app.use(updateSeenItemsRouter);
 app.use(removeFavouriteItemRouter);
 app.use(getFavouriteItemsRouter);
-app.use(getSeenItems)
+app.use(getSeenItems);
 app.use(getUserRouter);
 
 // Category Services
