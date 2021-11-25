@@ -36,3 +36,8 @@
   padding: 0.5em 1em;
   border-radius: 20px;
 }
+
+.btn-disable {
+  background-color: rgba($color: grey, $alpha: 1);
+  color: black;
+}

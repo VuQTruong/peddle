@@ -37,6 +37,11 @@
   align-self: center;
 }
 
+.signup__captcha {
+  display: flex;
+  justify-content: center;
+}
+
 .signup__link {
   font-size: $fs-14;
 }
