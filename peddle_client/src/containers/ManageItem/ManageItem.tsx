@@ -27,9 +27,26 @@ export default function ManageItem(props: Props) {
   const itemId = props.match.params.itemId;
 
   //Getting userId from localStorage
-  // const { id: userId } = JSON.parse(localStorage.getItem('userInfo')!);
   const { userInfo } = useSelector((state: State) => state.user);
   const { id: userId } = userInfo;
+
+  const { userItems } = useSelector((state: State) => state.userItems);
+
+  // Checking if the number of posted items is less than 5
+  useEffect(() => {
+    if (props.mode === 'new') {
+      if (userItems.length >= 5) {
+        swal({
+          title: 'Info',
+          text: 'You can only post 5 items as a Free Member. Please upgrade to Premium Member to continue!',
+          icon: 'info',
+        }).then(() => {
+          history.goBack();
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // If the mode is "edit", fetch the item info from the server
   useEffect(() => {

@@ -21,7 +21,10 @@ export default function MyItems() {
     <main>
       <div className='container'>
         <section className='my-items__header'>
-          <i className='bx bx-left-arrow-alt' onClick={history.goBack} />
+          <i
+            className='bx bx-left-arrow-alt'
+            onClick={() => history.push('/')}
+          />
           <div className='my-items__title'>My items</div>
         </section>
         <div className='my-items__item-list'>
