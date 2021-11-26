@@ -21,6 +21,7 @@ import {
   getFavouriteItemsRouter,
   getSeenItems,
 } from './user-service/routes';
+
 import {
   createCategoryRouter,
   getAllCategoriesRouter,
@@ -35,8 +36,16 @@ import {
   deleteItemRouter,
   incrementMatchesRouter,
 } from './item-service/routes';
-import { purchaseRoute } from './purchase-service/routes/purchase-item';
 
+import {
+  getChatsRouter,
+  createChatRouter,
+  deleteChatRouter,
+  updateChatRouter,
+  getChatsByUserRouter,
+} from './chat-service/routes';
+
+import { purchaseRoute } from './purchase-service/routes/purchase-item';
 import { NotFoundError } from './errors/not-found-error';
 import { errorHandler } from './middlewares/error-handler';
 import cookieSession from 'cookie-session';
@@ -115,6 +124,14 @@ app.use(updateItemRouter);
 app.use(deleteItemRouter);
 app.use(getUserItemsRouter);
 app.use(incrementMatchesRouter);
+
+// Chat Service
+app.use(getChatsRouter);
+app.use(updateChatRouter);
+app.use(createChatRouter);
+app.use(deleteChatRouter);
+app.use(getChatsByUserRouter);
+
 // Purchase Services
 app.use(purchaseRoute);
 
