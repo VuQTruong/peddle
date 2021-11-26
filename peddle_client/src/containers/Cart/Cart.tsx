@@ -26,22 +26,41 @@ export default function Cart() {
     history.goBack();
   };
 
-  const removeItemHandler = async (id: string) => {
-    const result: any = await dispatch(removeFavItem(id));
+  const removeItemHandler = (id: string) => {
+    swal({
+      title: 'Warning',
+      text: 'Are you sure you want to remove this item from your cart?',
+      icon: 'warning',
+      dangerMode: true,
+      buttons: {
+        deny: {
+          text: 'Cancel',
+          value: null,
+        },
+        confirm: {
+          text: 'Yes',
+          value: true,
+        },
+      },
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        const result: any = await dispatch(removeFavItem(id));
 
-    if (result.meta.requestStatus === 'fulfilled') {
-      swal({
-        title: 'Success',
-        text: 'Item removed successfully',
-        icon: 'success',
-      });
-    } else if (result.meta.requestStatus === 'rejected') {
-      swal({
-        title: 'Error',
-        text: result.payload,
-        icon: 'error',
-      });
-    }
+        if (result.meta.requestStatus === 'fulfilled') {
+          swal({
+            title: 'Success',
+            text: 'Item removed successfully',
+            icon: 'success',
+          });
+        } else if (result.meta.requestStatus === 'rejected') {
+          swal({
+            title: 'Error',
+            text: result.payload,
+            icon: 'error',
+          });
+        }
+      }
+    });
   };
 
   return (

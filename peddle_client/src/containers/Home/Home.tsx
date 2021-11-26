@@ -47,7 +47,7 @@ export default function Home() {
           to='/cart'
           className='btn btn-secondary home__btn home__btn--option'
         >
-          Shopping Cart (3)
+          Shopping Cart ({userInfo.favouriteItems?.length || '0'})
           <i className='bx bx-chevron-right'></i>
         </Link>
         <Link
