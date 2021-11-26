@@ -17,6 +17,7 @@ import MyItems from './containers/MyItems/MyItems';
 import Settings from './containers/Settings/Settings';
 import ManageItem from './containers/ManageItem/ManageItem';
 import Cart from './containers/Cart/Cart';
+import UpgradeToPro from './containers/UpgradeToPro/UpgradeToPro';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           </PrivateRoute>
           <PrivateRoute path='/user' component={Profile} />
           <PrivateRoute path='/cart' component={Cart} />
+          <PrivateRoute path='/upgrade' component={UpgradeToPro} />
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />
           <PrivateRoute path='/my-items' component={MyItems} />

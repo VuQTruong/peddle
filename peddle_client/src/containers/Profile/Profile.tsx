@@ -64,9 +64,12 @@ export default function UserInfo() {
         </section>
 
         <section className='profile__features'>
-          <button className='btn btn-primary profile__btn profile__btn--upgrade'>
+          <Link
+            to='/upgrade'
+            className='btn btn-primary profile__btn profile__btn--upgrade'
+          >
             Upgrade to Pro
-          </button>
+          </Link>
 
           <Link
             to='/user'
