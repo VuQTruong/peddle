@@ -17,6 +17,8 @@ import MyItems from './containers/MyItems/MyItems';
 import Settings from "./containers/Settings/Settings";
 
 import ManageItem from './containers/ManageItem/ManageItem';
+import PurchaseHistory from './containers/PurchaseHistory/PurchaseHistory';
+import SellHistory from './containers/SellHistory/SellHistory';
 
 
 function App() {
@@ -35,6 +37,8 @@ function App() {
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />
           <PrivateRoute path='/my-items' component={MyItems} />
+          <PrivateRoute path='/purchase-history' component={PurchaseHistory} />
+          <PrivateRoute path='/sell-history' component={SellHistory} />
           <PrivateRoute path='/' component={Home} exact />
           <PrivateRoute path='/settings' component={Settings} exact />
           <Route path='*' component={Page404} />

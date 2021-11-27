@@ -69,14 +69,14 @@ export default function UserInfo() {
           </button>
 
           <Link
-            to='/user'
+            to='/purchase-history'
             className='btn btn-secondary profile__btn profile__btn--option'
           >
             Purchase History
             <i className='bx bx-chevron-right'></i>
           </Link>
           <Link
-            to='/user'
+            to='/sell-history'
             className='btn btn-secondary profile__btn profile__btn--option'
           >
             Sell History

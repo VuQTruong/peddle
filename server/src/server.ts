@@ -19,7 +19,8 @@ import {
   addFavouriteItemRouter,
   removeFavouriteItemRouter,
   getFavouriteItemsRouter,
-  getSeenItems,
+  getSeenItemsRouter,
+  getSoldItemsRouter,
 } from "./user-service/routes";
 
 import {
@@ -100,7 +101,8 @@ app.use(updateUserRouter);
 app.use(updateSeenItemsRouter);
 app.use(removeFavouriteItemRouter);
 app.use(getFavouriteItemsRouter);
-app.use(getSeenItems);
+app.use(getSeenItemsRouter);
+app.use(getSoldItemsRouter);
 app.use(getUserRouter);
 
 // Category Services
