@@ -35,7 +35,7 @@ export default function ManageItem(props: Props) {
   // Checking if the number of posted items is less than 5
   useEffect(() => {
     if (props.mode === 'new') {
-      if (userItems.length >= 5) {
+      if (userItems.length >= 5 && !userInfo.isPremiumMember) {
         swal({
           title: 'Info',
           text: 'You can only post 5 items as a Free Member. Please upgrade to Premium Member to continue!',
