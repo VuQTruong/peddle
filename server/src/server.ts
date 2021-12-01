@@ -21,7 +21,6 @@ import {
   getFavouriteItemsRouter,
   getSeenItemsRouter,
   getSoldItemsRouter,
-  getSeenItems,
 } from './user-service/routes';
 
 import {
