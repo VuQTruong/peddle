@@ -15,7 +15,14 @@ router.get(
 
     const favouriteItems = await User.findById(userId)
       .select('favouriteItems')
-      .populate('favouriteItems');
+      .populate({
+        path: 'favouriteItems',
+        populate: {
+          path: 'postedBy',
+          model: 'User',
+          select: 'firstName lastName email postalCode photo',
+        },
+      });
 
     return res.status(200).send({
       status: '200',

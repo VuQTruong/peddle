@@ -10,10 +10,12 @@ import { Item } from '../../types/item';
 import axios from 'axios';
 
 export default function MyItems() {
+  
+  const history = useHistory();
+  const { userItems } = useSelector((state: State) => state.userItems);
 
-    const history = useHistory();
-    const { id } = useSelector((state: State) => state.user.userInfo);
-    const [items, setitems] = useState<Item[]>([]);
+  const { id } = useSelector((state: State) => state.user.userInfo);
+  const [items, setitems] = useState<Item[]>([]);
 
     useEffect(() => {
         fetchMyItems();

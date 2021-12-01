@@ -27,9 +27,26 @@ export default function ManageItem(props: Props) {
   const itemId = props.match.params.itemId;
 
   //Getting userId from localStorage
-  // const { id: userId } = JSON.parse(localStorage.getItem('userInfo')!);
   const { userInfo } = useSelector((state: State) => state.user);
   const { id: userId } = userInfo;
+
+  const { userItems } = useSelector((state: State) => state.userItems);
+
+  // Checking if the number of posted items is less than 5
+  useEffect(() => {
+    if (props.mode === 'new') {
+      if (userItems.length >= 5 && !userInfo.isPremiumMember) {
+        swal({
+          title: 'Info',
+          text: 'You can only post 5 items as a Free Member. Please upgrade to Premium Member to continue!',
+          icon: 'info',
+        }).then(() => {
+          history.goBack();
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // If the mode is "edit", fetch the item info from the server
   useEffect(() => {
@@ -45,7 +62,7 @@ export default function ManageItem(props: Props) {
             text: err.response.data.message,
             icon: 'error',
           }).then(() => {
-            history.push('/user/items');
+            history.push('/my-items');
           });
         });
     }
@@ -91,7 +108,7 @@ export default function ManageItem(props: Props) {
             text: 'Item created successfully',
             icon: 'success',
           }).then(() => {
-            history.push('/user/items');
+            history.push('/my-items');
           });
         })
         .catch((error) => {
@@ -114,7 +131,7 @@ export default function ManageItem(props: Props) {
             text: 'Item updated successfully',
             icon: 'success',
           }).then(() => {
-            history.push('/user/items');
+            history.push('/my-items');
           });
         })
         .catch((error) => {
@@ -152,22 +169,26 @@ export default function ManageItem(props: Props) {
         },
       }).then((willLeave) => {
         if (willLeave) {
-          swal({
-            title: 'Info',
-            text: 'Deleting Images...',
-            icon: 'info',
-          });
+          if (imageUrls.length > 0) {
+            swal({
+              title: 'Info',
+              text: 'Deleting Images...',
+              icon: 'info',
+            });
 
-          // The user has confirmed that they want to leave without saving images that have been uploaded to the server, we need to delete them to prevent orphan images and waste of space
-          const promises = imageUrls.map((imageUrl) => {
-            const imageName = imageUrl.split('/').pop();
-            const imageId = imageName!.split('.')[0];
-            return axios.delete(`/api/images/${imageId}`);
-          });
+            // The user has confirmed that they want to leave without saving images that have been uploaded to the server, we need to delete them to prevent orphan images and waste of space
+            const promises = imageUrls.map((imageUrl) => {
+              const imageName = imageUrl.split('/').pop();
+              const imageId = imageName!.split('.')[0];
+              return axios.delete(`/api/images/${imageId}`);
+            });
 
-          Promise.all(promises).then(() => {
+            Promise.all(promises).then(() => {
+              history.goBack();
+            });
+          } else {
             history.goBack();
-          });
+          }
         }
       });
     } else {
@@ -214,7 +235,7 @@ export default function ManageItem(props: Props) {
               text: 'Item deleted successfully',
               icon: 'success',
             }).then(() => {
-              history.push('/user/items');
+              history.push('/my-items');
             });
           })
           .catch((error) => {

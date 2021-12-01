@@ -1,6 +1,6 @@
-body{
-  overflow:hidden;
-}
+// body {
+//   overflow: hidden;
+// }
 .container {
   height: 100vh;
   padding-bottom: 80px;
@@ -35,4 +35,9 @@ body{
   color: white;
   padding: 0.5em 1em;
   border-radius: 20px;
+}
+
+.btn-disable {
+  background-color: rgba($color: grey, $alpha: 1);
+  color: black;
 }
