@@ -5,11 +5,12 @@ import * as Yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { State } from '../../store';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import swal from 'sweetalert';
 import { isValidPostalCode } from '../../utilities/validators';
 import { signUp } from '../../features/user/userSlice';
 import { setSessionTTL } from '../../features/session/sessionSlice';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 type SignUpFormType = {
   firstName: string;
@@ -56,6 +57,8 @@ export default function SignUp() {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const [isVerified, setIsVerified] = useState(false);
+
   const user = useSelector((state: State) => state.user);
   const { userInfo, error, loading } = user;
 
@@ -79,9 +82,8 @@ export default function SignUp() {
   }, [dispatch, error, history, userInfo]);
 
   const registerHandler = (values: SignUpFormType) => {
-   
-    const lat = 43.007800;
-    const lng = -81.192500;
+    const lat = 43.0078;
+    const lng = -81.1925;
     dispatch(
       signUp({
         ...values,
@@ -105,6 +107,12 @@ export default function SignUp() {
 
   const returnHandler = () => {
     history.goBack();
+  };
+
+  const recaptchaHandler = (value: any) => {
+    if (value) {
+      setIsVerified(true);
+    }
   };
 
   return (
@@ -220,9 +228,19 @@ export default function SignUp() {
             </ErrorMessage>
           </div>
 
+          <div className='signup__captcha'>
+            <ReCAPTCHA
+              sitekey='6LdDKFsdAAAAAM6zc4EAOZsAciM8_aahdoYEryjd'
+              onChange={recaptchaHandler}
+            />
+          </div>
+
           <button
             type='submit'
-            className='btn btn-primary signup__btn-register'
+            className={`btn btn-primary signup__btn-register ${
+              !isVerified ? 'btn-disable' : ''
+            }`}
+            disabled={!isVerified}
           >
             {loading ? (
               <i className='bx bx-loader-alt bx-spin bx-rotate-90'></i>
