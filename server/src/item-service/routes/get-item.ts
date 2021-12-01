@@ -8,7 +8,7 @@ import { validateRequest } from "../../middlewares/validate-request";
 
 const router = express.Router();
 
-const validations = [param('itemId').isMongoId().withMessage('itemId not in Mongo Id form')]
+const validations = [param('itemId').isMongoId().withMessage('itemId is not valid mongo Id')]
 
 router.get("/api/items/:itemId", 
 currentUser, 
