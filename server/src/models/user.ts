@@ -35,6 +35,7 @@ interface UserDoc extends mongoose.Document {
   dislikedItemIds: string[];
   seenItems: string[];
   postedItems: string[];
+  soldItems: string[];
   purchasedItems: string[];
   favouriteItems: string[];
 }
@@ -95,6 +96,12 @@ const userSchema = new mongoose.Schema(
       },
     ],
     purchasedItems: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
+      },
+    ],
+    soldItems: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Item',

@@ -23,7 +23,7 @@ export const signIn = createAsyncThunk(
   async (values: object, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const { data }  = await axios.post<ResponseType>(
+      const { data } = await axios.post<ResponseType>(
         '/api/auth/signin',
         values
       );
@@ -39,7 +39,8 @@ export const signIn = createAsyncThunk(
   }
 );
 
-export const signUp = createAsyncThunk('user/signup',
+export const signUp = createAsyncThunk(
+  'user/signup',
   async (values: object, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
@@ -68,32 +69,40 @@ export const signOut = createAsyncThunk('user/signout', async (_, thunkAPI) => {
   }
 });
 
-export const fetchCurrUser = createAsyncThunk('user/fetchCurrUser', async (_, thunkAPI) => {
-  const { rejectWithValue, getState } = thunkAPI;
+export const fetchCurrUser = createAsyncThunk(
+  'user/fetchCurrUser',
+  async (_, thunkAPI) => {
+    const { rejectWithValue, getState } = thunkAPI;
 
-  try {
-    const { user } =  getState() as State;
-    const { data } = await axios.get<UserResponse>(`/api/users/${user.userInfo.id}`);
+    try {
+      const { user } = getState() as State;
+      const { data } = await axios.get<UserResponse>(
+        `/api/users/${user.userInfo.id}`
+      );
 
-    return data.data.user;
-  } catch (error: any) {
-    return rejectWithValue(error.response.data);
+      return data.data.user;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
+    }
   }
-});
+);
 
-export const updateUser = createAsyncThunk('users/update', async(values: object, thunkAPI) => {
-  const {rejectWithValue} = thunkAPI;
-  try {
-    const {data} = await axios.patch<ResponseType>(
-      '/api/users/current-user',
-      values
-    );
-    return data.data;
+export const updateUser = createAsyncThunk(
+  'users/update',
+  async (values: object, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const { data } = await axios.patch<ResponseType>(
+        '/api/users/current-user',
+        values
+      );
+      //@ts-ignore
+      return data.data.user;
+    } catch (error: any) {
+      return rejectWithValue(error.response.data.message);
+    }
   }
-  catch (error:any) {
-    return rejectWithValue(error.response.data.message);
-  }
-});
+);
 
 export const userSlice = createSlice({
   name: 'user',
@@ -166,13 +175,13 @@ export const userSlice = createSlice({
     [signOut.rejected.type]: (state, action) => {
       state.loading = false;
       state.error = action.error;
-      state.userInfo = null; 
+      state.userInfo = null;
     },
 
     /* Update User Reducer */
     [updateUser.pending.type]: (state, action) => {
       state.loading = true;
-      localStorage.removeItem('userInfo');
+      // localStorage.removeItem('userInfo');
     },
     [updateUser.fulfilled.type]: (state, action) => {
       state.loading = false;
@@ -183,7 +192,7 @@ export const userSlice = createSlice({
     [updateUser.rejected.type]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
-      state.userInfo = null;
+      // state.userInfo = null;
     },
 
     // Fetch Curr User Reducer

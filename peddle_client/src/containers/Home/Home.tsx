@@ -50,15 +50,24 @@ export default function Home() {
           Profile
           <i className='bx bx-chevron-right'></i>
         </Link>
-        <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
-          Shopping Cart (3)
+        <Link
+          to='/cart'
+          className='btn btn-secondary home__btn home__btn--option'
+        >
+          Shopping Cart ({userInfo.favouriteItems?.length || '0'})
           <i className='bx bx-chevron-right'></i>
         </Link>
-        <Link to='/my-items' className='btn btn-secondary home__btn home__btn--option'>
+        <Link
+          to='/my-items'
+          className='btn btn-secondary home__btn home__btn--option'
+        >
           My Items ({userInfo.postedItems?.length || '0'})
           <i className='bx bx-chevron-right'></i>
         </Link>
-        <Link to='/settings' className='btn btn-secondary home__btn home__btn--option'>
+        <Link
+          to='/settings'
+          className='btn btn-secondary home__btn home__btn--option'
+        >
           Settings
           <i className='bx bx-chevron-right'></i>
         </Link>

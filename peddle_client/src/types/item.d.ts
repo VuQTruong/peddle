@@ -10,7 +10,14 @@ export interface Item {
   isActive: boolean;
   isSold: boolean;
   purchasedBy: string;
-  postedBy: string;
+  postedBy: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    photo: string;
+    email: string;
+    postalCode: string;
+  };
   createdAt: Date;
   updatedAt: Date;
 }

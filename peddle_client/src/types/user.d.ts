@@ -1,4 +1,4 @@
-import { Item } from "./item";
+import { Item } from './item';
 export interface User {
   id: string;
   firstName: string;
@@ -22,6 +22,12 @@ export interface UserState {
 
 export interface UserItemsState {
   userItems: Item[];
+  loading: boolean;
+  error: string;
+}
+
+export interface UserFavoritesState {
+  favorites: Item[];
   loading: boolean;
   error: string;
 }

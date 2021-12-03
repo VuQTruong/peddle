@@ -64,29 +64,25 @@ export default function UserInfo() {
         </section>
 
         <section className='profile__features'>
-          <button className='btn btn-primary profile__btn profile__btn--upgrade'>
+          <Link
+            to='/upgrade'
+            className='btn btn-primary profile__btn profile__btn--upgrade'
+          >
             Upgrade to Pro
-          </button>
+          </Link>
 
           <Link
-            to='/user'
+            to='/purchase-history'
             className='btn btn-secondary profile__btn profile__btn--option'
           >
             Purchase History
             <i className='bx bx-chevron-right'></i>
           </Link>
           <Link
-            to='/user'
+            to='/sell-history'
             className='btn btn-secondary profile__btn profile__btn--option'
           >
             Sell History
-            <i className='bx bx-chevron-right'></i>
-          </Link>
-          <Link
-            to='/user'
-            className='btn btn-secondary profile__btn profile__btn--option'
-          >
-            Settings
             <i className='bx bx-chevron-right'></i>
           </Link>
           <Link
