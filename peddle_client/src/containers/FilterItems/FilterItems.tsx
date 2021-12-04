@@ -76,9 +76,9 @@ export default function FilterItems() {
       }
     }
 
-    if (values.sortBy === 'lowest') {
+    if (values.sortBy === 'price') {
       queryObj.sort = 'price';
-    } else if (values.sortBy === 'highest') {
+    } else if (values.sortBy === '-price') {
       queryObj.sort = '-price';
     }
     // Build Query String
