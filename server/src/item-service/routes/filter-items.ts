@@ -7,7 +7,7 @@ import { QueryAnalyzer } from '../../utilities/query-analyzer';
 const router = express.Router();
 
 router.get('/api/items/filter', currentUser, requireAuth, async (req, res) => {
-  const query = new QueryAnalyzer(Item.find(), req.query).filter().query;
+  const query = new QueryAnalyzer(Item.find(), req.query).filter().sort().query;
   console.log('Query', query);
   const items = await query;
 
