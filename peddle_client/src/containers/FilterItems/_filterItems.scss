@@ -1,0 +1,86 @@
+.search__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.search__header {
+  position: relative;
+  text-align: center;
+  padding: 1em;
+}
+
+.search__header i {
+  position: absolute;
+  top: 50%;
+  left: 0.5em;
+  transform: translateY(-50%);
+  font-size: $fs-36;
+}
+
+.search__form {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1em;
+}
+
+.search__input {
+  display: flex;
+  align-items: center;
+
+  margin-bottom: 1em;
+
+  label {
+    margin-right: 0.5em;
+    width: 3em;
+  }
+
+  input,
+  select {
+    width: 100%;
+    font-size: $fs-18;
+    color: $clr-txt-primary;
+    padding: 0.25em 1em;
+    border-radius: 10px;
+    border: none;
+    background-color: $clr-secondary;
+  }
+
+  input::-webkit-input-placeholder {
+    font-style: italic;
+    font-size: 0.8em;
+  }
+
+  input::-moz-placeholder {
+    font-style: italic;
+    font-size: 0.8em;
+  }
+
+  input:-ms-input-placeholder {
+    font-style: italic;
+    font-size: 0.8em;
+  }
+
+  input::-ms-input-placeholder {
+    font-style: italic;
+    font-size: 0.8em;
+  }
+
+  input::placeholder {
+    font-style: italic;
+    font-size: 0.8em;
+  }
+}
+
+.search__price {
+  display: flex;
+  justify-content: space-between;
+
+  & .search__input:nth-child(2) label {
+    width: 2em;
+    margin-left: 1em;
+  }
+}
+
+.search__btn {
+  font-size: $fs-20;
+}

@@ -13,6 +13,8 @@
 @import './components/PurchaseHistory/purchased-item-tile';
 @import './components/SellHistory/sold-item-tile';
 @import './components/MessageBox/messageBox';
+@import './components/FilteredItemCard/filteredItemCard';
+@import './components/FilteredItemList/filteredItemList';
 
 /* Containers */
 @import './containers/Page404/page404';
@@ -25,3 +27,4 @@
 @import './containers/ManageItem/manageItemForm';
 @import './containers/Cart/cart';
 @import './containers/UpgradeToPro/upgradeToPro';
+@import './containers/FilterItems/filterItems';

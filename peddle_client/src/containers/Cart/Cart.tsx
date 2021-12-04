@@ -76,7 +76,7 @@ export default function Cart() {
           {loading ? (
             <i className='bx bx-loader-alt bx-spin bx-rotate-90'></i>
           ) : error ? (
-            <MessageBox variant='danger'>Something went wrong</MessageBox>
+            <MessageBox variant='danger'>{error}</MessageBox>
           ) : (
             <React.Fragment>
               {favorites.map((item) => (

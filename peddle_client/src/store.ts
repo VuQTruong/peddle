@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { UserFavoritesState, UserItemsState, UserState } from './types/user';
-import { ItemState } from './types/item';
+import { FilteredItemsState, ItemState } from './types/item';
 import { SessionState } from './types/session';
 
 import sessionReducer from './features/session/sessionSlice';
@@ -9,6 +9,7 @@ import userReducer from './features/user/userSlice';
 import itemReducer from './features/item/itemSlice';
 import userItemsReducer from './features/user/userItemsSlice';
 import userFavoritesReducer from './features/user/userFavoritesSlice';
+import filteredItemsReducer from './features/item/filteredItemsSlice';
 
 export interface State {
   session: SessionState;
@@ -16,6 +17,7 @@ export interface State {
   item: ItemState;
   userItems: UserItemsState;
   userFavorites: UserFavoritesState;
+  filteredItems: FilteredItemsState;
 }
 
 const store = configureStore({
@@ -25,6 +27,7 @@ const store = configureStore({
     item: itemReducer,
     userItems: userItemsReducer,
     userFavorites: userFavoritesReducer,
+    filteredItems: filteredItemsReducer,
   },
 });
 
