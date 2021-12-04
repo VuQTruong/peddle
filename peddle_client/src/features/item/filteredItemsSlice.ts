@@ -23,7 +23,13 @@ const filteredItemsSlice = createSlice({
     error: null,
     items: [],
   },
-  reducers: {},
+  reducers: {
+    clearFilteredItems: (state) => {
+      state.items = [];
+      state.loading = false;
+      state.error = null;
+    },
+  },
   extraReducers: {
     [getFilteredItems.pending.type]: (state, action) => {
       state.loading = true;
@@ -41,4 +47,5 @@ const filteredItemsSlice = createSlice({
   },
 });
 
+export const { clearFilteredItems } = filteredItemsSlice.actions;
 export default filteredItemsSlice.reducer;

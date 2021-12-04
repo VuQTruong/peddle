@@ -5,7 +5,10 @@ import * as Yup from 'yup';
 import Cleave from 'cleave.js/react';
 import queryBuilder from '../../utilities/queryBuilder';
 import { useDispatch } from 'react-redux';
-import { getFilteredItems } from '../../features/item/filteredItemsSlice';
+import {
+  clearFilteredItems,
+  getFilteredItems,
+} from '../../features/item/filteredItemsSlice';
 import qs from 'qs';
 import { useEffect } from 'react';
 import FilteredItemList from '../../components/FilteredItemList/FilteredItemList';
@@ -50,6 +53,13 @@ export default function FilterItems() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
+
+  // Clear the filtered items when the user navigates away from the page
+  useEffect(() => {
+    return () => {
+      dispatch(clearFilteredItems());
+    };
+  });
 
   const onSubmit = (values: FormikValues) => {
     const queryObj: any = {};
