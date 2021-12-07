@@ -30,6 +30,9 @@ interface UserDoc extends mongoose.Document {
   password: string;
   lat: number;
   lng: number;
+  rating: number;
+  numRates: number;
+  totalRatings: number;
   postalCode: string;
   isPremiumMember: boolean;
   dislikedItemIds: string[];
@@ -68,6 +71,18 @@ const userSchema = new mongoose.Schema(
     lng: {
       type: Number,
       required: true,
+    },
+    rating: {
+      type: Number,
+      default: 0,
+    },
+    numRates:{
+      type: Number,
+      default: 0,
+    },
+    totalRatings:{
+      type: Number,
+      default: 0
     },
     postalCode: {
       type: String,
@@ -122,6 +137,8 @@ const userSchema = new mongoose.Schema(
         delete ret.password;
         delete ret.__v;
         delete ret.seenItems;
+        delete ret.numRates;
+        delete ret.totalRatings;
       },
     },
   }
