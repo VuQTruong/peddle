@@ -1,0 +1,83 @@
+.chat-by-you {
+  width: max-content;
+  text-align: right;
+  margin: 10px 0;
+  background-color: #212121;
+  color: #fff;
+  padding: 0.5em 1em;
+  border-radius: 20px;
+  margin-left: auto;
+}
+
+.chat_by_other_user {
+  width: max-content;
+  text-align: left;
+  margin: 10px 0;
+  background-color: #212121;
+  color: #fff;
+  padding: 0.5em 1em;
+  border-radius: 20px;
+}
+
+.chat-list-card__container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.message {
+  width: 100%;
+  margin-left: 10px;
+}
+
+#send {
+  float: right;
+}
+
+.chat__user-avatar-right {
+  box-shadow: 0 0 5px rgba($color: #000000, $alpha: 0.5);
+  margin-left: 5px;
+}
+
+.chat__user-avatar-left {
+  box-shadow: 0 0 5px rgba($color: #000000, $alpha: 0.5);
+  margin-right: 8px;
+}
+
+.loader {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+}
+
+#send {
+  text-align: right;
+  position: absolute;
+  right: 0;
+  font-size: 26px;
+  top: inherit;
+  margin-left: 86%;
+}
+
+#block {
+  position: absolute;
+  right: 0;
+  margin-left: 85%;
+}
+
+.blockedMsg {
+  text-align: center;
+}
+
+.chat-bottom {
+  display: flex;
+  flex-direction: column;
+}
+
+.my-chat-list {
+  height: 480px;
+  margin-bottom: 20px;
+  overflow: scroll;
+}

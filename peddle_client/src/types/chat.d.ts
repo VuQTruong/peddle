@@ -1,9 +1,12 @@
 import { Chat } from "./chat";
+import { User } from "./user";
 export interface Chat {
   id: string;
   itemId: Item;
   sender: User;
   receiver: User;
+  isBlocked: boolean;
+  blockedByUserId: User;
   messages: object[{ userId: string; chat: string; _id: string; time: string }];
 }
 

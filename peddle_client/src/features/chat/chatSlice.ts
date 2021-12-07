@@ -1,22 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { State } from "../../store";
+import { Chat } from "../../types/chat";
 
 type ResponseType = {
   status: string;
   message: string;
   data: {
-    chatForUser: [];
+    chatForUser: Chat;
   };
 };
 
-export const getChatByUser = createAsyncThunk(
-  "userMessages/getChatByUser",
+export const getChatById = createAsyncThunk(
+  "userMessages/getChatById",
   async (_, { rejectWithValue, getState }) => {
     try {
-      const { user } = getState() as State;
+      const state = getState() as State;
+      const { chat } = getState() as State;
+
       const itemRes = await axios.get<ResponseType>(
-        `/api/chat/user/${user.userInfo.id}`
+        `/api/chat/${chat.chatInfo.id}`
       );
       return itemRes.data.data.chatForUser;
     } catch (error: any) {
@@ -25,32 +28,32 @@ export const getChatByUser = createAsyncThunk(
   }
 );
 
-export const userMessagesSlice = createSlice({
-  name: "userMessages",
+export const chatSlice = createSlice({
+  name: "chatInfo",
   initialState: {
-    userMessages: [],
+    chatInfo: null,
     loading: true,
     error: "",
   },
   reducers: {},
   extraReducers: {
     /* Sign Up Reducer */
-    [getChatByUser.pending.type]: (state, action) => {
+    [getChatById.pending.type]: (state, action) => {
       state.loading = true;
       state.error = "";
-      state.userMessages = [];
+      state.chatInfo = null;
     },
-    [getChatByUser.fulfilled.type]: (state, action) => {
+    [getChatById.fulfilled.type]: (state, action) => {
       state.loading = true;
       state.error = "";
-      state.userMessages = action.payload;
+      state.chatInfo = action.payload;
     },
-    [getChatByUser.rejected.type]: (state, action) => {
+    [getChatById.rejected.type]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
-      state.userMessages = [];
+      state.chatInfo = null;
     },
   },
 });
 
-export default userMessagesSlice.reducer;
+export default chatSlice.reducer;
