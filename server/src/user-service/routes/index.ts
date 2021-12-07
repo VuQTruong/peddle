@@ -6,7 +6,8 @@ import { updateSeenItemsRouter } from './update-seen-items';
 import { addFavouriteItemRouter } from './add-favourite-item';
 import { removeFavouriteItemRouter } from './remove-favourite-item';
 import { getFavouriteItemsRouter } from './get-favourite-items';
-import { getSeenItems } from './get-seen-item';
+import { getSeenItemsRouter } from './get-seen-item';
+import { getSoldItemsRouter } from './get-sold-items';
 export {
   getUserRouter,
   getPostItemsRouter,
@@ -16,5 +17,6 @@ export {
   addFavouriteItemRouter,
   removeFavouriteItemRouter,
   getFavouriteItemsRouter,
-  getSeenItems
+  getSeenItemsRouter,
+  getSoldItemsRouter
 };

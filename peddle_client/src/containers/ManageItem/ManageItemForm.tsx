@@ -4,6 +4,7 @@ import swal from 'sweetalert';
 import SlickImages from '../../components/SlickImages/SlickImages';
 import React, { useRef, useState } from 'react';
 import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
+import Cleave from 'cleave.js/react';
 
 type Props = {
   itemId: string;
@@ -290,12 +291,27 @@ export default function ManageItemForm(props: Props) {
 
             <div className='form__control--text'>
               <label htmlFor='price'>Price</label>
-              <Field
-                type='text'
-                name='price'
-                id='price'
-                placeholder='Item Price'
-              />
+              <Field name='price'>
+                {({ field, form }: any) => {
+                  return (
+                    <Cleave
+                      id='price'
+                      placeholder='Item Price'
+                      options={{
+                        numeral: true,
+                        numeralThousandsGroupStyle: 'thousand',
+                      }}
+                      {...field}
+                      onChange={(event: any) => {
+                        const value = event.target.rawValue
+                          .replace(',', '')
+                          .replace('$ ', '');
+                        form.setFieldValue('price', value);
+                      }}
+                    />
+                  );
+                }}
+              </Field>
               <i className='bx bx-dollar-circle'></i>
               <ErrorMessage name='price'>
                 {(errorMsg) => <div className='form__error'>{errorMsg}</div>}

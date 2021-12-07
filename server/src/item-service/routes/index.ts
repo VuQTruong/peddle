@@ -11,5 +11,5 @@ export {
   createItemRouter,
   updateItemRouter,
   deleteItemRouter,
-  incrementMatchesRouter
+  incrementMatchesRouter,
 };

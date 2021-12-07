@@ -1,0 +1,32 @@
+.alert {
+  margin: 0.5em;
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.alert-info {
+  color: $clr-info;
+  background-color: rgba($color: $clr-info, $alpha: 0.1);
+  border: 1px solid $clr-info;
+}
+
+.alert-success {
+  color: $clr-success;
+  background-color: rgba($color: $clr-success, $alpha: 0.1);
+  border: 1px solid $clr-success;
+}
+
+.alert-danger {
+  color: $clr-danger;
+  background-color: rgba($color: $clr-danger, $alpha: 0.1);
+  border: 1px solid $clr-danger;
+}
+
+.alert-warning {
+  color: $clr-warning;
+  background-color: rgba($color: $clr-warning, $alpha: 0.1);
+  border: 1px solid $clr-warning;
+}
