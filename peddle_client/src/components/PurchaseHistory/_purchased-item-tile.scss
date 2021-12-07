@@ -1,0 +1,29 @@
+.purchased-item-tile__container {
+    width:100%;
+    display: flex;
+    flex-direction: row;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.purchased-item-tile__image {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.purchased-item-tile__container img{
+    width: 70px;
+    height: 70px;
+    border-radius: 4px;
+}
+.purchased-item-tile__content {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+}
+.item-list-card__price {
+    color: $clr-primary;
+    margin-left: 0.5em;
+}
+
+.purchased-item-tile__seller {
+    color: $clr-primary;
+}

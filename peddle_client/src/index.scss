@@ -10,6 +10,9 @@
 @import "./components/NavBar/navbar";
 @import "./components/Item/item-tile";
 @import "./components/SlickImages/slickImages";
+@import "./components/PurchaseHistory/purchased-item-tile";
+@import "./components/SellHistory/sold-item-tile";
+@import "./components/MessageBox/messageBox";
 @import "./components/Chat/chat-tile";
 
 /* Containers */
@@ -21,4 +24,6 @@
 @import "./containers/MyItems/my-items";
 @import "./containers/Settings/settings";
 @import "./containers/ManageItem/manageItemForm";
+@import "./containers/Cart/cart";
+@import "./containers/UpgradeToPro/upgradeToPro";
 @import "./containers/UserMessages/user-messages";
