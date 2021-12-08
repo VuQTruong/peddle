@@ -4,6 +4,7 @@ import { createItemRouter } from './create-item';
 import { updateItemRouter } from './update-item';
 import { deleteItemRouter } from './delete-item';
 import { incrementMatchesRouter } from './increment-matches';
+import { filterItemsRouter } from './filter-items';
 
 export {
   getMultiItemsRouter,
@@ -12,4 +13,5 @@ export {
   updateItemRouter,
   deleteItemRouter,
   incrementMatchesRouter,
+  filterItemsRouter,
 };

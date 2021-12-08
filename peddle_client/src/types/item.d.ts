@@ -27,3 +27,9 @@ export interface ItemState {
   loading: boolean;
   error: '';
 }
+
+export interface FilteredItemsState {
+  items: Item[];
+  loading: boolean;
+  error: '';
+}

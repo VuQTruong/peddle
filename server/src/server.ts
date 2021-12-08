@@ -35,6 +35,7 @@ import {
   createItemRouter,
   updateItemRouter,
   deleteItemRouter,
+  filterItemsRouter,
   incrementMatchesRouter,
 } from './item-service/routes';
 
@@ -119,6 +120,7 @@ app.use(updateCategoryRouter);
 app.use(deleteCategoryRouter);
 
 // Item Services
+app.use(filterItemsRouter);
 app.use(getMultiItemsRouter);
 app.use(getItemRouter);
 app.use(createItemRouter);

@@ -20,7 +20,7 @@ import PurchaseHistory from './containers/PurchaseHistory/PurchaseHistory';
 import SellHistory from './containers/SellHistory/SellHistory';
 import Cart from './containers/Cart/Cart';
 import UpgradeToPro from './containers/UpgradeToPro/UpgradeToPro';
-
+import FilterItems from './containers/FilterItems/FilterItems';
 
 function App() {
   return (
@@ -36,6 +36,7 @@ function App() {
           </PrivateRoute>
           <PrivateRoute path='/user' component={Profile} />
           <PrivateRoute path='/cart' component={Cart} />
+          <PrivateRoute path='/search' component={FilterItems} />
           <PrivateRoute path='/upgrade' component={UpgradeToPro} />
           <Route path='/signin' component={SignIn} />
           <Route path='/signup' component={SignUp} />
