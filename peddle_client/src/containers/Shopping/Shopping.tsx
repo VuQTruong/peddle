@@ -6,16 +6,12 @@
 import React, { useEffect, useRef, useState, useReducer, Component } from 'react';
 import faker from "faker";
 import SwipeableHook from './SwipeableHook';
-
-import "./shopping.css";
-
 import NavBar from '../../components/NavBar/NavBar';
 
-import { useDispatch } from 'react-redux';
 
+import { useSelector, useDispatch } from "react-redux";
+import { State } from '../../store';
 
-
-//import { addItem, incrementTest } from './actions';
 
 //* Constants */
 const SPACING = 20;
@@ -226,12 +222,28 @@ function Main() {
               RAND_DATA.map((item, i) => (
                 <div key={i} className="Item" id={`item-${i}`} style={{borderRadius: 12}}>
                   <img src={item.image} alt="img" />
-                  <div className="Item-text">
+                  <h1 className="item_name_price">{item.name}</h1>
+                  {/* <div className="item_price_container">
+                    <h1 className="item_name">{item.name}</h1>
+                    <h1 className="item_price">{item.price}</h1>
+                  </div> */}
+                  <div className="price_container">
+                    <h2>Price: ${item.price}</h2>
+                  </div>
+                  <div className="desc_container">
+                    <h2>Description</h2>
+                    <h3>Charming hand-made wicker picnic basket filled with everything you need except the wine and potato salad. Used once. Even when it's too cold for a picnic this pretty shape will be a basket lover's joy. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h3>
+                  </div>
+                  <div className="seller_container">
+                    <h3>Sold By: {item.seller}</h3>
+                  </div>
+                  
+                  {/* <div className="Item-text">
                     <h2>{item.name}</h2>
                     <h2>${item.price}</h2>
                     <h4>{item.description}</h4>
                     <h6>Sold By: {item.seller}</h6>
-                  </div>
+                  </div> */}
                 </div>
               ))
             }
