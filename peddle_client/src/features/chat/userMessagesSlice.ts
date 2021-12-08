@@ -34,7 +34,6 @@ export const userMessagesSlice = createSlice({
   },
   reducers: {},
   extraReducers: {
-    /* Sign Up Reducer */
     [getChatByUser.pending.type]: (state, action) => {
       state.loading = true;
       state.error = "";

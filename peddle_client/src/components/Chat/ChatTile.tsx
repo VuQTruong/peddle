@@ -54,7 +54,14 @@ export const ChatTile = (props: { chat: Chat }) => {
       />
       <div className="chat-list-card__content">
         <div className="chat-list-card__title-div">
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              fontSize: "20px",
+              fontWeight: "bolder",
+            }}
+          >
             <p>
               {title} | {itemName}
             </p>

@@ -28,17 +28,22 @@ export default function UserMessages() {
           <i className="bx bx-left-arrow-alt" onClick={history.goBack} />
           <div className="my-items__title">My Messages</div>
         </section>
-        <div className="my-items__item-list">
-          {userMessages?.map((chat) => (
-            <div
-              key={chat.id}
-              className="btn btn-secondary home__btn home__btn--option"
-              onClick={() => routeChange(chat.id)}
-            >
-              <ChatTile key={chat.id} chat={{ ...chat }} />
-            </div>
-          ))}
-        </div>
+        {userMessages.length !== 0 && (
+          <div className="my-items__item-list">
+            {userMessages?.map((chat) => (
+              <div
+                key={chat.id}
+                className="btn btn-secondary home__btn home__btn--option"
+                onClick={() => routeChange(chat.id)}
+              >
+                <ChatTile key={chat.id} chat={{ ...chat }} />
+              </div>
+            ))}
+          </div>
+        )}
+        {userMessages.length === 0 && (
+          <div className="noChat">No Recent Chats</div>
+        )}
       </div>
       <NavBar />
     </main>

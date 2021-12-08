@@ -11,7 +11,6 @@ import itemReducer from "./features/item/itemSlice";
 import userItemsReducer from "./features/user/userItemsSlice";
 import userFavoritesReducer from "./features/user/userFavoritesSlice";
 import userMessagesSlice from "./features/chat/userMessagesSlice";
-import chatReducer from "./features/chat/chatSlice";
 
 export interface State {
   session: SessionState;
@@ -30,7 +29,6 @@ const store = configureStore({
     item: itemReducer,
     userItems: userItemsReducer,
     userMessages: userMessagesSlice,
-    chat: chatReducer,
     userFavorites: userFavoritesReducer,
   },
 });

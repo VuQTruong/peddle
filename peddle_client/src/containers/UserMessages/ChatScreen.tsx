@@ -132,7 +132,6 @@ export default function ChatScreen(props: {
   const [chatInfo, setChatInfo] = useState<any>(null);
   const [itemName, setItemName] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
-  //const [blocked, setBlocked] = useState(false);
 
   useEffect(() => {
     if (chatInfo === null) {
@@ -162,12 +161,7 @@ export default function ChatScreen(props: {
         }
       }
     }
-    return () => {
-      //   setChatInfo(null);
-      //   setItemName(null);
-      //   setUserInfo(null);
-      //   setIsLoading(true);
-    };
+    return () => {};
   });
   return isLoading ? (
     <div className="loader">
