@@ -21,6 +21,7 @@ import {
   getFavouriteItemsRouter,
   getSeenItemsRouter,
   getSoldItemsRouter,
+  rateUserRouter,
 } from './user-service/routes';
 
 import {
@@ -112,6 +113,7 @@ app.use(getFavouriteItemsRouter);
 app.use(getSeenItemsRouter);
 app.use(getSoldItemsRouter);
 app.use(getUserRouter);
+app.use(rateUserRouter);
 
 // Category Services
 app.use(createCategoryRouter);
