@@ -1,11 +1,11 @@
-import express, { NextFunction, Request, Response } from 'express';
-import Item from '../../models/item';
-import { body, param } from 'express-validator';
-import { BadRequestError } from '../../errors/bad-request-error';
-import { currentUser } from '../../middlewares/current-user';
-import { validateRequest } from '../../middlewares/validate-request';
-import { requireAuth } from '../../middlewares/require-auth';
-import { NotAuthorizedError } from '../../errors';
+import express, { NextFunction, Request, Response } from "express";
+import Item from "../../models/item";
+import { body, param } from "express-validator";
+import { BadRequestError } from "../../errors/bad-request-error";
+import { currentUser } from "../../middlewares/current-user";
+import { validateRequest } from "../../middlewares/validate-request";
+import { requireAuth } from "../../middlewares/require-auth";
+import { NotAuthorizedError } from "../../errors";
 
 const router = express.Router();
 
@@ -33,7 +33,6 @@ router.patch(
     if (!item) {
       return next(new BadRequestError('Bad request - item doesn not exist'));
     }
-
     if (item?.postedBy.toString() !== req.currentUser?.id) {
       return next(new NotAuthorizedError());
     }

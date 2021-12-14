@@ -19,8 +19,11 @@ import {
   addFavouriteItemRouter,
   removeFavouriteItemRouter,
   getFavouriteItemsRouter,
-  getSeenItems,
+  getSeenItemsRouter,
+  getSoldItemsRouter,
+  rateUserRouter,
 } from './user-service/routes';
+
 import {
   createCategoryRouter,
   getAllCategoriesRouter,
@@ -33,13 +36,25 @@ import {
   createItemRouter,
   updateItemRouter,
   deleteItemRouter,
+  filterItemsRouter,
+  incrementMatchesRouter,
 } from './item-service/routes';
-import { purchaseRoute } from './purchase-service/routes/purchase-item';
 
+import {
+  getChatsRouter,
+  createChatRouter,
+  deleteChatRouter,
+  updateChatRouter,
+  getChatsByUserRouter,
+} from './chat-service/routes';
+
+import { purchaseRoute } from './purchase-service/routes/purchase-item';
 import { NotFoundError } from './errors/not-found-error';
 import { errorHandler } from './middlewares/error-handler';
 import cookieSession from 'cookie-session';
 import { deleteImage, uploadImage } from './file-service/routes';
+import { getUserItemsRouter } from './item-service/routes/get-items-by-userId';
+import { hashPassword } from './utilities/password-util';
 
 dotenv.config();
 
@@ -71,6 +86,11 @@ app.get('/health', (req, res) => {
   });
 });
 
+app.get('/resetpassword', async (req, res) => {
+  const password = await hashPassword('password');
+  res.status(200).json({ password });
+});
+
 /* Routes */
 // Auth Services
 app.use(currentUserRouter);
@@ -90,8 +110,10 @@ app.use(updateUserRouter);
 app.use(updateSeenItemsRouter);
 app.use(removeFavouriteItemRouter);
 app.use(getFavouriteItemsRouter);
-app.use(getSeenItems)
+app.use(getSeenItemsRouter);
+app.use(getSoldItemsRouter);
 app.use(getUserRouter);
+app.use(rateUserRouter);
 
 // Category Services
 app.use(createCategoryRouter);
@@ -100,11 +122,21 @@ app.use(updateCategoryRouter);
 app.use(deleteCategoryRouter);
 
 // Item Services
+app.use(filterItemsRouter);
 app.use(getMultiItemsRouter);
 app.use(getItemRouter);
 app.use(createItemRouter);
 app.use(updateItemRouter);
 app.use(deleteItemRouter);
+app.use(getUserItemsRouter);
+app.use(incrementMatchesRouter);
+
+// Chat Service
+app.use(getChatsRouter);
+app.use(updateChatRouter);
+app.use(createChatRouter);
+app.use(deleteChatRouter);
+app.use(getChatsByUserRouter);
 
 // Purchase Services
 app.use(purchaseRoute);

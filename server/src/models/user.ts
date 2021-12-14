@@ -30,11 +30,15 @@ interface UserDoc extends mongoose.Document {
   password: string;
   lat: number;
   lng: number;
+  rating: number;
+  numRates: number;
+  totalRatings: number;
   postalCode: string;
   isPremiumMember: boolean;
   dislikedItemIds: string[];
   seenItems: string[];
   postedItems: string[];
+  soldItems: string[];
   purchasedItems: string[];
   favouriteItems: string[];
 }
@@ -68,6 +72,18 @@ const userSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    rating: {
+      type: Number,
+      default: 0,
+    },
+    numRates:{
+      type: Number,
+      default: 0,
+    },
+    totalRatings:{
+      type: Number,
+      default: 0
+    },
     postalCode: {
       type: String,
       required: true,
@@ -100,6 +116,12 @@ const userSchema = new mongoose.Schema(
         ref: 'Item',
       },
     ],
+    soldItems: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item',
+      },
+    ],
     favouriteItems: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -115,6 +137,8 @@ const userSchema = new mongoose.Schema(
         delete ret.password;
         delete ret.__v;
         delete ret.seenItems;
+        delete ret.numRates;
+        delete ret.totalRatings;
       },
     },
   }
