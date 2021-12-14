@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { State } from '../../store';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import { State } from "../../store";
 
 type ResponseType = {
   status: string;
@@ -19,12 +19,14 @@ type UserResponse = {
 };
 
 export const signIn = createAsyncThunk(
-  'user/signin',
+  "user/signin",
   async (values: object, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
       const { data } = await axios.post<ResponseType>(
+
         '/api/auth/signin',
+
         values
       );
 
@@ -40,13 +42,15 @@ export const signIn = createAsyncThunk(
 );
 
 export const signUp = createAsyncThunk(
+
   'user/signup',
+
   async (values: object, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
 
     try {
       const { data } = await axios.post<ResponseType>(
-        '/api/auth/signup',
+        "/api/auth/signup",
         values
       );
 
@@ -57,11 +61,11 @@ export const signUp = createAsyncThunk(
   }
 );
 
-export const signOut = createAsyncThunk('user/signout', async (_, thunkAPI) => {
+export const signOut = createAsyncThunk("user/signout", async (_, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
 
   try {
-    await axios.post<ResponseType>('/api/auth/signout');
+    await axios.post<ResponseType>("/api/auth/signout");
 
     return null;
   } catch (error: any) {
@@ -70,12 +74,15 @@ export const signOut = createAsyncThunk('user/signout', async (_, thunkAPI) => {
 });
 
 export const fetchCurrUser = createAsyncThunk(
+
   'user/fetchCurrUser',
+
   async (_, thunkAPI) => {
     const { rejectWithValue, getState } = thunkAPI;
 
     try {
       const { user } = getState() as State;
+
       const { data } = await axios.get<UserResponse>(
         `/api/users/${user.userInfo.id}`
       );
@@ -89,15 +96,18 @@ export const fetchCurrUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   'users/update',
+
   async (values: object, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
       const { data } = await axios.patch<ResponseType>(
+
         '/api/users/current-user',
         values
       );
       //@ts-ignore
       return data.data.user;
+
     } catch (error: any) {
       return rejectWithValue(error.response.data.message);
     }
@@ -105,20 +115,20 @@ export const updateUser = createAsyncThunk(
 );
 
 export const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState: {
-    userInfo: localStorage.getItem('userInfo')
-      ? JSON.parse(localStorage.getItem('userInfo')!)
+    userInfo: localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo")!)
       : null,
     loading: false,
-    error: '',
+    error: "",
   },
   reducers: {
     resetUserState: (state) => {
-      state.error = '';
+      state.error = "";
       state.loading = false;
-      state.userInfo = localStorage.getItem('userInfo')
-        ? JSON.parse(localStorage.getItem('userInfo')!)
+      state.userInfo = localStorage.getItem("userInfo")
+        ? JSON.parse(localStorage.getItem("userInfo")!)
         : null;
     },
   },
@@ -126,7 +136,7 @@ export const userSlice = createSlice({
     /* Sign In Reducer*/
     [signIn.pending.type]: (state, action) => {
       state.loading = true;
-      state.error = '';
+      state.error = "";
       state.userInfo = null;
     },
     [signIn.fulfilled.type]: (state, action) => {
@@ -134,7 +144,7 @@ export const userSlice = createSlice({
       state.userInfo = action.payload;
 
       // Save userInfo to localStorage
-      localStorage.setItem('userInfo', JSON.stringify(action.payload));
+      localStorage.setItem("userInfo", JSON.stringify(action.payload));
     },
     [signIn.rejected.type]: (state, action) => {
       state.loading = false;
@@ -145,7 +155,7 @@ export const userSlice = createSlice({
     /* Sign Up Reducer */
     [signUp.pending.type]: (state, action) => {
       state.loading = true;
-      state.error = '';
+      state.error = "";
       state.userInfo = null;
     },
     [signUp.fulfilled.type]: (state, action) => {
@@ -153,7 +163,7 @@ export const userSlice = createSlice({
       state.userInfo = action.payload;
 
       // Save userInfo to localStorage
-      localStorage.setItem('userInfo', JSON.stringify(action.payload));
+      localStorage.setItem("userInfo", JSON.stringify(action.payload));
     },
     [signUp.rejected.type]: (state, action) => {
       state.loading = false;
@@ -170,7 +180,7 @@ export const userSlice = createSlice({
       state.userInfo = null;
 
       // Remove userInfo from localStorage
-      localStorage.removeItem('userInfo');
+      localStorage.removeItem("userInfo");
     },
     [signOut.rejected.type]: (state, action) => {
       state.loading = false;
@@ -181,13 +191,15 @@ export const userSlice = createSlice({
     /* Update User Reducer */
     [updateUser.pending.type]: (state, action) => {
       state.loading = true;
+
       // localStorage.removeItem('userInfo');
+
     },
     [updateUser.fulfilled.type]: (state, action) => {
       state.loading = false;
       state.userInfo = action.payload;
       // Update userInfo to localStorage
-      localStorage.setItem('userInfo', JSON.stringify(action.payload));
+      localStorage.setItem("userInfo", JSON.stringify(action.payload));
     },
     [updateUser.rejected.type]: (state, action) => {
       state.loading = false;

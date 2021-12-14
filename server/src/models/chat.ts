@@ -6,6 +6,8 @@ export interface ChatDocument extends mongoose.Document {
   itemId: typeof Item;
   sender: typeof User;
   receiver: typeof User;
+  isBlocked: boolean;
+  blockedByUserId: typeof User;
   messages: Object[];
 }
 
@@ -25,6 +27,16 @@ const ChatSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "receiver",
       required: true,
+    },
+    isBlocked: {
+      type: mongoose.Schema.Types.Boolean,
+      ref: "isBlocked",
+      default: false,
+    },
+    blockedByUserId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "blockedByUserId",
+      default: null,
     },
     messages: [
       {

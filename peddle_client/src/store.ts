@@ -1,14 +1,17 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
-import { UserFavoritesState, UserItemsState, UserState } from './types/user';
+import { UserFavoritesState, UserItemsState, UserState } from "./types/user";
 import { FilteredItemsState, ItemState } from './types/item';
+import { ChatState, UserMessagesState } from "./types/chat";
+
+import sessionReducer from "./features/session/sessionSlice";
+import userReducer from "./features/user/userSlice";
+import itemReducer from "./features/item/itemSlice";
+import userItemsReducer from "./features/user/userItemsSlice";
+import userFavoritesReducer from "./features/user/userFavoritesSlice";
+import userMessagesSlice from "./features/chat/userMessagesSlice";
 import { SessionState } from './types/session';
 
-import sessionReducer from './features/session/sessionSlice';
-import userReducer from './features/user/userSlice';
-import itemReducer from './features/item/itemSlice';
-import userItemsReducer from './features/user/userItemsSlice';
-import userFavoritesReducer from './features/user/userFavoritesSlice';
 import filteredItemsReducer from './features/item/filteredItemsSlice';
 
 export interface State {
@@ -16,6 +19,8 @@ export interface State {
   user: UserState;
   item: ItemState;
   userItems: UserItemsState;
+  chat: ChatState;
+  userMessages: UserMessagesState;
   userFavorites: UserFavoritesState;
   filteredItems: FilteredItemsState;
 }
@@ -26,6 +31,7 @@ const store = configureStore({
     user: userReducer,
     item: itemReducer,
     userItems: userItemsReducer,
+    userMessages: userMessagesSlice,
     userFavorites: userFavoritesReducer,
     filteredItems: filteredItemsReducer,
   },
