@@ -8,9 +8,11 @@ import faker from "faker";
 import SwipeableHook from './SwipeableHook';
 import NavBar from '../../components/NavBar/NavBar';
 
-
+import { useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { State } from '../../store';
+
+
 
 
 //* Constants */
@@ -56,6 +58,11 @@ const initialState = {
 };
 
 function Main() {
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  
 
   //const dispatch = useDispatch();
   //const cart = useSelector((state:any) => state.ItemCartReducer);
