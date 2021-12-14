@@ -1,0 +1,28 @@
+.slide__container {
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.slider {
+  height: 12em;
+}
+
+.slider .slick-list,
+.slider .slick-track,
+.slider .slick-slide,
+.slider .slick-slide div {
+  height: 100%;
+}
+
+.slide__item img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  -o-object-position: center;
+  object-position: center;
+}

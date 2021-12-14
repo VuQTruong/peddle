@@ -1,14 +1,21 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import WavyDivider from '../../components/WavyDivider/WavyDivider';
 import Avatar from 'react-avatar';
 import { Link } from 'react-router-dom';
 import { State } from '../../store';
 import { isURL } from '../../utilities/validators';
+import { useEffect } from 'react';
+import { fetchCurrUser } from '../../features/user/userSlice';
 
 export default function Home() {
   const user = useSelector((state: State) => state.user);
+  const dispatch = useDispatch();
   const { userInfo } = user;
- 
+
+  useEffect(() => {
+    dispatch(fetchCurrUser());
+  }, [])
+
   return (
     <main className='home__container'>
       <section className='home__header'>
@@ -43,15 +50,24 @@ export default function Home() {
           Profile
           <i className='bx bx-chevron-right'></i>
         </Link>
-        <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
-          Shopping Cart (3)
+        <Link
+          to='/cart'
+          className='btn btn-secondary home__btn home__btn--option'
+        >
+          Shopping Cart ({userInfo.favouriteItems?.length || '0'})
           <i className='bx bx-chevron-right'></i>
         </Link>
-        <Link to='#' className='btn btn-secondary home__btn home__btn--option'>
-          My Items (4)
+        <Link
+          to='/my-items'
+          className='btn btn-secondary home__btn home__btn--option'
+        >
+          My Items ({userInfo.postedItems?.length || '0'})
           <i className='bx bx-chevron-right'></i>
         </Link>
-        <Link to='/settings' className='btn btn-secondary home__btn home__btn--option'>
+        <Link
+          to='/settings'
+          className='btn btn-secondary home__btn home__btn--option'
+        >
           Settings
           <i className='bx bx-chevron-right'></i>
         </Link>

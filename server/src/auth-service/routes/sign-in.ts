@@ -46,9 +46,11 @@ router.post(
     };
 
 
-    const userJwt = jwt.sign(sessionData, process.env.ACCESS_TOKEN_SECRET!, {
-      expiresIn: 1800, // 30 minutes
-    });
+    const userJwt = jwt.sign(sessionData, process.env.ACCESS_TOKEN_SECRET!, 
+    //   {
+    //   expiresIn: 1800, // 30 minutes
+    // }
+    );
 
     // store jwt in a cookie
     req.session = {

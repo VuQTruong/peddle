@@ -1,4 +1,6 @@
+import { Item } from './item';
 export interface User {
+  id: string;
   firstName: string;
   lastName: string;
   photo: string;
@@ -14,6 +16,18 @@ export interface User {
 
 export interface UserState {
   userInfo: User;
+  loading: boolean;
+  error: string;
+}
+
+export interface UserItemsState {
+  userItems: Item[];
+  loading: boolean;
+  error: string;
+}
+
+export interface UserFavoritesState {
+  favorites: Item[];
   loading: boolean;
   error: string;
 }

@@ -27,4 +27,4 @@ router.get(
   }
 );
 
-export { router as getSeenItems };
+export { router as getSeenItemsRouter };
