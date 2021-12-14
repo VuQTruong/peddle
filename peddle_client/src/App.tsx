@@ -8,21 +8,21 @@ import PrivateRoute from "./routes/PrivateRoute";
 import SessionExpiredModal from "./components/SessionExpiredModal/SessionExpiredModal";
 
 /* Containers */
-import Page404 from "./containers/Page404/Page404";
-import Home from "./containers/Home/Home";
-import SignIn from "./containers/SignIn/SignIn";
-import SignUp from "./containers/SignUp/SignUp";
-import Profile from "./containers/Profile/Profile";
-import MyItems from "./containers/MyItems/MyItems";
-import Settings from "./containers/Settings/Settings";
 import UserMessages from "./containers/UserMessages/UserMessages";
 import ChatScreen from "./containers/UserMessages/ChatScreen";
-
-import ManageItem from "./containers/ManageItem/ManageItem";
-import PurchaseHistory from "./containers/PurchaseHistory/PurchaseHistory";
-import SellHistory from "./containers/SellHistory/SellHistory";
-import Cart from "./containers/Cart/Cart";
-import UpgradeToPro from "./containers/UpgradeToPro/UpgradeToPro";
+import Page404 from './containers/Page404/Page404';
+import Home from './containers/Home/Home';
+import SignIn from './containers/SignIn/SignIn';
+import SignUp from './containers/SignUp/SignUp';
+import Profile from './containers/Profile/Profile';
+import MyItems from './containers/MyItems/MyItems';
+import Settings from './containers/Settings/Settings';
+import ManageItem from './containers/ManageItem/ManageItem';
+import PurchaseHistory from './containers/PurchaseHistory/PurchaseHistory';
+import SellHistory from './containers/SellHistory/SellHistory';
+import Cart from './containers/Cart/Cart';
+import UpgradeToPro from './containers/UpgradeToPro/UpgradeToPro';
+import FilterItems from './containers/FilterItems/FilterItems';
 
 function App() {
   return (

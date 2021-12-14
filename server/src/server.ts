@@ -21,6 +21,7 @@ import {
   getFavouriteItemsRouter,
   getSeenItemsRouter,
   getSoldItemsRouter,
+  rateUserRouter,
 } from './user-service/routes';
 
 import {
@@ -35,6 +36,7 @@ import {
   createItemRouter,
   updateItemRouter,
   deleteItemRouter,
+  filterItemsRouter,
   incrementMatchesRouter,
 } from './item-service/routes';
 
@@ -111,6 +113,7 @@ app.use(getFavouriteItemsRouter);
 app.use(getSeenItemsRouter);
 app.use(getSoldItemsRouter);
 app.use(getUserRouter);
+app.use(rateUserRouter);
 
 // Category Services
 app.use(createCategoryRouter);
@@ -119,6 +122,7 @@ app.use(updateCategoryRouter);
 app.use(deleteCategoryRouter);
 
 // Item Services
+app.use(filterItemsRouter);
 app.use(getMultiItemsRouter);
 app.use(getItemRouter);
 app.use(createItemRouter);

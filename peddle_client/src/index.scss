@@ -14,6 +14,8 @@
 @import "./components/SellHistory/sold-item-tile";
 @import "./components/MessageBox/messageBox";
 @import "./components/Chat/chat-tile";
+@import './components/FilteredItemCard/filteredItemCard';
+@import './components/FilteredItemList/filteredItemList';
 
 /* Containers */
 @import "./containers/Page404/page404";
@@ -27,3 +29,4 @@
 @import "./containers/Cart/cart";
 @import "./containers/UpgradeToPro/upgradeToPro";
 @import "./containers/UserMessages/user-messages";
+@import './containers/FilterItems/filterItems';

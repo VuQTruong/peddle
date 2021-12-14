@@ -384,7 +384,43 @@ request{}
 response Ok:
 {
     "status": "200",
-    "message": "Favourite Item removed successfully",
+    "message": "Success",
+}
+
+response Error:
+{
+    "status": 400,
+    "message": "User not found",
+    "errors":[
+        {
+            "message": "User not found",
+        }
+    ]
+}
+
+response Error:
+{
+    "status": 500,
+    "message": "Unexpected Error - ${err.message}",
+    "errors":[
+        {
+            "message": "Unexpected Error - ${err.message}",
+        }
+    ]
+}
+```
+**`GET` /api/users/:userid/rating/:rating - rate a user(can't rate user themselves)**
+
+``` json
+request{}
+
+response Ok:
+{
+    "status": "200",
+    "message": "Success",
+    "user": {
+        
+    }
 }
 
 response Error:

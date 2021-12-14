@@ -19,7 +19,7 @@ Success Response:
     status: SuccessStatusCode,
     message: string,
     data:{
-        
+
     }
 }
 
@@ -272,10 +272,54 @@ response Error:
 response Error:
 {
     status: 500,
-    message: "Unexpected Error - ${err.message}", 
+    message: "Unexpected Error - ${err.message}",
     errors:[
         {
             message: "Unexpected Error - ${err.message}",
+        }
+    ]
+}
+```
+
+**`GET` /api/items/filter?queryString - filter items**
+
+- `queryString` syntax:
+  - Search by name: name[regex]=somename
+  - Search in range: (gt:>, gte:>=, lt:<, lte:<=)
+    - price[gt]=25
+    - price[gte]=20&price[lt]=50
+
+```json
+request {}
+
+response Ok:
+{
+    "status": 200,
+    "message": "Success",
+    "data": {
+        "items": [
+            { ...item1 },
+            { ...item2 },
+            { ...item3 },
+            { ...item4 },
+            { ...item5 },
+            { ...item6 },
+            { ...item7 },
+            { ...item8 },
+            { ...item9 },
+            { ...item10 },
+            ...
+        ]
+    }
+}
+
+response Error:
+{
+    "status": 500,
+    "message": "Unexpected Error - ${err.message}"
+    "errors": [
+        {
+            "message": "Unexpected Error - ${err.message}",
         }
     ]
 }
