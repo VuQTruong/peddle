@@ -52,9 +52,10 @@ function App() {
           <PrivateRoute path='/settings' component={Settings} />
           <PrivateRoute path='/' component={Home} exact />
           <PrivateRoute path='/shopping' component={Shopping} exact />
-          <Route path='*' component={Page404} />
           <PrivateRoute path="/user-messages" component={UserMessages} />
           <PrivateRoute path="/chat-screen" component={ChatScreen} exact />
+          <Route path='*' component={Page404} />
+          
 
         </Switch>
       </Router>
