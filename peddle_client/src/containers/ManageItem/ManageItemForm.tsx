@@ -1,10 +1,10 @@
-import axios from 'axios';
-import * as Yup from 'yup';
-import swal from 'sweetalert';
-import SlickImages from '../../components/SlickImages/SlickImages';
-import React, { useRef, useState } from 'react';
-import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
-import Cleave from 'cleave.js/react';
+import axios from "axios";
+import * as Yup from "yup";
+import swal from "sweetalert";
+import SlickImages from "../../components/SlickImages/SlickImages";
+import React, { useRef, useState } from "react";
+import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
+import Cleave from "cleave.js/react";
 
 type Props = {
   itemId: string;
@@ -42,12 +42,12 @@ export default function ManageItemForm(props: Props) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const validationSchema = Yup.object({
-    name: Yup.string().required('Product Name is required'),
+    name: Yup.string().required("Product Name is required"),
     price: Yup.number()
-      .typeError('Price must be a number')
-      .required('Price is required'),
-    description: Yup.string().required('Description is required'),
-    images: Yup.array().min(1, 'At least one image is required'),
+      .typeError("Price must be a number")
+      .required("Price is required"),
+    description: Yup.string().required("Description is required"),
+    images: Yup.array().min(1, "At least one image is required"),
   });
 
   /**
@@ -62,20 +62,20 @@ export default function ManageItemForm(props: Props) {
 
     if (files.length !== 0) {
       files.forEach((image: any) => {
-        formData.append('file', image);
+        formData.append("file", image);
       });
 
       setImgLoading(true);
       axios
-        .post('/api/images', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
+        .post("/api/images", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
         })
         .then(({ data }: any) => {
           setImgLoading(false);
 
           // Set the image urls to the form values
           const productImages = form.values.images;
-          form.setFieldValue('images', [...productImages, ...data.data.images]);
+          form.setFieldValue("images", [...productImages, ...data.data.images]);
 
           // Set the image urls to the newImageUrlsRef
           newImageUrlsRef.current = [
@@ -84,24 +84,24 @@ export default function ManageItemForm(props: Props) {
           ];
 
           swal({
-            title: 'Success',
-            text: 'Images uploaded successfully',
-            icon: 'success',
+            title: "Success",
+            text: "Images uploaded successfully",
+            icon: "success",
           });
         })
         .catch((err) => {
           setImgLoading(false);
           swal({
-            title: 'Error',
+            title: "Error",
             text: `${err}`,
-            icon: 'error',
+            icon: "error",
           });
         });
     } else {
       swal({
-        title: 'Error',
-        text: 'File(s) not found',
-        icon: 'error',
+        title: "Error",
+        text: "File(s) not found",
+        icon: "error",
       });
     }
   };
@@ -116,22 +116,22 @@ export default function ManageItemForm(props: Props) {
 
     const imageName = productImages
       .filter((item) => item === currentImage)[0]
-      .split('/')
+      .split("/")
       .pop();
-    const imageId = imageName!.split('.')[0];
+    const imageId = imageName!.split(".")[0];
 
     swal({
-      title: 'Warning',
+      title: "Warning",
       text: `The image will be deleted permanently even if you don't hit Save! Are you sure you want to delete this image?`,
-      icon: 'warning',
+      icon: "warning",
       dangerMode: true,
       buttons: {
         deny: {
-          text: 'Cancel',
+          text: "Cancel",
           value: null,
         },
         confirm: {
-          text: 'Yes',
+          text: "Yes",
           value: true,
         },
       },
@@ -146,7 +146,7 @@ export default function ManageItemForm(props: Props) {
           const formCurrentImages = productImages.filter(
             (item) => item !== currentImage
           );
-          formik.setFieldValue('images', formCurrentImages);
+          formik.setFieldValue("images", formCurrentImages);
 
           // Remove the image url from the newImageUrlsRef
           newImageUrlsRef.current.filter((item) => item !== currentImage);
@@ -155,33 +155,33 @@ export default function ManageItemForm(props: Props) {
           setCurrentImageIndex(0);
 
           // If the mode is "edit", we need to update the list of image urls immediately to make sure the images are up to date even if the user doesn't hit Save
-          if (mode === 'edit') {
-            console.log('Deleting image url on server');
-            console.log('Item Id: ', itemId);
+          if (mode === "edit") {
+            console.log("Deleting image url on server");
+            console.log("Item Id: ", itemId);
             axios
               .patch(`/api/items/${itemId}`, {
                 images: formCurrentImages,
               })
               .catch((err) => {
                 swal({
-                  title: 'Error',
+                  title: "Error",
                   text: `${err}`,
-                  icon: 'error',
+                  icon: "error",
                 });
               });
           }
 
           swal({
-            title: 'Success',
-            text: 'Image deleted successfully',
-            icon: 'success',
+            title: "Success",
+            text: "Image deleted successfully",
+            icon: "success",
           });
         })
         .catch((error) => {
           swal({
-            title: 'Error',
+            title: "Error",
             text: `${error}`,
-            icon: 'error',
+            icon: "error",
           });
         });
     });
@@ -196,39 +196,39 @@ export default function ManageItemForm(props: Props) {
     >
       {(formik) => {
         return (
-          <Form className='signup__form'>
-            <div className='signup__form-header'>
+          <Form className="signup__form">
+            <div className="signup__form-header">
               <i
-                className='bx bx-left-arrow-alt'
+                className="bx bx-left-arrow-alt"
                 onClick={() => onReturn(newImageUrlsRef.current, formik.dirty)}
               ></i>
-              <p className='signup__form-title'>
-                {mode === 'new' ? 'New Item' : 'Update Item'}
+              <p className="signup__form-title">
+                {mode === "new" ? "New Item" : "Update Item"}
               </p>
             </div>
 
-            <div className='form__control--text'>
-              <label htmlFor='name'>Product Name</label>
+            <div className="form__control--text">
+              <label htmlFor="name">Product Name</label>
               <Field
-                type='text'
-                name='name'
-                id='name'
-                placeholder='Product Name'
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Product Name"
               />
-              <i className='bx bx-purchase-tag'></i>
-              <ErrorMessage name='name'>
-                {(errorMsg) => <div className='form__error'>{errorMsg}</div>}
+              <i className="bx bx-purchase-tag"></i>
+              <ErrorMessage name="name">
+                {(errorMsg) => <div className="form__error">{errorMsg}</div>}
               </ErrorMessage>
             </div>
 
-            <div className='form__control manage-item__images'>
+            <div className="form__control manage-item__images">
               {imgLoading ? (
-                <i className='bx bx-loader-alt bx-spin bx-rotate-90 manage-item__loading'></i>
+                <i className="bx bx-loader-alt bx-spin bx-rotate-90 manage-item__loading"></i>
               ) : (
                 <React.Fragment>
                   <div
                     className={`images__slide ${
-                      formik.values.images.length > 0 ? '' : 'hidden'
+                      formik.values.images.length > 0 ? "" : "hidden"
                     }`}
                   >
                     <SlickImages
@@ -239,23 +239,23 @@ export default function ManageItemForm(props: Props) {
                     />
                   </div>
 
-                  <div className='images__input'>
-                    <i className='bx bx-images images__icon'></i>
+                  <div className="images__input">
+                    <i className="bx bx-images images__icon"></i>
                     <label
-                      className='btn btn-primary images__upload-btn'
-                      htmlFor='images'
+                      className="btn btn-primary images__upload-btn"
+                      htmlFor="images"
                     >
-                      <i className='bx bx-image-add'></i>
+                      <i className="bx bx-image-add"></i>
                       Upload Image
                     </label>
-                    <Field name='images'>
+                    <Field name="images">
                       {({ field, form }: any) => {
                         return (
                           <input
-                            type='file'
+                            type="file"
                             multiple
-                            id='images'
-                            className='images__file-input'
+                            id="images"
+                            className="images__file-input"
                             onChange={(event: any) =>
                               uploadImagesHandler(event, form)
                             }
@@ -263,9 +263,9 @@ export default function ManageItemForm(props: Props) {
                         );
                       }}
                     </Field>
-                    <ErrorMessage name='images'>
+                    <ErrorMessage name="images">
                       {(errorMsg) => (
-                        <div className='form__error'>{errorMsg}</div>
+                        <div className="form__error">{errorMsg}</div>
                       )}
                     </ErrorMessage>
                   </div>
@@ -274,14 +274,14 @@ export default function ManageItemForm(props: Props) {
             </div>
 
             {formik.values.images.length > 0 && (
-              <div className='images-btns'>
-                <label className='btn btn-primary' htmlFor='images'>
+              <div className="images-btns">
+                <label className="btn btn-primary" htmlFor="images">
                   Upload
                 </label>
 
                 <button
-                  type='button'
-                  className='btn btn-danger'
+                  type="button"
+                  className="btn btn-danger"
                   onClick={() => deleteItemHandler(formik)}
                 >
                   Delete
@@ -289,69 +289,69 @@ export default function ManageItemForm(props: Props) {
               </div>
             )}
 
-            <div className='form__control--text'>
-              <label htmlFor='price'>Price</label>
-              <Field name='price'>
+            <div className="form__control--text">
+              <label htmlFor="price">Price</label>
+              <Field name="price">
                 {({ field, form }: any) => {
                   return (
                     <Cleave
-                      id='price'
-                      placeholder='Item Price'
+                      id="price"
+                      placeholder="Item Price"
                       options={{
                         numeral: true,
-                        numeralThousandsGroupStyle: 'thousand',
+                        numeralThousandsGroupStyle: "thousand",
                       }}
                       {...field}
                       onChange={(event: any) => {
                         const value = event.target.rawValue
-                          .replace(',', '')
-                          .replace('$ ', '');
-                        form.setFieldValue('price', value);
+                          .replace(",", "")
+                          .replace("$ ", "");
+                        form.setFieldValue("price", value);
                       }}
                     />
                   );
                 }}
               </Field>
-              <i className='bx bx-dollar-circle'></i>
-              <ErrorMessage name='price'>
-                {(errorMsg) => <div className='form__error'>{errorMsg}</div>}
+              <i className="bx bx-dollar-circle"></i>
+              <ErrorMessage name="price">
+                {(errorMsg) => <div className="form__error">{errorMsg}</div>}
               </ErrorMessage>
             </div>
 
-            <div className='form__control--text'>
-              <label htmlFor='description'>Description</label>
+            <div className="form__control--text">
+              <label htmlFor="description">Description</label>
               <Field
-                as='textarea'
-                name='description'
-                id='description'
-                placeholder='Description'
-                className='manage-item__description'
+                as="textarea"
+                name="description"
+                id="description"
+                placeholder="Description"
+                className="manage-item__description"
               />
-              <i className='bx bx-notepad'></i>
-              <ErrorMessage name='description'>
-                {(errorMsg) => <div className='form__error'>{errorMsg}</div>}
+              <i className="bx bx-notepad"></i>
+              <ErrorMessage name="description">
+                {(errorMsg) => <div className="form__error">{errorMsg}</div>}
               </ErrorMessage>
             </div>
 
-            <div className='manage-item__btns'>
-              <button type='submit' className='btn btn-primary'>
+            <div className="manage-item__btns">
+              <button type="submit" className="btn btn-primary">
                 {submitLoading ? (
-                  <i className='bx bx-loader-alt bx-spin bx-rotate-90'></i>
+                  <i className="bx bx-loader-alt bx-spin bx-rotate-90"></i>
                 ) : (
-                  'Save'
+                  "Save"
                 )}
               </button>
 
-              {mode === 'edit' && (
+              {mode === "edit" && (
                 <button
-                  type='button'
-                  className='btn btn-danger'
+                  type="button"
+                  className="btn btn-danger"
                   onClick={onDelete}
                 >
                   {deleteLoading ? (
-                    <i className='bx bx-loader-alt bx-spin bx-rotate-90'></i>
+                    <i className="bx bx-loader-alt bx-spin bx-rotate-90"></i>
                   ) : (
-                    'Delete'
+                    "Delete"
                   )}
                 </button>
               )}

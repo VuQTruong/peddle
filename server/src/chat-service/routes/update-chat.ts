@@ -14,6 +14,7 @@ const validations = [
   body("receiver")
     .isMongoId()
     .withMessage("Receiver id not in valid MongoId form"),
+  body("isBlocked").isBoolean().optional().withMessage("Invalid isBlocked"),
   body("itemId").isMongoId().withMessage("Item id not in valid MongoId form"),
 ];
 

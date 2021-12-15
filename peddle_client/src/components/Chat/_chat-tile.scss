@@ -1,0 +1,27 @@
+.chat-list-card__container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.chat-list-card__content {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.chat-list-card__title-div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.chat-list-card__card-title {
+  display: "flex";
+  flex-direction: "row";
+}
