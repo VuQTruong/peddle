@@ -22,9 +22,19 @@
   height: 100vh;
 }
 
+
+.image_container {
+  position: relative;
+  min-height: 50vh;
+}
+
 img {
+  position: absolute;
   max-height: 50vh;
   width: 100vw;
+  top: 0;
+  bottom: 0;
+  margin: auto;
 }
 
 .desc_container, .seller_container, .price_container {

@@ -11,6 +11,11 @@ import NavBar from '../../components/NavBar/NavBar';
 import { useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { State } from '../../store';
+import { Item } from '../../types/item';
+import { fetchMyItems } from '../../features/user/userItemsSlice';
+import axios from 'axios';
+import { User } from '../../types/user';
+import { type } from 'os';
 
 
 
@@ -36,6 +41,8 @@ const RAND_DATA = Array.from(Array(20).keys()).map((_, i) => {
   }
 });
 
+const ITEM_DATA: Item[] = []
+
 const initialState = {
   swiping: false,
   swiped: false,
@@ -58,16 +65,55 @@ const initialState = {
 };
 
 function Main() {
-
-  const history = useHistory();
-  const dispatch = useDispatch();
-
-  
-
   //const dispatch = useDispatch();
   //const cart = useSelector((state:any) => state.ItemCartReducer);
   const reducer = (state:any, newState:any) => ({ ...state, ...newState });
   const [state, setState] = useReducer(reducer, initialState);
+
+
+  // Get items
+  const [items, setItems] = useState<Item[]>([])
+
+  useEffect(() => {
+    fetchMyItems();
+  }, []);
+
+  const fetchMyItems = async () => {
+    try {
+      const items = await axios.get<{ data: {items: Item[]}}>(
+        `/api/items`
+      )
+      // Clear Items
+      ITEM_DATA.length = 0
+
+      items.data.data.items.map((i) => {
+        ITEM_DATA.push(i)
+      })
+
+      for (const item of ITEM_DATA) {
+        const sellerData = await axios.get<{ data: {user: User}}>(
+          `/api/users/${item.postedBy}`
+        )
+
+        const seller  = sellerData.data.data.user
+
+        item.postedBy = {
+          id: seller.id,
+          firstName: seller.firstName,
+          lastName: seller.lastName,
+          photo: '',
+          email: seller.email,
+          postalCode: seller.postalCode
+        } 
+
+      }
+
+    } catch (error: any) {
+      console.log(error);
+    }
+  }
+
+
 
   const onSwiping = (args: any) => {
     let item = document.getElementById(`item-${(CURR_ITEM_IDX)}`);
@@ -98,6 +144,8 @@ function Main() {
     });
   }
 
+  
+
   const onSwiped = (args: any) => {
  
     let item = document.getElementById(`item-${(CURR_ITEM_IDX)}`);
@@ -108,6 +156,18 @@ function Main() {
         if (args.deltaX > 350) {
           //dispatch(addItem(RAND_DATA[CURR_ITEM_IDX]));
           item.style.visibility = "hidden";
+
+          //* Add item to Shopping Cart here
+
+          const addItemToCart = async () => {
+            await axios.post('/api/users/favourite', {
+              itemId: ITEM_DATA[CURR_ITEM_IDX].id
+            })
+          }
+
+          addItemToCart()
+
+
           scrollNextItem();
         }
         else {
@@ -226,31 +286,22 @@ function Main() {
         style={swipeableStyle}>
             <header className="App-header" onWheel = {(e) => ScrollToNextItem(e)}>
             {
-              RAND_DATA.map((item, i) => (
+              ITEM_DATA.map((item, i) => (
                 <div key={i} className="Item" id={`item-${i}`} style={{borderRadius: 12}}>
-                  <img src={item.image} alt="img" />
+                  <div className='image_container'>
+                    <img src={item.images[0]} alt="img" />
+                  </div>
                   <h1 className="item_name_price">{item.name}</h1>
-                  {/* <div className="item_price_container">
-                    <h1 className="item_name">{item.name}</h1>
-                    <h1 className="item_price">{item.price}</h1>
-                  </div> */}
                   <div className="price_container">
                     <h2>Price: ${item.price}</h2>
                   </div>
                   <div className="desc_container">
                     <h2>Description</h2>
-                    <h3>Charming hand-made wicker picnic basket filled with everything you need except the wine and potato salad. Used once. Even when it's too cold for a picnic this pretty shape will be a basket lover's joy. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h3>
+                    <h3>{item.description}</h3>
                   </div>
                   <div className="seller_container">
-                    <h3>Sold By: {item.seller}</h3>
+                    <h3>Sold By: {item.postedBy.firstName} {item.postedBy.lastName}</h3>
                   </div>
-                  
-                  {/* <div className="Item-text">
-                    <h2>{item.name}</h2>
-                    <h2>${item.price}</h2>
-                    <h4>{item.description}</h4>
-                    <h6>Sold By: {item.seller}</h6>
-                  </div> */}
                 </div>
               ))
             }

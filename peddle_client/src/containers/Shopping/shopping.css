@@ -12,6 +12,8 @@
 
 img {
   width: 100vw;
+  min-height: 200px;
+  max-height: 200px;
 }
 
 .App-header {
