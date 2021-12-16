@@ -15,11 +15,12 @@ router.get('/api/items', currentUser, requireAuth, async (req, res) => {
     throw new BadRequestError('User not found')
   }
   const postedItems = userInfo.postedItems;
+  const seenItems = userInfo.seenItems;
 
   // Get items
   const items = await Item.find({
     _id: {
-      $nin: [...postedItems]
+      $nin: [...seenItems, ...postedItems]
     },
   }).limit(10);
 

@@ -11,7 +11,7 @@ import Item from '../../models/item';
 const router = express.Router();
 
 const validations = [
-  body('itemId').isArray().isMongoId().withMessage("Invalid item Id(s)"),
+  body('itemId').isMongoId().withMessage("Invalid item Id(s)"),
 ];
 
 router.patch(
@@ -27,8 +27,7 @@ router.patch(
     const updatedUser = await User.findById(userId);
 
     if (updatedUser) {
-      const newSeenItems =  updatedUser.seenItems.concat(itemIds)
-      updatedUser.seenItems = newSeenItems;
+      updatedUser.seenItems.push(itemIds)
       await updatedUser.save();
 
       return res.status(200).send({

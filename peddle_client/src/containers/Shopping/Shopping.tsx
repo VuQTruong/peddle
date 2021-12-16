@@ -79,19 +79,29 @@ function Main() {
   // Get items
   const [items, setItems] = useState<Item[]>([])
 
+
+
+
+
   useEffect(() => {
+    console.log("Inside the useEffect")
     fetchMyItems();
   }, []);
 
   const fetchMyItems = async () => {
     try {
-      const items = await axios.get<{ data: {items: Item[]}}>(
+      const itemsLocal = await axios.get<{ data: {items: Item[]}}>(
         `/api/items`
       )
+
+      console.log(itemsLocal)
+
+      setItems(itemsLocal.data.data.items)
+
       // Clear Items
       ITEM_DATA.length = 0
 
-      items.data.data.items.map((i) => {
+      itemsLocal.data.data.items.map((i) => {
         ITEM_DATA.push(i)
       })
 
@@ -173,18 +183,20 @@ function Main() {
               itemId: ITEM_DATA[idx].id
             })
 
-            await axios.post('/api/chat', {
-              itemId: ITEM_DATA[idx].id,
-              sender: userInfo.id,
-              receiver: ITEM_DATA[idx].postedBy.id,
-              messages: [{userId:userInfo.id,chat:"Hello, is this item still available?"}]
-            })
+            await axios.patch('/api/users/seen-items', {
+              itemId: ITEM_DATA[idx].id
+            }) 
 
+            try {
+              await axios.post('/api/chat', {
+                itemId: ITEM_DATA[idx].id,
+                sender: userInfo.id,
+                receiver: ITEM_DATA[idx].postedBy.id,
+                messages: [{userId:userInfo.id,chat:"Hello, is this item still available?"}]
+              })
+            }
+            catch (error) {}
           }
-
-
-
-
 
           addItemToCart()
 
