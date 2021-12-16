@@ -19,6 +19,11 @@
   border-radius: 20px;
 }
 
+.my-chats_chat-list {
+  height: 630px;
+  overflow: auto;
+}
+
 .chat-list-card__container {
   width: 100%;
   display: flex;
@@ -97,7 +102,7 @@
 }
 
 .my-chat-list {
-  height: 480px;
+  height: 570px;
   margin-bottom: 20px;
   overflow: scroll;
   scroll-behavior: smooth;
