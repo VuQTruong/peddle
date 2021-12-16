@@ -29,7 +29,7 @@ export default function UserMessages() {
           <div className="my-items__title">My Messages</div>
         </section>
         {userMessages.length !== 0 && (
-          <div className="my-items__item-list">
+          <div className="my-chats_chat-list">
             {userMessages?.map((chat) => (
               <div
                 key={chat.id}
