@@ -16,6 +16,7 @@ import { fetchMyItems } from '../../features/user/userItemsSlice';
 import axios from 'axios';
 import { User } from '../../types/user';
 import { type } from 'os';
+import Loader from 'react-loader-spinner';
 
 
 
@@ -69,6 +70,10 @@ function Main() {
   //const cart = useSelector((state:any) => state.ItemCartReducer);
   const reducer = (state:any, newState:any) => ({ ...state, ...newState });
   const [state, setState] = useReducer(reducer, initialState);
+  const {userInfo} = useSelector((state:State) => state.user)
+
+  const [isLoading, setIsLoading] = useState(true);
+
 
 
   // Get items
@@ -105,8 +110,9 @@ function Main() {
           email: seller.email,
           postalCode: seller.postalCode
         } 
-
       }
+
+      setIsLoading(false)
 
     } catch (error: any) {
       console.log(error);
@@ -163,7 +169,19 @@ function Main() {
             await axios.post('/api/users/favourite', {
               itemId: ITEM_DATA[CURR_ITEM_IDX].id
             })
+
+            await axios.post('/api/chat', {
+              itemId: ITEM_DATA[CURR_ITEM_IDX].id,
+              sender: userInfo.id,
+              receiver: ITEM_DATA[CURR_ITEM_IDX].postedBy.id,
+              messages: [{userId:userInfo.id,chat:"Hello, is this item still available?"}]
+            })
+
           }
+
+
+
+
 
           addItemToCart()
 
@@ -272,7 +290,9 @@ function Main() {
     swipeableDirProps.onTap = (...args: any) => onTap(...args);
   }
 
-  return (
+  return  isLoading ? (
+    <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
+    ) : (
     <div className="row">
       <div className="small-12 column">
         <SwipeableHook
@@ -289,7 +309,7 @@ function Main() {
               ITEM_DATA.map((item, i) => (
                 <div key={i} className="Item" id={`item-${i}`} style={{borderRadius: 12}}>
                   <div className='image_container'>
-                    <img src={item.images[0]} alt="img" />
+                    <img className="image_item" src={item.images[0]} alt="img" />
                   </div>
                   <h1 className="item_name_price">{item.name}</h1>
                   <div className="price_container">
@@ -308,6 +328,7 @@ function Main() {
             </header>
         </SwipeableHook>
       </div>
+      
       <NavBar />
     </div>
   )
