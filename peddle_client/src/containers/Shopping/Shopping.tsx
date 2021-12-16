@@ -94,8 +94,6 @@ function Main() {
         `/api/items`
       )
 
-      console.log(itemsLocal)
-
       setItems(itemsLocal.data.data.items)
 
       // Clear Items
@@ -187,15 +185,13 @@ function Main() {
               itemId: ITEM_DATA[idx].id
             }) 
 
-            try {
-              await axios.post('/api/chat', {
-                itemId: ITEM_DATA[idx].id,
-                sender: userInfo.id,
-                receiver: ITEM_DATA[idx].postedBy.id,
-                messages: [{userId:userInfo.id,chat:"Hello, is this item still available?"}]
-              })
-            }
-            catch (error) {}
+            await axios.post('/api/chat', {
+              itemId: ITEM_DATA[idx].id,
+              sender: userInfo.id,
+              receiver: ITEM_DATA[idx].postedBy.id,
+              messages: [{userId:userInfo.id,chat:"Hello, is this item still available?"}]
+            })
+       
           }
 
           addItemToCart()
