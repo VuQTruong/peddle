@@ -70,8 +70,21 @@
 
 #block {
   position: absolute;
-  right: 0;
   margin-left: 85%;
+}
+
+.rateUser {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 10px;
+  background-color: #212121;
+  color: #fff;
+  padding: 0.5em 1em;
+  border-radius: 20px;
+}
+
+#userRating {
+  margin-left: 73%;
 }
 
 .blockedMsg {
@@ -87,4 +100,5 @@
   height: 480px;
   margin-bottom: 20px;
   overflow: scroll;
+  scroll-behavior: smooth;
 }

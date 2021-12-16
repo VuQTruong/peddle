@@ -1,19 +1,22 @@
 import { State } from "../../store";
 import NavBar from "../../components/NavBar/NavBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Avatar from "react-avatar";
 import swal from "sweetalert";
 import { isURL } from "../../utilities/validators";
 import Loader from "react-loader-spinner";
+import Rating from "react-rating";
+import { getChatByUser } from "../../features/chat/userMessagesSlice";
 
 export default function ChatScreen(props: {
   location: { state: { chat: string } };
 }) {
   const user = useSelector((state: State) => state.user);
   const history = useHistory();
+  const dispatch = useDispatch();
   const onChangeHandler = (event: { target: { value: any } }) => {
     setMessage(event.target.value);
   };
@@ -37,10 +40,28 @@ export default function ChatScreen(props: {
       .then(({ data }: any) => {
         setChatInfo(data.data.chat);
         setMessage("");
+        dispatch(getChatByUser());
       })
       .catch((error) => {
         console.log(error.response.data.message);
       });
+  };
+
+  const rateUser = () => {
+    userRatingBool ? setUserRatingBool(false) : setUserRatingBool(true);
+  };
+
+  const updateRating = (value: any) => {
+    axios
+      .post(`/api/users/${userInfo.id}/rating/${value}`)
+      .then(({ data }: any) => {
+        setUserInfo(data.data.user);
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+      });
+
+    setUserRatingBool(false);
   };
 
   const blockUser = () => {
@@ -132,6 +153,7 @@ export default function ChatScreen(props: {
   const [chatInfo, setChatInfo] = useState<any>(null);
   const [itemName, setItemName] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [userRatingBool, setUserRatingBool] = useState(false);
 
   useEffect(() => {
     if (chatInfo === null) {
@@ -175,13 +197,27 @@ export default function ChatScreen(props: {
           <div className="my-items__title">{itemName}</div>
           {chatInfo.blockedByUserId &&
             chatInfo.blockedByUserId === user.userInfo.id && (
-              <i id="block" className="bx bx-user-minus" onClick={blockUser} />
+              <i id="block" className="bx bxs-user-x" onClick={blockUser} />
             )}
           {!chatInfo.blockedByUserId && (
-            <i id="block" className="bx bx-user-minus" onClick={blockUser} />
+            <i id="block" className="bx bxs-user-x" onClick={blockUser} />
+          )}
+          {!chatInfo.blockedByUserId && (
+            <i id="userRating" className="bx bx-star" onClick={rateUser} />
           )}
         </section>
-        <div className="my-chat-list">
+        {userRatingBool && (
+          <div className="rateUser">
+            Rate {userInfo.firstName} :&nbsp;&nbsp;
+            <Rating
+              emptySymbol="bx bx-star"
+              fullSymbol="bx bxs-star"
+              initialRating={userInfo.rating}
+              onClick={updateRating}
+            />
+          </div>
+        )}
+        <div id="chatList" className="my-chat-list">
           {chatInfo.messages?.map((message: any) =>
             message.userId === user.userInfo.id ? (
               <div className="chat-by-you" key={message._id}>
@@ -235,4 +271,7 @@ export default function ChatScreen(props: {
       <NavBar />
     </main>
   );
+}
+function dispatch(arg0: any) {
+  throw new Error("Function not implemented.");
 }
