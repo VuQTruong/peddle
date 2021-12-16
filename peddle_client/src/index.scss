@@ -17,7 +17,22 @@
 @import './components/FilteredItemCard/filteredItemCard';
 @import './components/FilteredItemList/filteredItemList';
 
-/* Containers */
+@import './containers/Page404/page404';
+@import './containers/Home/home';
+@import './containers/SignIn/signIn';
+@import './containers/SignUp/signUp';
+@import './containers/Profile/profile';
+
+
+@import './containers/Shopping/shopping';
+@import './containers/MyItems/my-items';
+@import './containers/Settings/settings';
+@import './containers/ManageItem/manageItemForm';
+@import './containers/Cart/cart';
+@import './containers/UpgradeToPro/upgradeToPro';
+@import './containers/FilterItems/filterItems';
+
+
 @import "./containers/Page404/page404";
 @import "./containers/Home/home";
 @import "./containers/SignIn/signIn";

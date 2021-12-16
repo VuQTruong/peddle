@@ -67,6 +67,41 @@ export default function Settings() {
     streetaddr: '',
   };
 
+
+  /* const reducer = (state:any, newState:any) => ({ ...state, ...newState });
+  const [state, setState] = useReducer(reducer, formInitialValues);
+
+  const handleChange = (e:any) => {
+    switch(e.target.id)
+    {
+      case "name": {
+        let splitName = e.target.value.split(" ");
+        setState({firstName: splitName[0]});
+        setState({lastName: splitName[1]});
+        break;
+      }
+      case "email": {
+        setState({email: e.target.value})
+        break;
+      }
+      case "password": {
+        setState({password: e.target.value})
+        break;
+      }
+      case "postalcode": {
+        setState({postalCode: e.target.value})
+        break;
+      }
+      case "streetaddr": {
+        setState({streetaddr: e.target.value})
+        break;
+      }
+    }
+    if (e.target.id !== "streetaddr")
+      changesMade = true; 
+  } */
+
+
   const returnHandler = () => {
     if (formikRef.current?.dirty && !changesSaved) {
       swal({
