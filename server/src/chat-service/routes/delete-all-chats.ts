@@ -15,4 +15,4 @@ router.delete("/api/chat", currentUser, requireAuth, async (req, res) => {
   });
 });
 
-export { router as deleteChatRouter };
+export { router as deleteAllChatsRouter };

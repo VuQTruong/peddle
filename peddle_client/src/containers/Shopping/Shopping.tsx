@@ -238,23 +238,34 @@ function Main() {
   }
 
   const scrollNextItem = () => {
-    CURR_ITEM_IDX++;
-
-    while (document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.style.visibility === "hidden") {
+    if ((CURR_ITEM_IDX + 1) < ITEM_DATA.length) {
       CURR_ITEM_IDX++;
-    }
 
-    document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+      while (document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.style.visibility === "hidden") {
+        CURR_ITEM_IDX++;
+      }
+  
+      document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+    }
+    else {
+      document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+    }
   }
 
   const scrollPrevItem = () => {
-    CURR_ITEM_IDX--;
 
-    while (document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.style.visibility === "hidden") {
+    if ((CURR_ITEM_IDX - 1) >= 0) {
       CURR_ITEM_IDX--;
-    }
 
-    document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+      while (document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.style.visibility === "hidden") {
+        CURR_ITEM_IDX--;
+      }
+  
+      document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+    }
+    else {
+      document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+    }   
   }
 
   

@@ -10,6 +10,11 @@ import { isURL } from "../../utilities/validators";
 import Loader from "react-loader-spinner";
 import Rating from "react-rating";
 import { getChatByUser } from "../../features/chat/userMessagesSlice";
+import { Item } from "../../types/item";
+
+import { formatCurrency } from '../../utilities/utils';
+import { removeFavItem } from "../../features/user/userFavoritesSlice";
+
 
 export default function ChatScreen(props: {
   location: { state: { chat: string } };
@@ -62,6 +67,50 @@ export default function ChatScreen(props: {
       });
 
     setUserRatingBool(false);
+  };
+
+  const removeItemHandler = (id: string) => {
+    swal({
+      title: 'Warning',
+      text: 'Are you sure you want to remove this item from your cart?',
+      icon: 'warning',
+      dangerMode: true,
+      buttons: {
+        deny: {
+          text: 'Cancel',
+          value: null,
+        },
+        confirm: {
+          text: 'Yes',
+          value: true,
+        },
+      },
+    }).then(async (willDelete) => {
+      if (willDelete) {
+        const result: any = await dispatch(removeFavItem(id));
+
+        // Delete chat
+        await axios.delete(`/api/chat/${chatId}`, {})
+ 
+        if (result.meta.requestStatus === 'fulfilled') {
+          swal({
+            title: 'Success',
+            text: 'Item removed successfully',
+            icon: 'success',
+          });
+
+          // redirect
+          history.goBack();
+          
+        } else if (result.meta.requestStatus === 'rejected') {
+          swal({
+            title: 'Error',
+            text: result.payload,
+            icon: 'error',
+          });
+        }
+      }
+    });
   };
 
   const blockUser = () => {
@@ -151,7 +200,7 @@ export default function ChatScreen(props: {
   const [userInfo, setUserInfo] = useState<any>(null);
   const [messageToSend, setMessage] = useState<any>("");
   const [chatInfo, setChatInfo] = useState<any>(null);
-  const [itemName, setItemName] = useState<any>(null);
+  const [item, setItem] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userRatingBool, setUserRatingBool] = useState(false);
 
@@ -163,9 +212,10 @@ export default function ChatScreen(props: {
     }
 
     if (chatInfo) {
-      if (itemName === null) {
+      if (item === null) {
         axios.get(`/api/items/${chatInfo.itemId}`).then(({ data }: any) => {
-          setItemName(data.data.item.name);
+          setItem(data.data.item);
+          console.log(data)
         });
       }
 
@@ -194,7 +244,7 @@ export default function ChatScreen(props: {
       <div className="container">
         <section className="my-items__header">
           <i className="bx bx-left-arrow-alt" onClick={history.goBack} />
-          <div className="my-items__title">{itemName}</div>
+          <div className="my-items__title">{item?.name}</div>
           {chatInfo.blockedByUserId &&
             chatInfo.blockedByUserId === user.userInfo.id && (
               <i id="block" className="bx bxs-user-x" onClick={blockUser} />
@@ -217,6 +267,31 @@ export default function ChatScreen(props: {
             />
           </div>
         )}
+        <div className='chat__cart__item' key={item?.id}>
+          <img
+            className='chat__item__img'
+            src={item?.images[0]}
+            alt={item?.name}
+          />
+          <div className='chat__item__info'>
+            <div className='chat__item__header'>
+              <p className='chat__item__title'>{item?.name}</p>
+              <p className='chat__item__price'>
+                ${item?.price}
+              </p>
+            </div>
+            <div className='chat__item__description'>
+              Seller {item?.postedBy.firstName} {item?.postedBy.lastName}
+            </div>
+          </div>
+          <button
+            type='button'
+            className='chat__item__remove-btn'
+            onClick={() => removeItemHandler(item!!.id)}
+          >
+            ✖
+          </button>
+        </div>
         <div id="chatList" className="my-chat-list">
           {chatInfo.messages?.map((message: any) =>
             message.userId === user.userInfo.id ? (
@@ -251,19 +326,21 @@ export default function ChatScreen(props: {
             <div className="blockedMsg">This conversation is blocked</div>
           )}
           {!chatInfo?.isBlocked && (
-            <div className="form__control--text">
-              <input
-                type="text"
-                id="textToSend"
-                value={messageToSend}
-                onChange={onChangeHandler}
-                placeholder="Send a message"
-              />
-              <i
-                id="send"
-                onClick={() => submitReq()}
-                className="bx bx-right-arrow-alt"
-              />
+            <div className="chat__form_container">
+              <div className="form__control--text">
+                <input
+                  type="text"
+                  id="textToSend"
+                  value={messageToSend}
+                  onChange={onChangeHandler}
+                  placeholder="Send a message"
+                />
+                <i
+                  id="send"
+                  onClick={() => submitReq()}
+                  className="bx bx-right-arrow-alt"
+                />
+              </div>
             </div>
           )}
         </div>

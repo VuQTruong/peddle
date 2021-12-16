@@ -1,7 +1,8 @@
 import { createChatRouter } from "./create-chat";
 import { getChatsRouter } from "./get-chat-by-id";
 import { updateChatRouter } from "./update-chat";
-import { deleteChatRouter } from "./delete-all-chats";
+import { deleteAllChatsRouter } from "./delete-all-chats";
+import { deleteChatRouter } from "./delete-chat";
 import { getChatsByUserRouter } from "./get-chat-by-user";
 
 export {
@@ -10,4 +11,5 @@ export {
   updateChatRouter,
   getChatsByUserRouter,
   deleteChatRouter,
+  deleteAllChatsRouter
 };
