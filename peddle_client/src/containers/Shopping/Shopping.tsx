@@ -163,17 +163,20 @@ function Main() {
           //dispatch(addItem(RAND_DATA[CURR_ITEM_IDX]));
           item.style.visibility = "hidden";
 
+
+          let idx = CURR_ITEM_IDX
+
           //* Add item to Shopping Cart here
 
           const addItemToCart = async () => {
             await axios.post('/api/users/favourite', {
-              itemId: ITEM_DATA[CURR_ITEM_IDX].id
+              itemId: ITEM_DATA[idx].id
             })
 
             await axios.post('/api/chat', {
-              itemId: ITEM_DATA[CURR_ITEM_IDX].id,
+              itemId: ITEM_DATA[idx].id,
               sender: userInfo.id,
-              receiver: ITEM_DATA[CURR_ITEM_IDX].postedBy.id,
+              receiver: ITEM_DATA[idx].postedBy.id,
               messages: [{userId:userInfo.id,chat:"Hello, is this item still available?"}]
             })
 
@@ -291,7 +294,9 @@ function Main() {
   }
 
   return  isLoading ? (
-    <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
+    <div className="shopping__loader__container">
+      <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
+    </div>
     ) : (
     <div className="row">
       <div className="small-12 column">
