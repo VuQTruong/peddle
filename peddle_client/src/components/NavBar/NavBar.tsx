@@ -13,6 +13,11 @@ export default function NavBar() {
             </Link>
           </li>
           <li className='navbar__item'>
+          <Link to='/search'>
+            <i className='bx bx-search'></i>
+          </Link>
+          </li>
+          <li className='navbar__item'>
             <Link to='/cart'>
               <i className='bx bx-basket'></i>
             </Link>

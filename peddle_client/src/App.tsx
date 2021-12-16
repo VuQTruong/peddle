@@ -45,12 +45,11 @@ function App() {
           <Route path="/user-messages" component={UserMessages} />
 
           <PrivateRoute path="/chat-screen" component={ChatScreen} exact />
-
+          <PrivateRoute path='/search' component={FilterItems} />
           <PrivateRoute path="/my-items" component={MyItems} />
           <PrivateRoute path="/purchase-history" component={PurchaseHistory} />
           <PrivateRoute path="/sell-history" component={SellHistory} />
           <PrivateRoute path="/settings" component={Settings} />
-
           <PrivateRoute path="/" component={Home} exact />
           <Route path="*" component={Page404} />
         </Switch>
