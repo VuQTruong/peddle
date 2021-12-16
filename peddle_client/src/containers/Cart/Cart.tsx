@@ -96,9 +96,6 @@ export default function Cart() {
                     <div className='item__description'>
                       Seller {item.postedBy.firstName} {item.postedBy.lastName}
                     </div>
-                    <div className='item__chat'>
-                      You: <em>Hey Jess, is this item...</em> ● 5:28 PM
-                    </div>
                   </div>
                   <button
                     type='button'

@@ -185,6 +185,8 @@ function Main() {
               itemId: ITEM_DATA[idx].id
             }) 
 
+            await axios.patch(`/api/items/${ITEM_DATA[idx].id}/increment-matches`, {})
+
             await axios.post('/api/chat', {
               itemId: ITEM_DATA[idx].id,
               sender: userInfo.id,
