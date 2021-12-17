@@ -117,9 +117,13 @@
   scroll-behavior: smooth;
 }
 
+.chat_box {
+  display:flex;
+}
+
 .my-chat-title {
   font-size: $fs-18;
-  width: 220px;
+  width: 270px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

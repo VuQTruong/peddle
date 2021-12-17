@@ -6,6 +6,7 @@ import { signOut } from '../../features/user/userSlice';
 import { State } from '../../store';
 import { isURL } from '../../utilities/validators';
 import { useHistory, Link } from 'react-router-dom';
+import Rating from "react-rating";
 
 export default function UserInfo() {
   const history = useHistory();
@@ -59,7 +60,15 @@ export default function UserInfo() {
             <div className='profile__user-name'>
               {userInfo.firstName} {userInfo.lastName}
             </div>
-            <div className='profile__user-status'>Trusted | Top 5% Seller</div>
+            <div className='profile__user-status'>
+              {userInfo.isPremiumMember && <div>Trusted |&nbsp;</div>}
+              <Rating
+                emptySymbol="bx bx-star"
+                fullSymbol="bx bxs-star"
+                initialRating={userInfo.rating}
+                readonly
+              />
+            </div>
           </div>
         </section>
 

@@ -257,7 +257,8 @@ export default function ChatScreen(props: {
       <div className="container">
         <section className="my-items__header">
           <i className="bx bx-left-arrow-alt" onClick={history.goBack} />
-          <div className="my-chat-title">Seller: {userInfo.firstName} {userInfo.lastName}</div>
+
+          <div className="my-chat-title">Message to: {userInfo.firstName} {userInfo.lastName}</div>
           {chatInfo.blockedByUserId &&
             chatInfo.blockedByUserId === user.userInfo.id && (
               <i id="block" className="bx bxs-user-x" onClick={blockUser} />
@@ -337,7 +338,8 @@ export default function ChatScreen(props: {
             <div className="blockedMsg">This conversation is blocked</div>
           )}
           {!chatInfo?.isBlocked && (
-            <div className="form__control--text">
+            <div className="form__control--text chat_box">
+              
               <input
                 type="text"
                 id="textToSend"

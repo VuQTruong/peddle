@@ -12,6 +12,7 @@ export interface User {
   postedItems: string[];
   purchasedItems: string[];
   favouriteItems: string[];
+  rating: number;
 }
 
 export interface UserState {

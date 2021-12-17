@@ -8,12 +8,13 @@ import { ItemTile } from '../../components/Item/ItemTile';
 import { IoMdAddCircle } from 'react-icons/io';
 import { Item } from '../../types/item';
 import axios from 'axios';
+import swal from 'sweetalert';
 
 export default function MyItems() {
   const history = useHistory();
   const { userItems } = useSelector((state: State) => state.userItems);
 
-  const { id } = useSelector((state: State) => state.user.userInfo);
+  const { id, isPremiumMember } = useSelector((state: State) => state.user.userInfo);
   const [items, setitems] = useState<Item[]>([]);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function MyItems() {
       const itemRes = await axios.get<{ data: { items: Item[] } }>(
         `/api/items/user/${id}`
       );
-      //console.log(itemRes.data.data.items);
+      console.log(itemRes.data.data.items.length);
       setitems(itemRes.data.data.items);
     } catch (error: any) {
       console.log(error);
@@ -45,19 +46,41 @@ export default function MyItems() {
           ))}
         </div>
         <div className='my-items__add-button-div'>
-          <Link
-            to='/my-items/new'
-            className='btn btn-primary my-items__add-button'
-            type='button'
-            onClick={(e) => console.log('button clicked')}
-          >
+          {(items.length < 5 || isPremiumMember) && 
+            <Link
+              to='/my-items/new'
+              className='btn btn-primary my-items__add-button'
+              type='button' 
+              onClick={(e) => console.log('button clicked')}
+            >
             <IoMdAddCircle
               style={{ backgroundColor: '#507dbc' }}
               color=''
               size={40}
             />
             <p>{'Add item'}</p>
-          </Link>
+            </Link>
+          }
+          {(items.length >= 5 && !isPremiumMember) &&
+            <Link
+              to='#'
+              className='btn btn-primary my-items__add-button'
+              type='button' 
+              onClick={(e) => swal({
+                title: 'Info',
+                text: 'You can only post 5 items as a Free Member. Please upgrade to Premium Member to continue!',
+                icon: 'info',
+              })}
+            >
+            <IoMdAddCircle
+              style={{ backgroundColor: '#507dbc' }}
+              color=''
+              size={40}
+            />
+            <p>{'Add item'}</p>
+            </Link>
+          }
+          
         </div>
       </div>
       <NavBar />
