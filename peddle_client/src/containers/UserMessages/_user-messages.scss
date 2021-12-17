@@ -19,6 +19,15 @@
   border-radius: 20px;
 }
 
+.shopping__user-avatar-right {
+  margin-right: 20px;
+}
+
+/* .chat__form_container {
+  position: fixed;
+  bottom: 400px;
+} */
+
 .my-chats_chat-list {
   height: 630px;
   overflow: auto;
@@ -102,8 +111,80 @@
 }
 
 .my-chat-list {
-  height: 570px;
+  height: 450px;
   margin-bottom: 20px;
   overflow: scroll;
   scroll-behavior: smooth;
+}
+
+.chat_box {
+  display:flex;
+}
+
+.my-chat-title {
+  font-size: $fs-18;
+  width: 270px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+
+.chat__cart__item {
+  position: relative;
+  display: flex;
+  padding: 1em;
+  background-color: #212121;
+}
+
+.chat__item__img {
+  width: 5em;
+  height: 5em;
+  margin-right: 1em;
+  border-radius: 10px;
+}
+
+.chat__item__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat__item__header {
+  display: flex;
+}
+
+.chat__item__title {
+  font-size: $fs-18;
+  width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat__item__price {
+  font-size: $fs-20;
+  color: $clr-primary;
+}
+
+.chat__item__btn {
+  background-color: transparent;
+  border:none;
+  color: $clr-primary;
+  text-align: left;
+}
+
+.chat__item__description {
+  font-size: $fs-14;
+}
+
+.chat__item__remove-btn {
+  position: absolute;
+  top: 0.2em;
+  right: 0.5em;
+  font-size: $fs-30;
+  color: $clr-primary;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
 }

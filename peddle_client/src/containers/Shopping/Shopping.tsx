@@ -7,6 +7,7 @@ import React, { useEffect, useRef, useState, useReducer, Component } from 'react
 import faker from "faker";
 import SwipeableHook from './SwipeableHook';
 import NavBar from '../../components/NavBar/NavBar';
+import Avatar from "react-avatar";
 
 import { useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
@@ -17,6 +18,7 @@ import axios from 'axios';
 import { User } from '../../types/user';
 import { type } from 'os';
 import Loader from 'react-loader-spinner';
+import { isURL } from '../../utilities/validators';
 
 
 
@@ -74,14 +76,8 @@ function Main() {
 
   const [isLoading, setIsLoading] = useState(true);
 
-
-
   // Get items
   const [items, setItems] = useState<Item[]>([])
-
-
-
-
 
   useEffect(() => {
     console.log("Inside the useEffect")
@@ -114,7 +110,7 @@ function Main() {
           id: seller.id,
           firstName: seller.firstName,
           lastName: seller.lastName,
-          photo: '',
+          photo: seller.photo,
           email: seller.email,
           postalCode: seller.postalCode
         } 
@@ -238,23 +234,34 @@ function Main() {
   }
 
   const scrollNextItem = () => {
-    CURR_ITEM_IDX++;
-
-    while (document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.style.visibility === "hidden") {
+    if ((CURR_ITEM_IDX + 1) < ITEM_DATA.length) {
       CURR_ITEM_IDX++;
-    }
 
-    document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+      while (document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.style.visibility === "hidden") {
+        CURR_ITEM_IDX++;
+      }
+  
+      document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+    }
+    else {
+      document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+    }
   }
 
   const scrollPrevItem = () => {
-    CURR_ITEM_IDX--;
 
-    while (document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.style.visibility === "hidden") {
+    if ((CURR_ITEM_IDX - 1) >= 0) {
       CURR_ITEM_IDX--;
-    }
 
-    document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+      while (document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.style.visibility === "hidden") {
+        CURR_ITEM_IDX--;
+      }
+  
+      document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+    }
+    else {
+      document.getElementById(`item-${(CURR_ITEM_IDX)}`)?.scrollIntoView({behavior: "smooth", block: "center", inline: "nearest"});
+    }   
   }
 
   
@@ -335,7 +342,17 @@ function Main() {
                     <h3>{item.description}</h3>
                   </div>
                   <div className="seller_container">
-                    <h3>Sold By: {item.postedBy.firstName} {item.postedBy.lastName}</h3>
+                    {/* <div className="shopping__avatar_container"> */}
+                      <Avatar
+                        className="shopping__user-avatar-right"
+                        name={`${item.postedBy.firstName} ${item.postedBy.lastName}`}
+                        round={true}
+                        size="50"
+                        textSizeRatio={1}
+                        src={isURL(item.postedBy.photo) ? item.postedBy.photo : ""}
+                      />
+                    {/* </div> */}
+                    {item.postedBy.firstName} {item.postedBy.lastName} | Trusted Seller
                   </div>
                 </div>
               ))

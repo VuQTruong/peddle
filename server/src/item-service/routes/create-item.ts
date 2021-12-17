@@ -6,6 +6,7 @@ import { ServerError } from '../../errors/server-error';
 import { currentUser } from '../../middlewares/current-user';
 import { requireAuth } from '../../middlewares/require-auth';
 import { validateRequest } from '../../middlewares/validate-request';
+import { BadRequestError } from '../../errors';
 
 const router = express.Router();
 
@@ -29,13 +30,14 @@ router.post(
       ...req.body,
       postedBy: userId,
     };
-    const newItem = await Item.create(itemInfo);
-
+    
     // Update user's postedItems
     const user = await User.findById(userId);
     if(!user){
       return next(new ServerError('Database out of sync'));
     }
+
+    const newItem = await Item.create(itemInfo);
 
     user!.postedItems.push(newItem._id);
     await user!.save();

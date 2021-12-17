@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { State } from "../../store";
+import { updateUser } from "../user/userSlice";
 
 type ResponseType = {
   status: string;
@@ -24,6 +25,22 @@ export const getChatByUser = createAsyncThunk(
     }
   }
 );
+
+export const deleteChat = createAsyncThunk(
+  "userMessages/deleteChat",
+  async(chatId:string, { rejectWithValue, getState }) => {
+    try {
+      const { userMessages } = getState() as State;
+      let updatedMessages = userMessages.userMessages.filter((chat) => {
+        return chat.id !== chatId
+      })
+      userMessages.userMessages = updatedMessages
+    }
+    catch (error:any) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+)
 
 export const userMessagesSlice = createSlice({
   name: "userMessages",

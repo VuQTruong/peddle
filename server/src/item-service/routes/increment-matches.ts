@@ -27,7 +27,7 @@ router.patch(
       return next(new BadRequestError('Bad request - item doesn not exist'));
     }
 
-    if (item?.postedBy.toString() !== req.currentUser?.id) {
+    if (item?.postedBy.toString() === req.currentUser?.id) {
       return next(new NotAuthorizedError());
     }
 

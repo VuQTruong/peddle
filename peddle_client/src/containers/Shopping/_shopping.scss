@@ -32,7 +32,8 @@
 
 .image_container {
   position: relative;
-  min-height: 50vh;
+  height: 45vh;
+  overflow: hidden;
 }
 
 .image_item {
@@ -42,6 +43,7 @@
   top: 0;
   bottom: 0;
   margin: auto;
+  object-fit: cover;
 }
 
 .desc_container, .seller_container, .price_container {
@@ -64,6 +66,9 @@
 }
 
 .seller_container {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 300;
+  font-size: 18px;
   margin: 5% 5% 2% 5%
 }
 
@@ -71,8 +76,9 @@
   position: relative;
   bottom: 325px;
   align-self: center;
+  text-align: center;
   color: white;
-  background-color: #212121;
+   background-color: rgba(#212121,0.5);
   border-radius: 20px;
   padding-left: 5%;
   padding-right: 5%;
