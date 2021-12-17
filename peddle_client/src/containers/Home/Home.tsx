@@ -57,6 +57,12 @@ export default function Home() {
           Shopping Cart ({userInfo.favouriteItems?.length || '0'})
           <i className='bx bx-chevron-right'></i>
         </Link> */}
+
+        <Link to='/user-messages' className='btn btn-secondary home__btn home__btn--option'>
+          Messages ({userInfo.favouriteItems?.length || '0'})
+          <i className='bx bx-chevron-right'></i>
+        </Link>
+
         <Link
           to='/my-items'
           className='btn btn-secondary home__btn home__btn--option'
@@ -65,10 +71,7 @@ export default function Home() {
           <i className='bx bx-chevron-right'></i>
         </Link>
 
-        <Link to='/user-messages' className='btn btn-secondary home__btn home__btn--option'>
-          Messages ({userInfo.favouriteItems?.length || '0'})
-          <i className='bx bx-chevron-right'></i>
-        </Link>
+        
 
         <Link
           to='/settings'

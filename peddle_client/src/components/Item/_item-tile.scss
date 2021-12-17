@@ -11,6 +11,13 @@
     margin-right: 10px;
 }
 
+.item__item__btn {
+    background-color: transparent;
+    border:none;
+    color: $clr-primary;
+    text-align: left;
+}
+
 .item-list-card__container img{
     width: 70px;
     height: 70px;

@@ -25,7 +25,7 @@ export default function MyItems() {
       const itemRes = await axios.get<{ data: { items: Item[] } }>(
         `/api/items/user/${id}`
       );
-      console.log(itemRes.data.data.items);
+      //console.log(itemRes.data.data.items);
       setitems(itemRes.data.data.items);
     } catch (error: any) {
       console.log(error);
@@ -36,7 +36,7 @@ export default function MyItems() {
     <main>
       <div className='container'>
         <section className='my-items__header'>
-          <i className='bx bx-left-arrow-alt' onClick={history.goBack} />
+          <i className='bx bx-left-arrow-alt' onClick={() => history.push('/')} />
           <div className='my-items__title'>My items</div>
         </section>
         <div className='my-items__item-list'>

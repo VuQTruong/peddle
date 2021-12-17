@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Avatar from "react-avatar";
 import swal from "sweetalert";
+import swal2 from "sweetalert2";
 import { isURL } from "../../utilities/validators";
 import Loader from "react-loader-spinner";
 import Rating from "react-rating";
@@ -112,6 +113,18 @@ export default function ChatScreen(props: {
       }
     });
   };
+
+  const onShowDetails = () => {
+    swal2.fire({
+      title: `${item?.name}`,
+    
+      html: `<p>${item?.description}</p> <br> <img src="${item?.images[0]}" style='width:150px; display: block;
+      margin-left: auto;
+      margin-right: auto;'>`,
+      
+    })
+  }
+
 
   const blockUser = () => {
     if (!chatInfo.isBlocked) {
@@ -244,7 +257,7 @@ export default function ChatScreen(props: {
       <div className="container">
         <section className="my-items__header">
           <i className="bx bx-left-arrow-alt" onClick={history.goBack} />
-          <div className="my-items__title">{item?.name}</div>
+          <div className="my-chat-title">Seller: {userInfo.firstName} {userInfo.lastName}</div>
           {chatInfo.blockedByUserId &&
             chatInfo.blockedByUserId === user.userInfo.id && (
               <i id="block" className="bx bxs-user-x" onClick={blockUser} />
@@ -276,13 +289,11 @@ export default function ChatScreen(props: {
           <div className='chat__item__info'>
             <div className='chat__item__header'>
               <p className='chat__item__title'>{item?.name}</p>
-              <p className='chat__item__price'>
-                ${item?.price}
-              </p>
             </div>
-            <div className='chat__item__description'>
-              Seller {item?.postedBy.firstName} {item?.postedBy.lastName}
+            <div className='chat__item__price'>
+              ${item?.price}
             </div>
+            <button className="chat__item__btn" onClick={onShowDetails}> View item details</button>
           </div>
           <button
             type='button'
@@ -326,22 +337,21 @@ export default function ChatScreen(props: {
             <div className="blockedMsg">This conversation is blocked</div>
           )}
           {!chatInfo?.isBlocked && (
-            <div className="chat__form_container">
-              <div className="form__control--text">
-                <input
-                  type="text"
-                  id="textToSend"
-                  value={messageToSend}
-                  onChange={onChangeHandler}
-                  placeholder="Send a message"
-                />
-                <i
-                  id="send"
-                  onClick={() => submitReq()}
-                  className="bx bx-right-arrow-alt"
-                />
-              </div>
+            <div className="form__control--text">
+              <input
+                type="text"
+                id="textToSend"
+                value={messageToSend}
+                onChange={onChangeHandler}
+                placeholder="Send a message"
+              />
+              <i
+                id="send"
+                onClick={() => submitReq()}
+                className="bx bx-right-arrow-alt"
+              />
             </div>
+
           )}
         </div>
       </div>

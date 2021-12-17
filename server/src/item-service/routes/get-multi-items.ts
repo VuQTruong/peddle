@@ -22,7 +22,8 @@ router.get('/api/items', currentUser, requireAuth, async (req, res) => {
     _id: {
       $nin: [...seenItems, ...postedItems]
     },
-  }).limit(10);
+  });
+
 
   return res.status(200).send({
     status: '200',
