@@ -35,7 +35,7 @@ it('updates seen item ' , async () => {
   await request(app)
     .patch('/api/users/seen-items')
     .set('Cookie', cookie2)
-    .send({itemId: [ itemRes1.body.data.item.id, itemRes2.body.data.item.id ]})
+    .send({itemId: itemRes1.body.data.item.id})
     .expect(200);
 
   const res = await request(app)
@@ -44,7 +44,7 @@ it('updates seen item ' , async () => {
     .send()
     .expect(200);
 
-  expect(res.body.data.items.length).toBe(2);
+  expect(res.body.data.items.length).toBe(1);
 });
 
 it('does not updates seen item because the item does not exist' , async () => {
@@ -53,7 +53,7 @@ it('does not updates seen item because the item does not exist' , async () => {
   await request(app)
     .patch('/api/users/seen-items')
     .set('Cookie', cookie)
-    .send({itemId: ["507f1f77bcf86cd799439011", "507f1f77bcf86cd799439011"]})
+    .send({itemId: "507f1f77bcf86cd799439011"})
     .expect(200);
 
   const res = await request(app)
@@ -74,7 +74,7 @@ it('does not update seen item because the request body is invalid' , async () =>
     .send({itemId: "asdf"})
     .expect(400);
 
-  expect(res.body.errors[0].message).toBe('Invalid value');
+  expect(res.body.errors[0].message).toBe('Invalid item Id(s)');
 });
 
 it('does not update seen item due to invalid session' , async () => {

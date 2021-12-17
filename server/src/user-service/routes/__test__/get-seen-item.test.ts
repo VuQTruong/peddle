@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../../server';
 
-it('gets seen item', async () => {
+it('updates seen item ' , async () => {
   const cookie = await global.signin();
   const cookie2 = await global.signin2();
 
@@ -35,7 +35,7 @@ it('gets seen item', async () => {
   await request(app)
     .patch('/api/users/seen-items')
     .set('Cookie', cookie2)
-    .send({itemId: [ itemRes1.body.data.item.id, itemRes2.body.data.item.id ]})
+    .send({itemId: itemRes1.body.data.item.id})
     .expect(200);
 
   const res = await request(app)
@@ -44,11 +44,17 @@ it('gets seen item', async () => {
     .send()
     .expect(200);
 
-  expect(res.body.data.items.length).toBe(2);
+  expect(res.body.data.items.length).toBe(1);
 });
 
-it('gets an empty seen item array', async () => {
+it('does not updates seen item because the item does not exist' , async () => {
   const cookie = await global.signin();
+
+  await request(app)
+    .patch('/api/users/seen-items')
+    .set('Cookie', cookie)
+    .send({itemId: "507f1f77bcf86cd799439011"})
+    .expect(200);
 
   const res = await request(app)
     .get('/api/users/seen-items')
@@ -56,14 +62,26 @@ it('gets an empty seen item array', async () => {
     .send()
     .expect(200);
 
-  expect(res.body.data.items).toBeDefined();
   expect(res.body.data.items.length).toBe(0);
 });
 
-it('fails to get seen items due to invalid session', async () => {
+it('does not update seen item because the request body is invalid' , async () => {
+  const cookie = await global.signin();
+
   const res = await request(app)
-    .get('/api/users/seen-items')
-    .send()
+    .patch('/api/users/seen-items')
+    .set('Cookie', cookie)
+    .send({itemId: "asdf"})
+    .expect(400);
+
+  expect(res.body.errors[0].message).toBe('Invalid item Id(s)');
+});
+
+it('does not update seen item due to invalid session' , async () => {
+
+  const res = await request(app)
+    .patch('/api/users/seen-items')
+    .send({itemId: "asdf"})
     .expect(401);
 
   expect(res.body.errors[0].message).toBe('Not authorized');
