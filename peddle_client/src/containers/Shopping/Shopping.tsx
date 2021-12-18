@@ -80,7 +80,6 @@ function Main() {
   const [items, setItems] = useState<Item[]>([])
 
   useEffect(() => {
-    console.log("Inside the useEffect")
     fetchMyItems();
   }, []);
 
@@ -115,12 +114,10 @@ function Main() {
           postalCode: seller.postalCode
         } 
       }
-
-      setIsLoading(false)
-
     } catch (error: any) {
       console.log(error);
     }
+    setIsLoading(false)
   }
 
 

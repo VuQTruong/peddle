@@ -103,10 +103,6 @@ export default function Home() {
           My Items ({userInfo.postedItems?.length || '0'})
           <i className='bx bx-chevron-right'></i>
         </Link>
-
-
-        
-
         <Link
           to='/settings'
           className='btn btn-secondary home__btn home__btn--option'

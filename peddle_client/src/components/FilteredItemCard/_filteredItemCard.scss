@@ -3,7 +3,9 @@
   display: flex;
   margin-bottom: 1em;
   color: $clr-txt-primary;
+  background-color: $clr-txt-secondary;
   font-weight: 400;
+  border:none;
 }
 
 .filtered-card__img {
@@ -21,6 +23,8 @@
 
 .filtered-card__info {
   flex-grow: 1;
+  padding: 0.5em;
+  //color:white
 }
 
 .filtered-card__header {
@@ -29,7 +33,7 @@
 }
 
 .filtered-card__title {
-  max-width: 10em;
+  max-width: 20em;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -41,7 +45,8 @@
 }
 
 .filtered-card__description {
-  width: 13em;
+  width: 18em;
+  text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
 
