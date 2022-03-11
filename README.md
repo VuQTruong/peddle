@@ -2,11 +2,9 @@
 
 ## Peddle Inc.
 
----
-
 ## Table of Contents
 - [Introduction](#introduction)
-- [Installing](#installing)
+- [Installation](#installation)
 - [Running the app](#running-the-app)
 - [APIs Overview](#apis-overview)
 	- [Auth Service](#auth-service)
@@ -16,17 +14,13 @@
 	- [Chat Service](#chat-service)
 	- [Category Service](#category-service)
 
----
-
 ## Introduction
 
 <a href='https://www.youtube.com/watch?v=ZuK0LSJSYA4' target='_blank'>
 	<img src='intro-thumbnail.jpg' alt='Peddle Inc. Intro' />
 </a>
 
----
-
-## Installing
+## Installation
 
 Execute these commands from the project directory
 
@@ -37,8 +31,6 @@ cd peddle_client/ && npm install
 ```
 cd server/ && npm install
 ```
-
----
 
 ## Running the app
 
@@ -53,8 +45,6 @@ And open another terminal on peddle_client directory
 ```
 npm start
 ```
-
----
 
 ## APIs Overview
 
