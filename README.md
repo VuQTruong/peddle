@@ -20,7 +20,7 @@
 
 ## Introduction
 
-<a href='https://www.youtube.com/watch?v=ZuK0LSJSYA4'>
+<a href='https://www.youtube.com/watch?v=ZuK0LSJSYA4' target='_blank'>
 	<img src='intro-thumbnail.jpg' alt='Peddle Inc. Intro' />
 </a>
 
